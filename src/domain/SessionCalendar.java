@@ -5,12 +5,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SessionCalendar {
+	private int[] academicYear;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private ArrayList<Session> sessions = new ArrayList<Session>();
+	private ArrayList<Session> sessions;
 	
-	public SessionCalendar(int startYear) {
-		throw new UnsupportedOperationException();
+	public SessionCalendar(int[] academicYear, LocalDate startDate, LocalDate endDate) {
+		this.academicYear = academicYear;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		sessions = new ArrayList<Session>(); //Hier worden dan later in de functie getSessions() alle sessions van de huidige maand aan toegevoegd.
 	}
 
 	public LocalDate getStartDate() {
@@ -35,6 +39,10 @@ public class SessionCalendar {
 
 	public void setSessions(ArrayList<Session> sessions) {
 		this.sessions = sessions;
+	}
+
+	public int[] getAcademicYear() {
+		return academicYear;
 	}
 	
 	

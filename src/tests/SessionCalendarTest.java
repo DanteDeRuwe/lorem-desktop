@@ -10,10 +10,14 @@ import domain.SessionCalendar;
 
 public class SessionCalendarTest {
 	SessionCalendar cal;
+	int[] aYear;
 	
 	@BeforeEach
 	void init() {
-		cal = new SessionCalendar(2020);
+		aYear = new int[2];
+		aYear[0] = 2020;
+		aYear[1] = 2021;
+		cal = new SessionCalendar(aYear, LocalDate.of(aYear[0], 9, 21), LocalDate.of(aYear[1], 9, 20));
 	}
 	
 
@@ -24,7 +28,12 @@ public class SessionCalendarTest {
     
     @Test
     public void newCalendar2020EndtDateTest() {
-    	assertEquals(cal.getEndDate(), LocalDate.of(2021, 9, 26));
+    	assertEquals(cal.getEndDate(), LocalDate.of(2021, 9, 20));
+    }
+    
+    @Test
+    public void newCalendar2020AcademicYearTest() {
+    	assertEquals(cal.getAcademicYear(), aYear);
     }
     
 }
