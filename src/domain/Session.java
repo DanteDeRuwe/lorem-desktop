@@ -1,15 +1,13 @@
 package domain;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.*;
-import java.time.*;
 
 public class Session {
 
-	private Member organizer;
+	private final Member organizer;
 	private Collection<Member> participants;
 	private Location location;
 	private Collection<MediaItem> media;
@@ -24,10 +22,13 @@ public class Session {
 			Location location) {
 		this.organizer = organizer;
 		setTitle(title);
-		this.speakerName = speakerName;
-		this.start = start;
-		this.end = end;
+		setSpeakerName(speakerName);
 		setLocation(location);
+
+		setStart(start);
+		setEnd(end);
+		if (!meetsMinimumPeriodRequirement())
+			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
 
 		// initialize collections
 		media = new ArrayList<>();
@@ -36,8 +37,20 @@ public class Session {
 		participants = new ArrayList<>();
 	}
 
+	private boolean meetsMinimumPeriodRequirement() {
+		Duration durationBetween = Duration.between(getStart(), getEnd());
+		Duration minimumPeriod = Duration.ofMinutes(30);
+		return durationBetween.compareTo(minimumPeriod) >= 0;
+	}
+
 	public String getTitle() {
 		return this.title;
+	}
+
+	public void setTitle(String value) {
+		if (value == null || value.trim().isEmpty())
+			throw new IllegalArgumentException("title null or empty");
+		this.title = value;
 	}
 
 	public String getSpeakerName() {
@@ -53,6 +66,12 @@ public class Session {
 	}
 
 	public void setStart(LocalDateTime value) {
+		if (value == null)
+			throw new IllegalArgumentException("start null");
+		if (value.compareTo(LocalDateTime.now()) < 0)
+			throw new IllegalArgumentException("start in past");
+		if (value.compareTo(LocalDateTime.now().plusHours(24)) < 0)
+			throw new IllegalArgumentException("start less than 1 day in future");
 		this.start = value;
 	}
 
@@ -61,13 +80,11 @@ public class Session {
 	}
 
 	public void setEnd(LocalDateTime value) {
+		if (value == null)
+			throw new IllegalArgumentException("end null");
+		if (value.compareTo(LocalDateTime.now()) < 0)
+			throw new IllegalArgumentException("end in past");
 		this.end = value;
-	}
-
-	public void setTitle(String value) {
-		if (value == null || value.isEmpty())
-			throw new IllegalArgumentException("title invalid");
-		this.title = value;
 	}
 
 	public Location getLocation() {
@@ -76,7 +93,7 @@ public class Session {
 
 	public void setLocation(Location value) {
 		if (value == null)
-			throw new IllegalArgumentException("location invalid");
+			throw new IllegalArgumentException("location null");
 		this.location = value;
 	}
 
