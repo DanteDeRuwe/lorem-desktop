@@ -27,7 +27,7 @@ public class SessionCalendarTest {
     }
     
     @Test
-    public void newCalendar2020EndtDateTest() {
+    public void newCalendar2020EndDateTest() {
     	assertEquals(cal.getEndDate(), LocalDate.of(2021, 9, 20));
     }
     

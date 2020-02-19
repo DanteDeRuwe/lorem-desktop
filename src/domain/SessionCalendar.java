@@ -3,6 +3,8 @@ package domain;
 import java.lang.UnsupportedOperationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.*;
+import java.util.*;
 
 public class SessionCalendar {
 	private int[] academicYear;
@@ -14,7 +16,7 @@ public class SessionCalendar {
 		this.academicYear = academicYear;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		sessions = new ArrayList<Session>(); //Hier worden dan later in de functie getSessions() alle sessions van de huidige maand aan toegevoegd.
+		sessions = new ArrayList<>();
 	}
 
 	public LocalDate getStartDate() {
