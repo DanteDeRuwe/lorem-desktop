@@ -73,10 +73,31 @@ class SessionTest {
 	}
 
 	@Test
+	void createSession_StartDateLessThan1DayInFuture_ThrowsIllegalArgumentException() {
+		LocalDateTime startDateTime = LocalDateTime.now().plusHours(23).plusMinutes(59);
+		LocalDateTime endDateTime = startDateTime.plusHours(2);
+		assertThrows(IllegalArgumentException.class, () -> new Session(exampleHeadAdmin, "Example Event",
+				"Example Speaker", startDateTime, endDateTime, exampleLocation));
+	}
+
+	@Test
+	void createSession_StartDateMoreThan1DayInFuture_ThrowsIllegalArgumentException() {
+		LocalDateTime startDateTime = LocalDateTime.now().plusHours(24).plusMinutes(1);
+		LocalDateTime endDateTime = startDateTime.plusHours(2);
+		new Session(exampleHeadAdmin, "Example Event", "Example Speaker", startDateTime, endDateTime, exampleLocation);
+	}
+
+	@Test
 	void createSession_StartAndEndWithinLessThan30Minutes_ThrowsIllegalArgumentException() {
 		LocalDateTime endDateTime = LocalDateTime.of(2020, 5, 5, 18, 29);
 		assertThrows(IllegalArgumentException.class, () -> new Session(exampleHeadAdmin, "Example Event",
 				"Example Speaker", exampleStartDateTime, endDateTime, exampleLocation));
+	}
+
+	@Test
+	void createSession_StartAndEndWithinExactly30Minutes_CreatesSession() {
+		new Session(exampleHeadAdmin, "Example Title", "Example Speaker", exampleStartDateTime,
+				LocalDateTime.of(2020, 5, 5, 18, 30), exampleLocation);
 	}
 
 }
