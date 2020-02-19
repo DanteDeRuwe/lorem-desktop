@@ -1,42 +1,43 @@
 package domain;
 
-import java.util.Date;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.*;
 
 public class FeedbackEntry {
 
 	private Member author;
 	private String title;
 	private String text;
-	private Date timestamp;
-	
-	
-	
-	
+	private LocalDateTime timestamp;
+
 	public FeedbackEntry(Member author, String title, String text) {
 		this.author = author;
 		this.title = title;
 		this.text = text;
-		this.timestamp = new Date();
+		this.timestamp = LocalDateTime.now();
 	}
-	
-	
+
 	public String getTitle() {
 		return this.title;
 	}
+
 	public void setTitle(String value) {
 		this.title = value;
 	}
+
 	public String getText() {
 		return this.text;
 	}
+
 	public void setText(String value) {
 		this.text = value;
 	}
-	public Date getTimestamp() {
+
+	public LocalDateTime getTimestamp() {
 		return this.timestamp;
 	}
-	public void setTimestamp(Date value) {
+
+	public void setTimestamp(LocalDateTime value) {
 		this.timestamp = value;
 	}
 }

@@ -1,6 +1,11 @@
 package domain;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.*;
+import java.time.*;
 
 public class Session {
 
@@ -12,24 +17,23 @@ public class Session {
 	private Collection<Announcement> announcements;
 	private String title;
 	private String speakerName;
-	private Date start;
-	private Date end;
+	private LocalDateTime start;
+	private LocalDateTime end;
 
-	
-	
-	public Session(Member organizer, String title, String speakerName, Date start, Date end, Location location) {
+	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
+			Location location) {
 		this.organizer = organizer;
-		this.title = title;
+		setTitle(title);
 		this.speakerName = speakerName;
 		this.start = start;
 		this.end = end;
-		this.location = location;
-		
-		//initialize collections
+		setLocation(location);
+
+		// initialize collections
 		media = new ArrayList<>();
 		feedbackEntries = new ArrayList<>();
-		announcements =  new ArrayList<>();
-		participants =  new ArrayList<>();
+		announcements = new ArrayList<>();
+		participants = new ArrayList<>();
 	}
 
 	public String getTitle() {
@@ -44,20 +48,36 @@ public class Session {
 		this.speakerName = value;
 	}
 
-	public Date getStart() {
+	public LocalDateTime getStart() {
 		return this.start;
 	}
 
-	public void setStart(Date value) {
+	public void setStart(LocalDateTime value) {
 		this.start = value;
 	}
 
-	public Date getEnd() {
+	public LocalDateTime getEnd() {
 		return this.end;
 	}
 
-	public void setEnd(Date value) {
+	public void setEnd(LocalDateTime value) {
 		this.end = value;
+	}
+
+	public void setTitle(String value) {
+		if (value == null || value.isEmpty())
+			throw new IllegalArgumentException("title invalid");
+		this.title = value;
+	}
+
+	public Location getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(Location value) {
+		if (value == null)
+			throw new IllegalArgumentException("location invalid");
+		this.location = value;
 	}
 
 }
