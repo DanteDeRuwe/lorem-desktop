@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import domain.SessionCalendar;
+import domain.*;
 
 public class SessionCalendarTest {
 	SessionCalendar cal;

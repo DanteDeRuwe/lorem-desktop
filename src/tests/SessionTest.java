@@ -10,9 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import domain.HeadAdmin;
 import domain.Location;
 import domain.Member;
+import domain.MemberType;
 import domain.Session;
 
 class SessionTest {
@@ -24,7 +24,7 @@ class SessionTest {
 
 	@BeforeAll
 	static void beforeAll() {
-		exampleHeadAdmin = new HeadAdmin("JohnDoe", "John", "Doe");
+		exampleHeadAdmin = new Member("JohnDoe", "John", "Doe", MemberType.HEADADMIN);
 		exampleStartDateTime = LocalDateTime.of(2020, 5, 5, 18, 0);
 		exampleEndDateTime = LocalDateTime.of(2020, 5, 5, 19, 0);
 		exampleLocation = new Location("GSCHBAUD", 50);
