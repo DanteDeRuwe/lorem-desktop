@@ -97,4 +97,12 @@ public class Session {
 		this.location = value;
 	}
 
+	public String getFullOrganizerName() {
+		return organizer.getFirstName() + " " + organizer.getLastName();
+	}
+
+	public int getLocationCapacity() {
+		return location.getCapacity();
+	}
+
 }
