@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,21 +31,21 @@ public class SessionCalendarTest {
 	}
 	
 	@ParameterizedTest
-	@NullAndEmptySource
-	public void createCalendar_NullOrEmptyStartDate_ThrowsIllegalArgumentException(LocalDate sDate) {
-		assertThrows(IllegalArgumentException.class, new SessionCalendar(sDate, endDate));
+	@NullSource
+	public void createCalendar_NullStartDate_ThrowsIllegalArgumentException(LocalDate sDate) {
+		assertThrows(IllegalArgumentException.class, () -> new SessionCalendar(sDate, endDate));
 	}
 	
 	@ParameterizedTest
-	@NullAndEmptySource
-	public void createCalendar_NullOrEmptyEndDate_ThrowsIllegalArgumentException(LocalDate eDate) {
-		assertThrows(IllegalArgumentException.class, new SessionCalendar(startDate, eDate));
+	@NullSource
+	public void createCalendar_NullEndDate_ThrowsIllegalArgumentException(LocalDate eDate) {
+		assertThrows(IllegalArgumentException.class, () -> new SessionCalendar(startDate, eDate));
 	}
 	
 	@ParameterizedTest
 	@CsvSource({"2020, 9, 20"})
 	public void createCalendar_EndDateBeforeStartDate_ThrowsIllegalArgumentException(int year, int month, int day) {
-		assertThrows(IllegalArgumentException.class, new SessionCalendar(startDate, LocalDate.of(year, month, day)));
+		assertThrows(IllegalArgumentException.class, () -> new SessionCalendar(startDate, LocalDate.of(year, month, day)));
 	}
 	
 	@Test
@@ -54,11 +55,11 @@ public class SessionCalendarTest {
 
 	@Test
 	public void createCalendar_CorrectStartDateAndEndDate_ReturnsCorrectEndDate() {
-		assertEquals(new SessionCalendar(startDate, endDate).getStartDate(), endDate);
+		assertEquals(new SessionCalendar(startDate, endDate).getEndDate(), endDate);
 	}
 
 	@Test
 	public void createCalendar_CorrectStartDateAndEndDate_ReturnsCorrectAcademicYear() {
-		assertEquals(new SessionCalendar(startDate, endDate).getAcademicYear(), aYear);
+		assertArrayEquals(new SessionCalendar(startDate, endDate).getAcademicYear(), aYear);
 	}
 }

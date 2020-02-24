@@ -11,6 +11,9 @@ public class SessionCalendar {
 
 	public SessionCalendar(LocalDate startDate, LocalDate endDate) {
 		// we also need to check if there are no already existing sessionCalendars which would overlap with this one
+		if (startDate == null || endDate == null) {
+			throw new IllegalArgumentException("startDate and endDdate must not be null.");
+		}
 		setAcademicYear(startDate.getYear(), endDate.getYear());
 		setStartDate(startDate);
 		setEndDate(endDate);
