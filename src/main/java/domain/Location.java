@@ -1,11 +1,10 @@
-package domain;
+package main.java.domain;
 
 public class Location {
 
 	private String id;
 	private int capacity;
-	
-	
+
 	public Location(String id, int capacity) {
 		this.id = id;
 		this.capacity = capacity;

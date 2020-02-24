@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import domain.Announcement;
-import domain.Member;
-import domain.MemberType;
+import main.java.domain.Announcement;
+import main.java.domain.Member;
+import main.java.domain.MemberType;
 
 class AnnouncementTest {
 
@@ -16,7 +16,7 @@ class AnnouncementTest {
 
 	@BeforeAll
 	static void beforeAll() {
-		exampleAuthor =  new Member("john.smith", "John", "Smith", MemberType.HEADADMIN);
+		exampleAuthor = new Member("john.smith", "John", "Smith", MemberType.HEADADMIN);
 	}
 
 	@ParameterizedTest

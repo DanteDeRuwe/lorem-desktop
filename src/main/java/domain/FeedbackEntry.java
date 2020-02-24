@@ -1,4 +1,4 @@
-package domain;
+package main.java.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +20,7 @@ public class FeedbackEntry {
 	public Member getAuthor() {
 		return this.author;
 	}
-	
+
 	public String getTitle() {
 		return this.title;
 	}

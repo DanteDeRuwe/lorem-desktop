@@ -1,17 +1,14 @@
-package domain;
+package main.java.domain;
 
-import java.lang.UnsupportedOperationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.time.*;
-import java.util.*;
 
 public class SessionCalendar {
 	private int[] academicYear;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private ArrayList<Session> sessions;
-	
+
 	public SessionCalendar(int[] academicYear, LocalDate startDate, LocalDate endDate) {
 		this.academicYear = academicYear;
 		this.startDate = startDate;
@@ -46,7 +43,5 @@ public class SessionCalendar {
 	public int[] getAcademicYear() {
 		return academicYear;
 	}
-	
-	
 
 }

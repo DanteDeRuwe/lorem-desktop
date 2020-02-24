@@ -10,10 +10,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
-import domain.Location;
-import domain.Member;
-import domain.MemberType;
-import domain.Session;
+import main.java.domain.Location;
+import main.java.domain.Member;
+import main.java.domain.MemberType;
+import main.java.domain.Session;
 
 class SessionTest {
 

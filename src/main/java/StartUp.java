@@ -1,6 +1,5 @@
-package main;
+package main.java;
 
-import gui.Gui;
 import javafx.application.Application;
 
 public class StartUp {

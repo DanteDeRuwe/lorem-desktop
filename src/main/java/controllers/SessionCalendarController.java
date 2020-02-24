@@ -1,13 +1,13 @@
-package controllers;
+package main.java.controllers;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.Member;
-import domain.Session;
-import domain.SessionCalendar;
+import main.java.domain.Member;
+import main.java.domain.Session;
+import main.java.domain.SessionCalendar;
 
 public class SessionCalendarController {
 

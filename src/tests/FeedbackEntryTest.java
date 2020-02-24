@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-import domain.FeedbackEntry;
-import domain.Member;
-import domain.MemberType;
+import main.java.domain.FeedbackEntry;
+import main.java.domain.Member;
+import main.java.domain.MemberType;
 
 class FeedbackEntryTest {
 
@@ -27,7 +27,7 @@ class FeedbackEntryTest {
 	void createFeedbackEntry_EmptyOrNullTitle_ThrowIllegalArgumentException(String title) {
 		assertThrows(IllegalArgumentException.class, () -> new FeedbackEntry(exampleAuthor, title, exampleText));
 	}
-	
+
 	@ParameterizedTest
 	@NullAndEmptySource
 	void createFeedbackEntry_EmptyOrNullText_ThrowIllegalArgumentException(String text) {

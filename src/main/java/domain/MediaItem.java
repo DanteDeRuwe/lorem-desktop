@@ -1,4 +1,4 @@
-package domain;
+package main.java.domain;
 
 public class MediaItem {
 
@@ -15,5 +15,5 @@ public class MediaItem {
 	public void setUrl(String value) {
 		this.url = value;
 	}
-	
+
 }

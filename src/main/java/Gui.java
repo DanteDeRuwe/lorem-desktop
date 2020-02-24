@@ -1,4 +1,4 @@
-package gui;
+package main.java;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ public class Gui extends Application {
 
 	@Override
 	public void init() throws Exception {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../fxml/Main.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
 		rootNode = fxmlLoader.load();
 	}
 
