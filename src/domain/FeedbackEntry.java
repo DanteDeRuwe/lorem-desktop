@@ -1,27 +1,33 @@
 package domain;
 
 import java.time.LocalDateTime;
-import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class FeedbackEntry {
 
-	private Member author;
+	private final Member author;
+	private final LocalDateTime timestamp;
 	private String title;
 	private String text;
-	private LocalDateTime timestamp;
 
 	public FeedbackEntry(Member author, String title, String text) {
 		this.author = author;
-		this.title = title;
-		this.text = text;
+		setTitle(title);
+		setText(text);
 		this.timestamp = LocalDateTime.now();
 	}
 
+	public Member getAuthor() {
+		return this.author;
+	}
+	
 	public String getTitle() {
 		return this.title;
 	}
 
 	public void setTitle(String value) {
+		if (value == null || value.trim().isEmpty())
+			throw new IllegalArgumentException("title null or empty");
 		this.title = value;
 	}
 
@@ -30,6 +36,8 @@ public class FeedbackEntry {
 	}
 
 	public void setText(String value) {
+		if (value == null || value.trim().isEmpty())
+			throw new IllegalArgumentException("text null or empty");
 		this.text = value;
 	}
 
@@ -37,7 +45,10 @@ public class FeedbackEntry {
 		return this.timestamp;
 	}
 
-	public void setTimestamp(LocalDateTime value) {
-		this.timestamp = value;
+	@Override
+	public String toString() {
+		return String.format("%s%n%s%n%s%n%s", getTitle(), getAuthor().getLastName() + getAuthor().getFirstName(),
+				getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), text);
 	}
+
 }

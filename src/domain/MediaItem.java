@@ -3,10 +3,9 @@ package domain;
 public class MediaItem {
 
 	private String url;
-	
-	
+
 	public MediaItem(String url) {
-		this.url = url;
+		setUrl(url);
 	}
 
 	public String getUrl() {
@@ -16,4 +15,5 @@ public class MediaItem {
 	public void setUrl(String value) {
 		this.url = value;
 	}
+	
 }

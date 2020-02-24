@@ -9,10 +9,10 @@ public class Session {
 
 	private final Member organizer;
 	private Collection<Member> participants;
-	private Location location;
 	private Collection<MediaItem> media;
 	private Collection<FeedbackEntry> feedbackEntries;
 	private Collection<Announcement> announcements;
+	private Location location;
 	private String title;
 	private String speakerName;
 	private LocalDateTime start;
@@ -41,6 +41,25 @@ public class Session {
 		Duration durationBetween = Duration.between(getStart(), getEnd());
 		Duration minimumPeriod = Duration.ofMinutes(30);
 		return durationBetween.compareTo(minimumPeriod) >= 0;
+	}
+
+	public void addParticipant(Member participant) {
+		/*
+		 * TODO: check maximum capacity of location
+		 */
+		participants.add(participant);
+	}
+
+	public void addMediaItem(MediaItem mediaItem) {
+		media.add(mediaItem);
+	}
+
+	public void addAnnouncement(Announcement announcement) {
+		announcements.add(announcement);
+	}
+
+	public void addFeedbackEntry(FeedbackEntry feedbackEntry) {
+		feedbackEntries.add(feedbackEntry);
 	}
 
 	public String getTitle() {
