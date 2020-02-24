@@ -1,11 +1,15 @@
-package domain;
+package controllers;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.*;
 
-public class DomainController {
+import domain.Member;
+import domain.Session;
+import domain.SessionCalendar;
+
+public class SessionCalendarController {
 
 	/**
 	 * Gives an overview of all Sessions in current SessionCalendar
