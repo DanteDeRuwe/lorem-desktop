@@ -9,11 +9,13 @@ public class SessionCalendar {
 	private LocalDate endDate;
 	private ArrayList<Session> sessions;
 
-	public SessionCalendar(int[] academicYear, LocalDate startDate, LocalDate endDate) {
-		setAcademicYear(academicYear);
-		this.startDate = startDate;
-		this.endDate = endDate;
+	public SessionCalendar(LocalDate startDate, LocalDate endDate) {
+		// we also need to check if there are no already existing sessionCalendars which would overlap with this one
+		setAcademicYear(startDate.getYear(), endDate.getYear());
+		setStartDate(startDate);
+		setEndDate(endDate);
 		sessions = new ArrayList<>();
+		// we also need to add any pre-existing sessions from the database for this academic year
 	}
 
 	public LocalDate getStartDate() {
@@ -21,6 +23,9 @@ public class SessionCalendar {
 	}
 
 	public void setStartDate(LocalDate startDate) {
+		if (startDate == null ) {
+			throw new IllegalArgumentException("the start date of the calendar is null");
+		}
 		this.startDate = startDate;
 	}
 
@@ -29,6 +34,9 @@ public class SessionCalendar {
 	}
 
 	public void setEndDate(LocalDate endDate) {
+		if (startDate == null) {
+			throw new IllegalArgumentException("the end date of the calendar is null");
+		}
 		this.endDate = endDate;
 	}
 
@@ -39,19 +47,30 @@ public class SessionCalendar {
 	public void setSessions(ArrayList<Session> sessions) {
 		this.sessions = sessions;
 	}
+	
+	public void addSession(Session session) {
+		this.sessions.add(session);
+	}
 
 	public int[] getAcademicYear() {
 		return academicYear;
 	}
 	
-	private void setAcademicYear(int[] acYear) {
-		if (acYear.length != 2) {
-			throw new IllegalArgumentException("An academic year must be an array with exactly two integers inside.");
+	private void setAcademicYear(int startYear, int endYear) {
+		
+		if (startYear < 0 || endYear < 0) {
+			throw new IllegalArgumentException("The start and end years of an academic year must be positive");
 		}
-		if (acYear[1] != acYear[0] + 1) {
-			throw new IllegalArgumentException("The second year of the academic year must be exactly one higher than the first year.");
+		// no need to check for null, because an int is a primitive and can't be null
+		
+		if (endYear != startYear + 1) {
+			throw new IllegalArgumentException("Academic years must start and end in consecutive years(e.g if it starts in 2020, it must end in 2021)");
 		}
-		this.academicYear = acYear;
+		
+		int[] academicYear = new int[2];
+		academicYear[0] = startYear;
+		academicYear[1] = endYear;
+		this.academicYear = academicYear;
 	}
 	
 	
