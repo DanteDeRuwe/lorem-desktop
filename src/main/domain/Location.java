@@ -1,4 +1,4 @@
-package pws2.domain;
+package main.domain;
 
 public class Location {
 

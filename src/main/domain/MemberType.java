@@ -1,4 +1,4 @@
-package pws2.domain;
+package main.domain;
 
 public enum MemberType {
 	USER, ADMIN, HEADADMIN

@@ -1,4 +1,4 @@
-package pws2.domain;
+package test.domain;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
+
+import main.domain.SessionCalendar;
 
 public class SessionCalendarTest {
 	static LocalDate startDate;
@@ -25,25 +27,26 @@ public class SessionCalendarTest {
 		aYear[0] = startDate.getYear();
 		aYear[1] = endDate.getYear();
 	}
-	
+
 	@ParameterizedTest
 	@NullSource
 	public void createCalendar_NullStartDate_ThrowsIllegalArgumentException(LocalDate sDate) {
 		assertThrows(IllegalArgumentException.class, () -> new SessionCalendar(sDate, endDate));
 	}
-	
+
 	@ParameterizedTest
 	@NullSource
 	public void createCalendar_NullEndDate_ThrowsIllegalArgumentException(LocalDate eDate) {
 		assertThrows(IllegalArgumentException.class, () -> new SessionCalendar(startDate, eDate));
 	}
-	
+
 	@ParameterizedTest
-	@CsvSource({"2020, 9, 20"})
+	@CsvSource({ "2020, 9, 20" })
 	public void createCalendar_EndDateBeforeStartDate_ThrowsIllegalArgumentException(int year, int month, int day) {
-		assertThrows(IllegalArgumentException.class, () -> new SessionCalendar(startDate, LocalDate.of(year, month, day)));
+		assertThrows(IllegalArgumentException.class,
+				() -> new SessionCalendar(startDate, LocalDate.of(year, month, day)));
 	}
-	
+
 	@Test
 	public void createCalendar_CorrectStartDateAndEndDate_ReturnsCorrectStartDate() {
 		assertEquals(new SessionCalendar(startDate, endDate).getStartDate(), startDate);

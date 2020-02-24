@@ -10,11 +10,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="session" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.SessionController">
    <children>
       <GridPane prefHeight="535.0" prefWidth="825.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -48,14 +45,7 @@
                 <content>
                   <AnchorPane id="Content" minHeight="-1.0" minWidth="200.0" prefHeight="532.0" prefWidth="267.0">
                     <children>
-                      <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false">
-                                 <textFill>
-                            <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
-                                 </textFill>
-                                 <font>
-                            <Font size="18.0" fx:id="x1" />
-                                 </font>
-                              </Label>
+                      <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false" />
                     </children>
                   </AnchorPane>
                 </content>

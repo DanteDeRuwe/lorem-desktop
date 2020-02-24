@@ -1,4 +1,4 @@
-package pws2.domain;
+package main.domain;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

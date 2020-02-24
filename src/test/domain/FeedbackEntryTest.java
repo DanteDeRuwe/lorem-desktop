@@ -1,10 +1,14 @@
-package pws2.domain;
+package test.domain;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+
+import main.domain.FeedbackEntry;
+import main.domain.Member;
+import main.domain.MemberType;
 
 class FeedbackEntryTest {
 
