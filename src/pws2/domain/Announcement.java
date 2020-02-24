@@ -1,34 +1,24 @@
-package main.java.domain;
+package pws2.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class FeedbackEntry {
+public class Announcement {
 
 	private final Member author;
 	private final LocalDateTime timestamp;
-	private String title;
 	private String text;
+	private String title;
 
-	public FeedbackEntry(Member author, String title, String text) {
+	public Announcement(Member author, String text, String title) {
 		this.author = author;
-		setTitle(title);
 		setText(text);
+		setTitle(title);
 		this.timestamp = LocalDateTime.now();
 	}
 
 	public Member getAuthor() {
 		return this.author;
-	}
-
-	public String getTitle() {
-		return this.title;
-	}
-
-	public void setTitle(String value) {
-		if (value == null || value.trim().isEmpty())
-			throw new IllegalArgumentException("title null or empty");
-		this.title = value;
 	}
 
 	public String getText() {
@@ -39,6 +29,14 @@ public class FeedbackEntry {
 		if (value == null || value.trim().isEmpty())
 			throw new IllegalArgumentException("text null or empty");
 		this.text = value;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String value) {
+		this.title = value;
 	}
 
 	public LocalDateTime getTimestamp() {

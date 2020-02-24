@@ -1,14 +1,10 @@
-package tests;
+package pws2.domain;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-
-import main.java.domain.Announcement;
-import main.java.domain.Member;
-import main.java.domain.MemberType;
 
 class AnnouncementTest {
 

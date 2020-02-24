@@ -1,4 +1,4 @@
-package tests;
+package pws2.domain;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -9,11 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
-
-import main.java.domain.Location;
-import main.java.domain.Member;
-import main.java.domain.MemberType;
-import main.java.domain.Session;
 
 class SessionTest {
 

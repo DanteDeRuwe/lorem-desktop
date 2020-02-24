@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="600.0" prefWidth="900.0" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -24,7 +23,7 @@
           <items>
             <MenuItem mnemonicParsing="false" text="Preferences…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" text="Quit" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Account">
@@ -70,7 +69,7 @@
         <tabs>
           <Tab closable="false" text="Sessies">
                <content>
-                  <fx:include source="Sessie.fxml" />
+                  <fx:include source="Sessions.fxml" />
                </content>
           </Tab>
           <Tab closable="false" text="Kalender">
@@ -81,4 +80,4 @@
         </tabs>
       </TabPane>
   </children>
-</VBox>
+</fx:root>

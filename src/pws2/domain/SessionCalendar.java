@@ -1,4 +1,4 @@
-package main.java.domain;
+package pws2.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
