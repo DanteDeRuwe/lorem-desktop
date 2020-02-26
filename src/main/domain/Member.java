@@ -39,4 +39,8 @@ public class Member {
 		this.lastName = value;
 	}
 
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+
 }

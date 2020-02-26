@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,6 +9,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="session" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.SessionController">
    <children>
@@ -21,16 +21,21 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <SplitPane dividerPositions="0.17, 0.5" focusTraversable="true" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <SplitPane dividerPositions="0.17, 0.7" focusTraversable="true" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
             <items>
               <AnchorPane maxWidth="300.0" minWidth="150.0" prefHeight="527.0" />
               <AnchorPane minWidth="300.0" prefHeight="533.0">
                      <children>
-                        <TableView minWidth="200.0" prefHeight="527.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="sessionTable" minWidth="200.0" prefHeight="527.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn minWidth="30.0" prefWidth="128.0" text="Sessie" />
-                              <TableColumn minWidth="30.0" prefWidth="204.0" text="Info" />
-                            <TableColumn minWidth="30.0" prefWidth="60.0" text="Datum" />
+                            <TableColumn fx:id="sessionTitleCol" minWidth="30.0" text="Titel" />
+                            <TableColumn fx:id="sessionDateCol" minWidth="30.0" text="Datum" />
+                            <TableColumn fx:id="sessionStartCol" minWidth="30.0" text="Begin" />
+                            <TableColumn fx:id="sessionEndCol" minWidth="30.0" text="Einde" />
+                            <TableColumn fx:id="sessionOrganizerCol" minWidth="30.0" text="Organisator" />
+                            <TableColumn fx:id="sessionLocationCol" minWidth="30.0" text="Locatie" />
+                            <TableColumn fx:id="sessionSpeakerCol" minWidth="30.0" text="Spreker" />
+                              
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -41,15 +46,11 @@
                         <Insets />
                      </opaqueInsets>
               </AnchorPane>
-              <ScrollPane minWidth="200.0" prefHeight="527.0">
-                <content>
-                  <AnchorPane id="Content" minHeight="-1.0" minWidth="200.0" prefHeight="532.0" prefWidth="267.0">
+                  <AnchorPane minHeight="-1.0" minWidth="100.0" prefHeight="532.0">
                     <children>
-                      <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false" />
+                              <VBox fx:id="detailsBox" prefHeight="532.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                   </AnchorPane>
-                </content>
-              </ScrollPane>
             </items>
             </SplitPane>
          </children>

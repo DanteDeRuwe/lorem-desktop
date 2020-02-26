@@ -5,13 +5,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import main.services.Util;
+
 public class Session {
 
 	private final Member organizer;
-	private Collection<Member> participants;
-	private Collection<MediaItem> media;
-	private Collection<FeedbackEntry> feedbackEntries;
-	private Collection<Announcement> announcements;
+	private Collection<Member> participants = new ArrayList<>();
+	private Collection<MediaItem> media = new ArrayList<>();
+	private Collection<FeedbackEntry> feedbackEntries = new ArrayList<>();
+	private Collection<Announcement> announcements = new ArrayList<>();
 	private Location location;
 	private String title;
 	private String speakerName;
@@ -20,6 +24,10 @@ public class Session {
 
 	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
 			Location location) {
+
+		if (!meetsMinimumPeriodRequirement(start, end))
+			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
+
 		this.organizer = organizer;
 		setTitle(title);
 		setSpeakerName(speakerName);
@@ -27,18 +35,11 @@ public class Session {
 
 		setStart(start);
 		setEnd(end);
-		if (!meetsMinimumPeriodRequirement())
-			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
 
-		// initialize collections
-		media = new ArrayList<>();
-		feedbackEntries = new ArrayList<>();
-		announcements = new ArrayList<>();
-		participants = new ArrayList<>();
 	}
 
-	private boolean meetsMinimumPeriodRequirement() {
-		Duration durationBetween = Duration.between(getStart(), getEnd());
+	private boolean meetsMinimumPeriodRequirement(LocalDateTime start, LocalDateTime end) {
+		Duration durationBetween = Duration.between(start, end);
 		Duration minimumPeriod = Duration.ofMinutes(30);
 		return durationBetween.compareTo(minimumPeriod) >= 0;
 	}
@@ -124,4 +125,47 @@ public class Session {
 		return location.getCapacity();
 	}
 
+	@Override
+	public String toString() {
+		return "Sessie: " + title + "\n" + "Start: " + start + "\n" + "Einde: " + end + "\n" + "Organisator: "
+				+ organizer.getFullName() + "\n" + "Locatie: " + location.getId() + "\n" + "Spreker: " + speakerName
+				+ "\n";
+	}
+
+	/*
+	 * properties for javafx
+	 * 
+	 */
+
+	public StringProperty titleProperty() {
+		return new SimpleStringProperty(title);
+	}
+
+	public StringProperty dateProperty() {
+
+		if (Util.isSameDay(start, end))
+			return new SimpleStringProperty(start.format(Util.DATEFORMATTER));
+		else
+			return new SimpleStringProperty(start.format(Util.DATEFORMATTER) + " - " + end.format(Util.DATEFORMATTER));
+	}
+
+	public StringProperty startProperty() {
+		return new SimpleStringProperty(start.format(Util.TIMEFORMATTER));
+	}
+
+	public StringProperty endProperty() {
+		return new SimpleStringProperty(end.format(Util.TIMEFORMATTER));
+	}
+
+	public StringProperty organizerProperty() {
+		return new SimpleStringProperty(organizer.getFullName());
+	}
+
+	public StringProperty speakerProperty() {
+		return new SimpleStringProperty(speakerName);
+	}
+
+	public StringProperty locationProperty() {
+		return new SimpleStringProperty(location.getId());
+	}
 }
