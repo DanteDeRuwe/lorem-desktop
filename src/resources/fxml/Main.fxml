@@ -52,12 +52,12 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField maxWidth="1.7976931348623157E308" minWidth="800.0" prefHeight="26.0" prefWidth="149.0" promptText="Search..." GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                  <TextField fx:id="searchBox" maxWidth="1.7976931348623157E308" minWidth="800.0" prefHeight="26.0" prefWidth="149.0" promptText="Search..." GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </TextField>
-                  <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Search" GridPane.columnIndex="1">
+                  <Button fx:id="searchButton" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Search" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="7.0" />
                      </GridPane.margin>
