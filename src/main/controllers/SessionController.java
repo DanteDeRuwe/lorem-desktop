@@ -69,4 +69,8 @@ public class SessionController {
 		return selectedSession;
 	}
 
+	public TableView<Session> getSessionTable() {
+		return sessionTable;
+	}
+
 }

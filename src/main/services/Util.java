@@ -16,6 +16,7 @@ public class Util {
 		return (one.getDayOfYear() == two.getDayOfYear() && one.getYear() == two.getYear());
 	}
 
+	private static LocalDateTime randomLocalDateTimeThisYearFromTomorrow() {
 	public static LocalDateTime[] randomStartStop() {
 		LocalDateTime start = randomLocalDateTimeThisYearFromTomorrow();
 		LocalDateTime stop = start.plusHours(ThreadLocalRandom.current().nextInt(1, 8));
