@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,7 +17,7 @@ import javafx.scene.layout.VBox;
 import main.domain.Session;
 import main.services.DummySessionProvider;
 
-public class SessionController implements Initializable {
+public class SessionController {
 
 	// seed 50 sessions for now
 	private final DummySessionProvider dummySessionProvider = new DummySessionProvider(50);
@@ -45,8 +46,8 @@ public class SessionController implements Initializable {
 
 	private Session selectedSession;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	@FXML
+	public void initialize() {
 
 		// Bind properties to table cells
 		sessionTitleCol.setCellValueFactory(new PropertyValueFactory<Session, String>("title"));
@@ -102,6 +103,10 @@ public class SessionController implements Initializable {
 	
 	public void refreshSessions() {
 		sessionTable.getItems().setAll(dummySessionProvider.getSessions());
+	}
+
+	public TableView<Session> getSessionTable() {
+		return sessionTable;
 	}
 
 }

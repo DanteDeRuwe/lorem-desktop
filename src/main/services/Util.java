@@ -17,7 +17,7 @@ public class Util {
 	}
 
 	public static LocalDateTime randomLocalDateTimeThisYearFromToday() {
-		long minDay = LocalDate.now().toEpochDay();
+		long minDay = LocalDate.now().plusDays(1).toEpochDay();
 		long maxDay = LocalDate.of(2020, 12, 31).toEpochDay();
 		long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 		LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
