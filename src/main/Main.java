@@ -24,6 +24,7 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		stage.setScene(new Scene(rootNode));
 		stage.setMaximized(true);
+		stage.setTitle("Lorem");
 		stage.show();
 	}
 
