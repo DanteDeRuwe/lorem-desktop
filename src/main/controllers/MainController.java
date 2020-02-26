@@ -7,7 +7,14 @@ public class MainController {
 	@FXML
 	private AnchorPane main;
 
-	public MainController() {
+	@FXML
+	SessionController sessionController;
+
+	@FXML
+	SessionCalendarController sessionCalendarController;
+
+	@FXML
+	private void initialize() {
 
 	}
 }

@@ -24,7 +24,7 @@ public class DummySessionProvider {
 	}
 
 	private void addRandomSession() {
-		LocalDateTime[] randomStartStop = Util.randomStartStopThisYear();
+		LocalDateTime[] randomStartStop = Util.randomStartStop();
 		Member organizer = dmp.getRandomOrganizer();
 		Location randomLocation = dlp.getRandomLocation();
 
