@@ -1,10 +1,12 @@
 package main.controllers;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,6 +33,15 @@ public class SessionController implements Initializable {
 
 	@FXML
 	private VBox detailsBox;
+	
+	@FXML
+	private Button newSessionBtn;
+	
+	@FXML
+	private VBox addSession;
+	
+	@FXML
+	private AddSessionController addSessionController;
 
 	private Session selectedSession;
 
@@ -56,6 +67,16 @@ public class SessionController implements Initializable {
 				displaySesionDetails();
 			}
 		});
+		
+		newSessionBtn.setVisible(false);
+		
+		newSessionBtn.setOnMouseClicked(x -> {
+			System.out.println(addSession);
+			detailsBox.getChildren().forEach(node -> node.setVisible(true));
+		});
+		
+		addSessionController.setSessionController(this);
+		
 
 	}
 
@@ -71,6 +92,16 @@ public class SessionController implements Initializable {
 
 	public Session getSelectedSession() {
 		return selectedSession;
+	}
+	
+	public void addSession(String organizer, String title, String speaker, LocalDateTime start, LocalDateTime end, String loc) {
+		
+		dummySessionProvider.addSession(organizer, title, speaker, start, end, loc);
+		System.out.println(dummySessionProvider.getSessions());
+	}
+	
+	public void refreshSessions() {
+		sessionTable.getItems().setAll(dummySessionProvider.getSessions());
 	}
 
 }

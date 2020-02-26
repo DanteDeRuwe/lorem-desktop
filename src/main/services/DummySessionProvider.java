@@ -1,11 +1,13 @@
 package main.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import main.domain.Location;
 import main.domain.Member;
+import main.domain.MemberType;
 import main.domain.Session;
 
 public class DummySessionProvider {
@@ -30,6 +32,13 @@ public class DummySessionProvider {
 
 		sessions.add(new Session(organizer, getRandomTitle(), getRandomSpeaker(), randomStartStop[0],
 				randomStartStop[1], randomLocation));
+	}
+	
+	public void addSession(String organizerStr, String title, String speaker, LocalDateTime start, LocalDateTime end, String locationStr) {
+		// this will all need to be redone; for now it's just a proof of concept.
+		Member organizer = new Member(organizerStr, organizerStr.split(" ")[0], organizerStr.split(" ")[1], MemberType.ADMIN);
+		Location location = new Location(locationStr, 20);
+		sessions.add(new Session(organizer, title, speaker, start, end, location));
 	}
 
 	private String getRandomTitle() {
