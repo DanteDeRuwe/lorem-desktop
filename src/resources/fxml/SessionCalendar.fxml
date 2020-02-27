@@ -3,4 +3,4 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane fx:id="sessionCalendar" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.SessionCalendarController" />
+<AnchorPane fx:id="sessionCalendar" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.SessionCalendarController" />
