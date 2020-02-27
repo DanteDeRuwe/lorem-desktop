@@ -12,7 +12,7 @@ module javag09 {
 	requires org.mockito;
 	requires org.junit.jupiter.params;
 
-	opens main.controllers to javafx.fxml;
+	opens gui.controllers to javafx.fxml;
 	opens main.domain to javafx.base;
 
 	exports main;
