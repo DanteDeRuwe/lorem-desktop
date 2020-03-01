@@ -16,14 +16,12 @@ public class Session {
 	private Collection<MediaItem> media = new ArrayList<>();
 	private Collection<FeedbackEntry> feedbackEntries = new ArrayList<>();
 	private Collection<Announcement> announcements = new ArrayList<>();
-	private Location location;
-	private String title;
-	private String speakerName;
-	private LocalDateTime start;
-	private LocalDateTime end;
+	private String location, title, speakerName;
+	private LocalDateTime start, end;
+	private int capacity;
 
 	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
-			Location location) {
+			String location, int capacity) {
 
 		if (!meetsMinimumPeriodRequirement(start, end))
 			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
@@ -32,10 +30,11 @@ public class Session {
 		setTitle(title);
 		setSpeakerName(speakerName);
 		setLocation(location);
+		
 
 		setStart(start);
 		setEnd(end);
-
+		setCapacity(capacity);
 	}
 
 	private boolean meetsMinimumPeriodRequirement(LocalDateTime start, LocalDateTime end) {
@@ -107,11 +106,11 @@ public class Session {
 		this.end = value;
 	}
 
-	public Location getLocation() {
+	public String getLocation() {
 		return this.location;
 	}
 
-	public void setLocation(Location value) {
+	public void setLocation(String value) {
 		if (value == null)
 			throw new IllegalArgumentException("location null");
 		this.location = value;
@@ -121,14 +120,18 @@ public class Session {
 		return organizer.getFirstName() + " " + organizer.getLastName();
 	}
 
-	public int getLocationCapacity() {
-		return location.getCapacity();
+	public int getCapacity() {
+		return this.capacity;
+	}
+	
+	public void setCapacity(int value) {
+		this.capacity = value;
 	}
 
 	@Override
 	public String toString() {
 		return "Sessie: " + title + "\n" + "Start: " + start + "\n" + "Einde: " + end + "\n" + "Organisator: "
-				+ organizer.getFullName() + "\n" + "Locatie: " + location.getId() + "\n" + "Spreker: " + speakerName
+				+ organizer.getFullName() + "\n" + "Locatie: " + location + "\n" + "Spreker: " + speakerName
 				+ "\n";
 	}
 
@@ -166,6 +169,6 @@ public class Session {
 	}
 
 	public StringProperty locationProperty() {
-		return new SimpleStringProperty(location.getId());
+		return new SimpleStringProperty(location);
 	}
 }

@@ -13,10 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import main.domain.Session;
-import main.services.DummySessionProvider;
 
 public class AddSessionController implements Initializable{
 	

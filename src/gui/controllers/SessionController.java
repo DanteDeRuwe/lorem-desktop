@@ -1,13 +1,9 @@
 package gui.controllers;
 
-import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,12 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import main.domain.Session;
-import main.services.DummySessionProvider;
 
 public class SessionController {
-
-	// seed 50 sessions for now
-	private final DummySessionProvider dummySessionProvider = new DummySessionProvider(50);
 
 	@FXML
 	private AnchorPane session;
@@ -59,7 +51,7 @@ public class SessionController {
 		sessionLocationCol.setCellValueFactory(new PropertyValueFactory<Session, String>("location"));
 
 		// fill in the table
-		sessionTable.getItems().setAll(dummySessionProvider.getSessions()); // dummy!
+		//TODO
 
 		// event listener for the selected row
 		sessionTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -96,13 +88,9 @@ public class SessionController {
 	}
 	
 	public void addSession(String organizer, String title, String speaker, LocalDateTime start, LocalDateTime end, String loc) {
-		
-		dummySessionProvider.addSession(organizer, title, speaker, start, end, loc);
-		System.out.println(dummySessionProvider.getSessions());
 	}
 	
 	public void refreshSessions() {
-		sessionTable.getItems().setAll(dummySessionProvider.getSessions());
 	}
 
 	public TableView<Session> getSessionTable() {
