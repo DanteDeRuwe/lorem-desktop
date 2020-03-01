@@ -2,12 +2,13 @@ package main.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SessionCalendar {
 	private int[] academicYear;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private ArrayList<Session> sessions;
+	private List<Session> sessions;
 
 	public SessionCalendar(LocalDate startDate, LocalDate endDate) {
 		// we also need to check if there are no already existing sessionCalendars which would overlap with this one
@@ -43,7 +44,7 @@ public class SessionCalendar {
 		this.endDate = endDate;
 	}
 
-	public ArrayList<Session> getSessions() {
+	public List<Session> getSessions() {
 		return sessions;
 	}
 
