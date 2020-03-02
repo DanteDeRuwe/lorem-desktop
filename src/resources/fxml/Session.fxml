@@ -51,7 +51,7 @@
                               <VBox fx:id="detailsBox" prefHeight="532.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Button fx:id="newSessionBtn" mnemonicParsing="false" text="Add New Session" />
-                              <fx:include fx:id="addSession" source="addSession.fxml" />
+                              <fx:include fx:id="addSession" source="AddSession.fxml" />
                            </children></VBox>
                     </children>
                   </AnchorPane>
