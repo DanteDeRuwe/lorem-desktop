@@ -12,12 +12,22 @@ public class MainController {
 
 	@FXML
 	private AnchorPane main;
+	
+	@FXML
+	private AnchorPane leftPane;
+	
+	@FXML
+	private AnchorPane centerPane;
+	
+	@FXML
+	private AnchorPane rightPane;
 
 	@FXML
 	private SessionController sessionController;
 
 	@FXML
 	public void initialize() {
+		//TODO: set default panes
 	}
 
 }
