@@ -13,10 +13,6 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		
-		//temporary (just for testing)
-		SessionDao sdao = new SessionDao();
-		sdao.addTestSession();
-		
 		Application.launch(args);
 	}
 

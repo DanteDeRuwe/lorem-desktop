@@ -29,6 +29,8 @@ public class Session {
 	private LocalDateTime startTime, endTime;
 	private int capacity;
 
+	public Session() {};
+	
 	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
 			String location, int capacity) {
 
