@@ -9,12 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.services.Util;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Session.findByTitle",
+			query = "select s from Session s where s.title = :sessionTitle")
+})
 public class Session {
 
 	@Id
