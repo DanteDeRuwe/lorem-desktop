@@ -5,24 +5,34 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.services.Util;
 
+@Entity
 public class Session {
 
-	private final Member organizer;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	private Member organizer;
 	private Collection<Member> participants = new ArrayList<>();
 	private Collection<MediaItem> media = new ArrayList<>();
 	private Collection<FeedbackEntry> feedbackEntries = new ArrayList<>();
 	private Collection<Announcement> announcements = new ArrayList<>();
 	private String location, title, speakerName;
-	private LocalDateTime start, end;
+	private LocalDateTime startTime, endTime;
 	private int capacity;
 
 	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
 			String location, int capacity) {
 
+		this.organizer = null;
 		if (!meetsMinimumPeriodRequirement(start, end))
 			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
 
@@ -81,7 +91,7 @@ public class Session {
 	}
 
 	public LocalDateTime getStart() {
-		return this.start;
+		return this.startTime;
 	}
 
 	public void setStart(LocalDateTime value) {
@@ -91,11 +101,11 @@ public class Session {
 			throw new IllegalArgumentException("start in past");
 		if (value.compareTo(LocalDateTime.now().plusHours(24)) < 0)
 			throw new IllegalArgumentException("start less than 1 day in future");
-		this.start = value;
+		this.startTime = value;
 	}
 
 	public LocalDateTime getEnd() {
-		return this.end;
+		return this.endTime;
 	}
 
 	public void setEnd(LocalDateTime value) {
@@ -103,7 +113,7 @@ public class Session {
 			throw new IllegalArgumentException("end null");
 		if (value.compareTo(LocalDateTime.now()) < 0)
 			throw new IllegalArgumentException("end in past");
-		this.end = value;
+		this.endTime = value;
 	}
 
 	public String getLocation() {
@@ -130,7 +140,7 @@ public class Session {
 
 	@Override
 	public String toString() {
-		return "Sessie: " + title + "\n" + "Start: " + start + "\n" + "Einde: " + end + "\n" + "Organisator: "
+		return "Sessie: " + title + "\n" + "Start: " + startTime + "\n" + "Einde: " + endTime + "\n" + "Organisator: "
 				+ organizer.getFullName() + "\n" + "Locatie: " + location + "\n" + "Spreker: " + speakerName
 				+ "\n";
 	}
@@ -146,18 +156,18 @@ public class Session {
 
 	public StringProperty dateProperty() {
 
-		if (Util.isSameDay(start, end))
-			return new SimpleStringProperty(start.format(Util.DATEFORMATTER));
+		if (Util.isSameDay(startTime, endTime))
+			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER));
 		else
-			return new SimpleStringProperty(start.format(Util.DATEFORMATTER) + " - " + end.format(Util.DATEFORMATTER));
+			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
 	}
 
 	public StringProperty startProperty() {
-		return new SimpleStringProperty(start.format(Util.TIMEFORMATTER));
+		return new SimpleStringProperty(startTime.format(Util.TIMEFORMATTER));
 	}
 
 	public StringProperty endProperty() {
-		return new SimpleStringProperty(end.format(Util.TIMEFORMATTER));
+		return new SimpleStringProperty(endTime.format(Util.TIMEFORMATTER));
 	}
 
 	public StringProperty organizerProperty() {

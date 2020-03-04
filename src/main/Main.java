@@ -5,12 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import persistence.SessionDao;
 
 public class Main extends Application {
 
 	private Parent rootNode;
 
 	public static void main(String[] args) {
+		
+		//temporary (just for testing)
+		SessionDao sdao = new SessionDao();
+		sdao.addTestSession();
+		
 		Application.launch(args);
 	}
 

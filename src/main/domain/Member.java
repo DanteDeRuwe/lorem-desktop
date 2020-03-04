@@ -1,6 +1,8 @@
 package main.domain;
 
-public class Member {
+import java.io.Serializable;
+
+public class Member implements Serializable{
 
 	private String username;
 	private String firstName;
