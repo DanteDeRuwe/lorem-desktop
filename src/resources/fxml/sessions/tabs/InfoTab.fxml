@@ -10,12 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="418.0" prefWidth="330.0">
+      <VBox prefHeight="418.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Lorem Ipsum Event">
+            <Label fx:id="sessionTitle" text="Lorem Ipsum Event">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -25,7 +24,7 @@
             </Label>
             <HBox>
                <children>
-                  <Label text="datum" textFill="#a4a4a4">
+                  <Label fx:id="sessionDate" text="datum" textFill="#a4a4a4">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
@@ -35,7 +34,7 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="uur" textFill="#a4a4a4">
+                  <Label fx:id="sessionTime" text="uur" textFill="#a4a4a4">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
@@ -45,7 +44,7 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="locatie" textFill="#a4a4a4">
+                  <Label fx:id="sessionLocation" text="locatie" textFill="#a4a4a4">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
@@ -60,7 +59,7 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label layoutX="134.0" layoutY="10.0" text="Spreker" textFill="#a4a4a4">
+                  <Label fx:id="sessionSpeaker" layoutX="134.0" layoutY="10.0" text="Spreker" textFill="#a4a4a4">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
@@ -75,7 +74,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </Separator>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="300.0">
+            <Text fx:id="sessionDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="300.0">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -87,12 +86,12 @@
             </Separator>
             <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="300.0">
                <children>
-                  <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="editSessionButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="deleteSessionButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>

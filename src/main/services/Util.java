@@ -1,17 +1,11 @@
 package main.services;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
-import gui.controllers.MainController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 public class Util {
 
@@ -34,22 +28,6 @@ public class Util {
 
 	public static <T> T randomChoice(T[] arr) {
 		return arr[ThreadLocalRandom.current().nextInt(0, arr.length)];
-	}
-
-	public static void bindAnchorPane(String fxmlFile, Pane parent) {
-		try {
-			AnchorPane child = FXMLLoader
-					.<AnchorPane>load(MainController.class.getResource("/resources/fxml/" + fxmlFile));
-
-			parent.getChildren().setAll(child);
-			AnchorPane.setBottomAnchor(child, 0.0d);
-			AnchorPane.setTopAnchor(child, 0.0d);
-			AnchorPane.setLeftAnchor(child, 0.0d);
-			AnchorPane.setRightAnchor(child, 0.0d);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	// helpers

@@ -5,10 +5,16 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import main.services.Util;
+import main.domain.facades.Facade;
+import main.domain.facades.MemberFacade;
+import main.domain.facades.SessionCalendarFacade;
+import main.services.GuiUtil;
 
-public class MainController {
+public class MainController extends GuiContoller {
 
+	private Facade sessionFacade, memberFacade, sessionCalendarFacade;
+
+	// fxml
 	@FXML
 	private AnchorPane main;
 
@@ -26,14 +32,19 @@ public class MainController {
 	private AnchorPane leftPane, centerPane, rightPane;
 
 	@FXML
-	private SessionController sessionController;
-
-	@FXML
 	public void initialize() {
 
-		// bind panes
-		Util.bindAnchorPane("sessions/SessionSideBar.fxml", leftPane);
-		Util.bindAnchorPane("sessions/DetailsPane.fxml", rightPane);
+		// initialize facades
+		sessionCalendarFacade = new SessionCalendarFacade();
+		memberFacade = new MemberFacade();
+
+		// bind initial panes
+		GuiUtil.bindAnchorPane("sessions/SessionSideBar.fxml", leftPane, sessionCalendarFacade);
+		GuiUtil.bindAnchorPane("sessions/DetailsPane.fxml", rightPane, sessionCalendarFacade);
+
+		// Make tableview
+		// TODO
+
 	}
 
 }
