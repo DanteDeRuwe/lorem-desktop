@@ -4,13 +4,12 @@ open module javag09 {
 	exports main.services;
 	exports gui.controllers;
 	exports main;
-	
 
 	requires javafx.fxml;
 	requires javafx.base;
 	requires javafx.controls;
-	requires transitive javafx.graphics;
-	
+	requires javafx.graphics;
+	requires com.jfoenix;
 
 	requires java.persistence;
 	requires java.instrument;
