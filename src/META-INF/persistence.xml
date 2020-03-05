@@ -7,6 +7,7 @@
 		transaction-type="RESOURCE_LOCAL">
 		<class>main.domain.Session</class>
 		<class>main.domain.Member</class>
+		<class>main.domain.SessionCalendar</class>
 
 
 		<properties>
