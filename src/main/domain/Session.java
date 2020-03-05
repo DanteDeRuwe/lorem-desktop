@@ -26,10 +26,12 @@ public class Session {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
 	@ManyToOne
     @JoinColumn(name="member_id", nullable=false)
 	private Member organizer;
+	@ManyToOne
+    @JoinColumn(name="calendar_id", nullable=false)
+	private SessionCalendar calendar;
 	private String location, title, speakerName;
 	private LocalDateTime startTime, endTime;
 	private int capacity;
@@ -141,6 +143,10 @@ public class Session {
 
 	public void setCapacity(int value) {
 		this.capacity = value;
+	}
+	
+	public void setCalendar(SessionCalendar cal) {
+		this.calendar = cal;
 	}
 
 	@Override

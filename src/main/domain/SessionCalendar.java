@@ -1,14 +1,28 @@
 package main.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class SessionCalendar {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long calendar_id;
 	private int[] academicYear;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private List<Session> sessions;
+	@OneToMany
+	private Set<Session> sessions;
+	
+	public SessionCalendar() { }
 
 	public SessionCalendar(LocalDate startDate, LocalDate endDate) {
 		// we also need to check if there are no already existing sessionCalendars which
@@ -19,9 +33,7 @@ public class SessionCalendar {
 		setAcademicYear(startDate.getYear(), endDate.getYear());
 		setStartDate(startDate);
 		setEndDate(endDate);
-		sessions = new ArrayList<>();
-		// we also need to add any pre-existing sessions from the database for this
-		// academic year
+		sessions = new HashSet<>();
 	}
 
 	public LocalDate getStartDate() {
@@ -46,11 +58,11 @@ public class SessionCalendar {
 		this.endDate = endDate;
 	}
 
-	public List<Session> getSessions() {
+	public Set<Session> getSessions() {
 		return sessions;
 	}
 
-	public void setSessions(ArrayList<Session> sessions) {
+	public void setSessions(HashSet<Session> sessions) {
 		this.sessions = sessions;
 	}
 

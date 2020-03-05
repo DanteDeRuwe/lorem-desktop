@@ -1,6 +1,7 @@
 package main.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -31,6 +32,8 @@ public class Member implements Serializable{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.memberType = memberType;
+		
+		sessions = new HashSet<Session>();
 	}
 
 	public String getUsername() {
@@ -59,6 +62,10 @@ public class Member implements Serializable{
 
 	public String getFullName() {
 		return firstName + " " + lastName;
+	}
+	
+	public void addSession(Session session) {
+		sessions.add(session);
 	}
 
 }
