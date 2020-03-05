@@ -6,6 +6,7 @@
 	<persistence-unit name="projectPU"
 		transaction-type="RESOURCE_LOCAL">
 		<class>main.domain.Session</class>
+		<class>main.domain.Member</class>
 
 
 		<properties>
@@ -18,7 +19,7 @@
 				value="9BecD@6939Bd" />
 			<!-- EclipseLink should create the database schema automatically -->
 			<property name="eclipselink.ddl-generation"
-				value="create-or-extend-tables" />
+				value="none" />
 			<property name="eclipselink.ddl-generation.output-mode"
 				value="database" />
 

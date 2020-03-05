@@ -1,14 +1,30 @@
 package main.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Member implements Serializable{
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long member_id;
 	private String username;
 	private String firstName;
 	private String lastName;
+	
+	@OneToMany
+	private Set<Session> sessions;
 
 	private MemberType memberType;
+	
+	public Member() { };
 
 	public Member(String username, String firstName, String lastName, MemberType memberType) {
 		this.username = username;
