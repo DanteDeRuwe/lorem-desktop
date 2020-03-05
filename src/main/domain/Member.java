@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Member implements Serializable{
+public class Member{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,8 @@ public class Member implements Serializable{
 	private String firstName;
 	private String lastName;
 	
-	@OneToMany
+	@OneToMany(
+			mappedBy = "organizer")
 	private Set<Session> sessions;
 
 	private MemberType memberType;

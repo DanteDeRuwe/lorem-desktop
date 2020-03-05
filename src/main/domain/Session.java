@@ -36,7 +36,7 @@ public class Session {
 	private LocalDateTime startTime, endTime;
 	private int capacity;
 
-	private List<Member> participants = new ArrayList<>();
+//	private List<Member> participants = new ArrayList<>();
 	private List<MediaItem> media = new ArrayList<>();
 	private List<FeedbackEntry> feedbackEntries = new ArrayList<>();
 	private List<Announcement> announcements = new ArrayList<>();
