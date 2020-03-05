@@ -1,59 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="main" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MainController">
+<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MainController">
    <children>
-      <VBox prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <children>
-          <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-            <menus>
-              <Menu fx:id="sessionMenu" mnemonicParsing="false" text="Sessies">
-                <items>
-                  <MenuItem fx:id="newSessionMenuItem" mnemonicParsing="false" text="Nieuw" />
-                  <MenuItem fx:id="editSessionMenuItem" mnemonicParsing="false" text="Beheer" />
-                </items>
-              </Menu>
-              <Menu fx:id="calendarMenu" mnemonicParsing="false" text="Kalenders">
-                <items>
-                  <MenuItem mnemonicParsing="false" text="Nieuw" />
-                        <MenuItem fx:id="openCalendarMenuItem" mnemonicParsing="false" text="Open" />
-                        <MenuItem fx:id="editCalendarMenuItem" mnemonicParsing="false" text="Beheer" />
-                </items>
-              </Menu>
-                  <Menu fx:id="memberMenu" mnemonicParsing="false" text="Gebruikers">
-                     <items>
-                        <MenuItem fx:id="newMemberMenuItem" mnemonicParsing="false" text="Nieuw" />
-                        <MenuItem fx:id="editMemberMenuItem" mnemonicParsing="false" text="Beheer" />
-                     </items>
-                  </Menu>
-                  <Menu fx:id="accountMenu" mnemonicParsing="false" text="Mijn Account">
-                    <items>
-                      <MenuItem fx:id="logOutMenuItem" mnemonicParsing="false" text="Log Uit" />
-                      <MenuItem fx:id="editAccountMenuItem" mnemonicParsing="false" text="Beheer" />
-                    </items>
-                  </Menu>
-                  <Menu fx:id="statsMenu" mnemonicParsing="false" text="Statistieken" />
-                  <Menu fx:id="aboutMenu" mnemonicParsing="false" text="Over Lorem" />
-            </menus>
-          </MenuBar>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" layoutX="-6.0" prefHeight="575.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <items>
-                        <AnchorPane fx:id="leftPane" maxWidth="300.0" minWidth="0.0" prefWidth="200.0" />
-                        <AnchorPane fx:id="middlePane" minWidth="300.0" />
-                        <AnchorPane fx:id="rightPane" minWidth="100.0" prefWidth="400.0" />
-                     </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-        </children>
-      </VBox>
+      <JFXTabPane prefHeight="480.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+         <Tab text="Kalender">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" >
+                  	<children>
+                        <fx:include source="calendar/CalendarScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                     </children>
+                  </AnchorPane>
+               </content>
+               </Tab>
+            <Tab text="Sessies">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" >
+                     <children>
+                        <fx:include source="sessions/SessionScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            
+            <Tab text="Gebruikers">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" >
+                  <children>
+                        <fx:include source="users/UserScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                     </children></AnchorPane>
+               </content></Tab>
+            <Tab text="Mijn Account">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content></Tab>
+            <Tab text="Statistieken">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content></Tab>
+            <Tab text="Over Lorem">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content></Tab>
+         </tabs>
+      </JFXTabPane>
    </children>
 </AnchorPane>

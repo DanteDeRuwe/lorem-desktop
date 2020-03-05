@@ -1,14 +1,5 @@
 package main.services;
 
-import java.io.IOException;
-
-import gui.controllers.GuiContoller;
-import gui.controllers.MainController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import main.domain.facades.Facade;
-
 public class GuiUtil {
 
 	/**
@@ -19,25 +10,25 @@ public class GuiUtil {
 	 * @param parent   : the parent
 	 * @param facade   : the facade to inject in the child
 	 */
-	public static void bindAnchorPane(String fxmlFile, Pane parent, Facade facade) {
-		try {
 
-			FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/resources/fxml/" + fxmlFile));
-
-			AnchorPane child = (AnchorPane) loader.load();
-
-			loader.<GuiContoller>getController().injectFacade(facade);
-
-			parent.getChildren().setAll(child);
-			AnchorPane.setBottomAnchor(child, 0.0d);
-			AnchorPane.setTopAnchor(child, 0.0d);
-			AnchorPane.setLeftAnchor(child, 0.0d);
-			AnchorPane.setRightAnchor(child, 0.0d);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-
-		}
-	}
+	/*
+	 * public static void bindAnchorPane(String fxmlFile, Pane parent, Facade
+	 * facade) { try {
+	 * 
+	 * FXMLLoader loader = new
+	 * FXMLLoader(MainController.class.getResource("/resources/fxml/" + fxmlFile));
+	 * 
+	 * AnchorPane child = (AnchorPane) loader.load();
+	 * 
+	 * loader.<GuiContoller>getController().injectFacade(facade);
+	 * 
+	 * parent.getChildren().setAll(child); AnchorPane.setBottomAnchor(child, 0.0d);
+	 * AnchorPane.setTopAnchor(child, 0.0d); AnchorPane.setLeftAnchor(child, 0.0d);
+	 * AnchorPane.setRightAnchor(child, 0.0d);
+	 * 
+	 * } catch (IOException e) { e.printStackTrace();
+	 * 
+	 * } }
+	 */
 
 }
