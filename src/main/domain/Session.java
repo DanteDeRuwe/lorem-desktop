@@ -3,7 +3,7 @@ package main.domain;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,9 +20,7 @@ import main.services.Util;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "Session.findByTitle",
-			query = "select s from Session s where s.title = :sessionTitle")
-})
+		@NamedQuery(name = "Session.findByTitle", query = "select s from Session s where s.title = :sessionTitle") })
 public class Session {
 
 	@Id
@@ -32,17 +30,18 @@ public class Session {
 	@ManyToOne
     @JoinColumn(name="member_id", nullable=false)
 	private Member organizer;
-	
-	private Collection<Member> participants = new ArrayList<>();
-	private Collection<MediaItem> media = new ArrayList<>();
-	private Collection<FeedbackEntry> feedbackEntries = new ArrayList<>();
-	private Collection<Announcement> announcements = new ArrayList<>();
 	private String location, title, speakerName;
 	private LocalDateTime startTime, endTime;
 	private int capacity;
 
-	public Session() {};
-	
+	private List<Member> participants = new ArrayList<>();
+	private List<MediaItem> media = new ArrayList<>();
+	private List<FeedbackEntry> feedbackEntries = new ArrayList<>();
+	private List<Announcement> announcements = new ArrayList<>();
+
+	public Session() {
+	};
+
 	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
 			String location, int capacity) {
 
@@ -54,7 +53,6 @@ public class Session {
 		setTitle(title);
 		setSpeakerName(speakerName);
 		setLocation(location);
-		
 
 		setStart(start);
 		setEnd(end);
@@ -65,13 +63,6 @@ public class Session {
 		Duration durationBetween = Duration.between(start, end);
 		Duration minimumPeriod = Duration.ofMinutes(30);
 		return durationBetween.compareTo(minimumPeriod) >= 0;
-	}
-
-	public void addParticipant(Member participant) {
-		/*
-		 * TODO: check maximum capacity of location
-		 */
-		participants.add(participant);
 	}
 
 	public void addMediaItem(MediaItem mediaItem) {
@@ -147,7 +138,7 @@ public class Session {
 	public int getCapacity() {
 		return this.capacity;
 	}
-	
+
 	public void setCapacity(int value) {
 		this.capacity = value;
 	}
@@ -155,8 +146,7 @@ public class Session {
 	@Override
 	public String toString() {
 		return "Sessie: " + title + "\n" + "Start: " + startTime + "\n" + "Einde: " + endTime + "\n" + "Organisator: "
-				+ organizer.getFullName() + "\n" + "Locatie: " + location + "\n" + "Spreker: " + speakerName
-				+ "\n";
+				+ organizer.getFullName() + "\n" + "Locatie: " + location + "\n" + "Spreker: " + speakerName + "\n";
 	}
 
 	/*
@@ -173,7 +163,8 @@ public class Session {
 		if (Util.isSameDay(startTime, endTime))
 			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER));
 		else
-			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
+			return new SimpleStringProperty(
+					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
 	}
 
 	public StringProperty startProperty() {
