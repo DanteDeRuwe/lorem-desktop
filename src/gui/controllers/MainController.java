@@ -1,11 +1,11 @@
 package gui.controllers;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import main.services.Util;
 
 public class MainController {
 
@@ -13,32 +13,27 @@ public class MainController {
 	private AnchorPane main;
 
 	@FXML
-	private AnchorPane leftPane;
+	private MenuBar menuBar;
 
 	@FXML
-	private AnchorPane centerPane;
+	private Menu sessionMenu, calendarMenu, memberMenu, accountMenu, statsMenu, aboutMenu;
 
 	@FXML
-	private AnchorPane rightPane;
+	private MenuItem newSessionMenuItem, editSessionMenuItem, openCalendarMenuItem, editCalendarMenuItem,
+			newMemberMenuItem, editMemberMenuItem, logOutMenuItem, editAccountMenuItem;
+
+	@FXML
+	private AnchorPane leftPane, centerPane, rightPane;
 
 	@FXML
 	private SessionController sessionController;
 
 	@FXML
 	public void initialize() {
-		try {
-			Node leftPaneInner = FXMLLoader
-					.<AnchorPane>load(getClass().getResource("/resources/fxml/sessions/SessionSideBar.fxml"));
 
-			leftPane.getChildren().setAll(leftPaneInner);
-			AnchorPane.setBottomAnchor(leftPaneInner, 0.0d);
-			AnchorPane.setTopAnchor(leftPaneInner, 0.0d);
-			AnchorPane.setLeftAnchor(leftPaneInner, 0.0d);
-			AnchorPane.setRightAnchor(leftPaneInner, 0.0d);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// bind panes
+		Util.bindAnchorPane("sessions/SessionSideBar.fxml", leftPane);
+		Util.bindAnchorPane("sessions/DetailsPane.fxml", rightPane);
 	}
 
 }

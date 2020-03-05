@@ -11,44 +11,44 @@
    <children>
       <VBox prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-          <MenuBar VBox.vgrow="NEVER">
+          <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
             <menus>
-              <Menu mnemonicParsing="false" text="Sessies">
+              <Menu fx:id="sessionMenu" mnemonicParsing="false" text="Sessies">
                 <items>
-                  <MenuItem mnemonicParsing="false" text="Nieuw" />
-                  <MenuItem mnemonicParsing="false" text="Beheer" />
+                  <MenuItem fx:id="newSessionMenuItem" mnemonicParsing="false" text="Nieuw" />
+                  <MenuItem fx:id="editSessionMenuItem" mnemonicParsing="false" text="Beheer" />
                 </items>
               </Menu>
-              <Menu mnemonicParsing="false" text="Kalenders">
+              <Menu fx:id="calendarMenu" mnemonicParsing="false" text="Kalenders">
                 <items>
                   <MenuItem mnemonicParsing="false" text="Nieuw" />
-                        <MenuItem mnemonicParsing="false" text="Open" />
-                        <MenuItem mnemonicParsing="false" text="Beheer" />
+                        <MenuItem fx:id="openCalendarMenuItem" mnemonicParsing="false" text="Open" />
+                        <MenuItem fx:id="editCalendarMenuItem" mnemonicParsing="false" text="Beheer" />
                 </items>
               </Menu>
-                  <Menu mnemonicParsing="false" text="Gebruikers">
+                  <Menu fx:id="memberMenu" mnemonicParsing="false" text="Gebruikers">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Nieuw" />
-                        <MenuItem mnemonicParsing="false" text="Beheer" />
+                        <MenuItem fx:id="newMemberMenuItem" mnemonicParsing="false" text="Nieuw" />
+                        <MenuItem fx:id="editMemberMenuItem" mnemonicParsing="false" text="Beheer" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Mijn Account">
+                  <Menu fx:id="accountMenu" mnemonicParsing="false" text="Mijn Account">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Log Uit" />
-                      <MenuItem mnemonicParsing="false" text="Beheer" />
+                      <MenuItem fx:id="logOutMenuItem" mnemonicParsing="false" text="Log Uit" />
+                      <MenuItem fx:id="editAccountMenuItem" mnemonicParsing="false" text="Beheer" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Statistieken" />
-                  <Menu mnemonicParsing="false" text="Over Lorem" />
+                  <Menu fx:id="statsMenu" mnemonicParsing="false" text="Statistieken" />
+                  <Menu fx:id="aboutMenu" mnemonicParsing="false" text="Over Lorem" />
             </menus>
           </MenuBar>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <SplitPane dividerPositions="0.25, 0.75" layoutX="-6.0" prefHeight="575.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" layoutX="-6.0" prefHeight="575.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <items>
-                        <AnchorPane fx:id="leftPane" />
-                        <AnchorPane fx:id="middlePane" />
-                        <AnchorPane fx:id="rightPane" prefHeight="573.0" prefWidth="244.0" />
+                        <AnchorPane fx:id="leftPane" maxWidth="300.0" minWidth="0.0" prefWidth="200.0" />
+                        <AnchorPane fx:id="middlePane" minWidth="300.0" />
+                        <AnchorPane fx:id="rightPane" minWidth="100.0" prefWidth="400.0" />
                      </items>
                   </SplitPane>
                </children>
