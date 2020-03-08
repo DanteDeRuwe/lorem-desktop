@@ -1,24 +1,28 @@
 package main.domain.facades;
 
-import java.util.List;
+import java.util.Set;
 
 import main.domain.Session;
 import main.domain.SessionCalendar;
+import persistence.SessionCalendarDaoJpa;
 
 public class SessionCalendarFacade implements Facade {
 
-	SessionCalendar currentCalendar;
+	SessionCalendarDaoJpa sesCalRepo = new SessionCalendarDaoJpa();
+	SessionCalendar calendar;
 
 	public SessionCalendarFacade() {
-		// TODO set default calendar here
+		// set calendar to current calendar by default
+		// TODO: this will throw an exception if there is no sessionCalendar for right now, maybe a try catch or something.
+		setCalendar(sesCalRepo.getCurrentSessionCalendar());
 	}
 
 	public SessionCalendarFacade(SessionCalendar calendar) {
-		setCurrentCalendar(calendar);
+		setCalendar(calendar);
 	}
 
 	public void addSession(Session session) {
-		currentCalendar.addSession(session);
+		calendar.addSession(session);
 	}
 
 	public void removeSession(int id) {
@@ -30,17 +34,16 @@ public class SessionCalendarFacade implements Facade {
 		return null;
 	}
 
-	public List<Session> getAllSessions() {
-		// TODO
-		return null;
+	public Set<Session> getAllSessions() {
+		return calendar.getSessions();
 	}
 
-	public SessionCalendar getCurrentCalendar() {
-		return currentCalendar;
+	public SessionCalendar getCalendar() {
+		return calendar;
 	}
 
-	public void setCurrentCalendar(SessionCalendar currentCalendar) {
-		this.currentCalendar = currentCalendar;
+	public void setCalendar(SessionCalendar calendar) {
+		this.calendar = calendar;
 	}
 
 }
