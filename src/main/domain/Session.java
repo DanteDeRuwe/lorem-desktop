@@ -174,11 +174,14 @@ public class Session {
 	}
 
 	public StringProperty startProperty() {
-		return new SimpleStringProperty(startTime.format(Util.TIMEFORMATTER));
+		return new SimpleStringProperty(startTime.format(Util.DATETIMEFORMATTER));
 	}
 
-	public StringProperty endProperty() {
-		return new SimpleStringProperty(endTime.format(Util.TIMEFORMATTER));
+	public StringProperty durationProperty() {
+		Duration duration = Duration.between(startTime, endTime);
+		int durationHours = duration.toHoursPart();
+		int durationMinutes = duration.toMinutesPart();
+		return new SimpleStringProperty(String.format("%dh %dm", durationHours, durationMinutes));
 	}
 
 	public StringProperty organizerProperty() {
@@ -191,5 +194,9 @@ public class Session {
 
 	public StringProperty locationProperty() {
 		return new SimpleStringProperty(location);
+	}
+	
+	public StringProperty capacityProperty() {
+		return new SimpleStringProperty(Integer.toString(capacity));
 	}
 }

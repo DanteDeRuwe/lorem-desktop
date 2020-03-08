@@ -16,14 +16,15 @@
             </AnchorPane>
             <AnchorPane fx:id="middlePane" minWidth="300.0">
                <children>
-                  <TableView prefHeight="598.4" prefWidth="385.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="sessionTable" prefHeight="598.4" prefWidth="385.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Sessie" />
-                      <TableColumn prefWidth="75.0" text="Begin" />
-                        <TableColumn prefWidth="75.0" text="Duur" />
-                        <TableColumn prefWidth="75.0" text="Organizator" />
-                        <TableColumn prefWidth="75.0" text="Locatie" />
-                        <TableColumn prefWidth="75.0" text="#" />
+                      <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Sessie" />
+                      <TableColumn fx:id="startColumn" prefWidth="75.0" text="Begin" />
+                      <TableColumn fx:id="durationColumn" prefWidth="75.0" text="Duur" />
+                      <TableColumn fx:id="organizerColumn" prefWidth="75.0" text="Organizator" />
+                      <TableColumn fx:id="speakerColumn" prefWidth="75.0" text="Spreker" />
+                      <TableColumn fx:id="locationColumn" prefWidth="75.0" text="Locatie" />
+                      <TableColumn fx:id="capacityColumn" prefWidth="75.0" text="#" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
