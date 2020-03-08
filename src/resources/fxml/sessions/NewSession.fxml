@@ -20,37 +20,37 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <JFXTextField labelFloat="true" promptText="Titel">
+            <JFXTextField fx:id="titleField" labelFloat="true" promptText="Titel">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Spreker (optioneel)">
+            <JFXTextField fx:id="speakerField" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Spreker (optioneel)">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXDatePicker defaultColor="#4059a9" maxWidth="1.7976931348623157E308" prefHeight="28.0" promptText="Startdatum">
+            <JFXDatePicker fx:id="startDateField" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" prefHeight="28.0" promptText="Startdatum">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXDatePicker>
-            <JFXTimePicker defaultColor="#4059a9" maxWidth="1.7976931348623157E308" prefHeight="28.0" promptText="Starttijd">
+            <JFXTimePicker fx:id="startTimeField" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" prefHeight="28.0" promptText="Starttijd">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTimePicker>
-            <JFXTextField labelFloat="true" promptText="Duurtijd (in uren)">
+            <JFXTextField fx:id="durationField" labelFloat="true" promptText="Duurtijd (in uren)">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField labelFloat="true" prefHeight="26.0" prefWidth="416.0" promptText="Locatie">
+            <JFXTextField fx:id="locationField" labelFloat="true" prefHeight="26.0" prefWidth="416.0" promptText="Locatie">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField labelFloat="true" prefHeight="26.0" prefWidth="108.0" promptText="Capaciteit">
+            <JFXTextField fx:id="capacityField" labelFloat="true" prefHeight="26.0" prefWidth="108.0" promptText="Capaciteit">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -62,12 +62,12 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="369.20001220703125" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="confirmButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #c1c1c1;" text="Annuleer" textAlignment="CENTER">
+            <JFXButton fx:id="cancelButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #c1c1c1;" text="Annuleer" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
    <children>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="376.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="330.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -17,7 +17,7 @@
             </JFXButton>
          </children>
       </HBox>
-      <ListView layoutY="56.0" prefHeight="306.0" prefWidth="330.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="60.0" />
+      <ListView layoutY="56.0" prefHeight="306.0" prefWidth="330.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <HBox alignment="CENTER" layoutY="359.20001220703125" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">

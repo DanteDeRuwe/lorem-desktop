@@ -13,7 +13,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" >
                   	<children>
-                        <fx:include source="calendar/CalendarScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <fx:include fx:id="calendarScene" source="calendar/CalendarScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                      </children>
                   </AnchorPane>
                </content>
@@ -22,7 +22,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" >
                      <children>
-                        <fx:include source="sessions/SessionScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <fx:include fx:id="sessionScene" source="sessions/SessionScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                      </children></AnchorPane>
                </content>
             </Tab>
@@ -31,7 +31,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" >
                   <children>
-                        <fx:include source="users/UserScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <fx:include fx:id="userScene" source="users/UserScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                      </children></AnchorPane>
                </content></Tab>
             <Tab text="Mijn Account">
