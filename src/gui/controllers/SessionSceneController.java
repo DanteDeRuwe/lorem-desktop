@@ -82,6 +82,8 @@ public class SessionSceneController extends GuiController {
 		sessionFiltersController.injectParentController(this).injectFacade(this.getFacade());
 
 		fillTableColumns();
+		
+		sessionTable.setOnMouseClicked((event) -> { /* UPDATE INFO RIGHT PANE */ });
 	}
 
 	private void fillTableColumns() {
@@ -89,7 +91,9 @@ public class SessionSceneController extends GuiController {
 		// wanneer het werkt
 
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-
+		titleColumn.setMinWidth(200);
+		titleColumn.setMaxWidth(400);
+		
 		startColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
 		startColumn.setMinWidth(120);
 		startColumn.setMaxWidth(120);
@@ -98,13 +102,18 @@ public class SessionSceneController extends GuiController {
 		durationColumn.setMinWidth(45);
 		durationColumn.setMaxWidth(45);
 
-		locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-		locationColumn.setMinWidth(120);
-
 		organizerColumn.setCellValueFactory(new PropertyValueFactory<>("organizer"));
-
+		organizerColumn.setMinWidth(100);
+		organizerColumn.setMaxWidth(200);
+		
 		speakerColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
-
+		speakerColumn.setMinWidth(100);
+		speakerColumn.setMaxWidth(200);
+		
+		locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+		locationColumn.setMinWidth(100);
+		locationColumn.setMaxWidth(200);
+		
 		capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
 		capacityColumn.setMinWidth(50);
 		capacityColumn.setMaxWidth(50);
