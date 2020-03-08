@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import persistence.SessionDaoJpa;
+
 @Entity
 @NamedQueries({
 	@NamedQuery(name = "SessionCalendar.getCurrentSessionCalendar", query = "select c from SessionCalendar c where CURRENT_DATE between c.startDate and c.endDate") })
@@ -72,7 +74,11 @@ public class SessionCalendar {
 	}
 
 	public void addSession(Session session) {
-		this.sessions.add(session);
+		session.setCalendar(this);
+		SessionDaoJpa sessionRepo = new SessionDaoJpa();
+		SessionDaoJpa.startTransaction();
+		sessionRepo.insert(session);
+		SessionDaoJpa.commitTransaction();
 	}
 
 	public int[] getAcademicYear() {
