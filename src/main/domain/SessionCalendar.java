@@ -12,24 +12,26 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import persistence.SessionDaoJpa;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "SessionCalendar.getCurrentSessionCalendar", query = "select c from SessionCalendar c where CURRENT_DATE between c.startDate and c.endDate") })
+		@NamedQuery(name = "SessionCalendar.getCurrentSessionCalendar", query = "select c from SessionCalendar c where CURRENT_DATE between c.startDate and c.endDate") })
 public class SessionCalendar {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long calendar_id;
 	private int[] academicYear;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	@OneToMany(
-			mappedBy = "calendar")
+	@OneToMany(mappedBy = "calendar")
 	private Set<Session> sessions;
-	
-	public SessionCalendar() { }
+
+	public SessionCalendar() {
+	}
 
 	public SessionCalendar(LocalDate startDate, LocalDate endDate) {
 		// we also need to check if there are no already existing sessionCalendars which
@@ -101,6 +103,10 @@ public class SessionCalendar {
 		academicYear[0] = startYear;
 		academicYear[1] = endYear;
 		this.academicYear = academicYear;
+	}
+
+	public StringProperty academicYearProperty() {
+		return new SimpleStringProperty(String.format("%d - %d", academicYear[0], academicYear[1]));
 	}
 
 }
