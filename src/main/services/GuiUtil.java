@@ -22,7 +22,8 @@ public class GuiUtil {
 
 	public static <T> void fillColumn(TableColumn<T, String> col, String propname, int minWidth, int maxWidth) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
-		col.setMinWidth(200);
-		col.setMaxWidth(400);
+		col.setMinWidth(minWidth);
+		col.setMaxWidth(maxWidth);
+		col.setResizable(true);
 	}
 }
