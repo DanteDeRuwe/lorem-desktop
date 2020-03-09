@@ -10,7 +10,9 @@ import com.jfoenix.controls.JFXTimePicker;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import main.domain.Member;
 import main.domain.Session;
+import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionCalendarFacade;
 import main.services.DataValidation;
 
@@ -78,10 +80,16 @@ public class NewSessionController extends GuiController {
 		String location = locationField.getText();
 		String capacity = capacityField.getText();
 
-		// Create a new session via facade
+		// Create a new session via facades
 		// TODO deal with business logic exceptions
 		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
-		Session s = scf.createSessionFromFields(title, speaker, startDate, startTime, duration, location, capacity);
+		MemberFacade mf = (MemberFacade) getMainController().getMemberFacade();
+
+		Member organizer = mf.getLoggedInMember();
+
+		Session s = scf.createSessionFromFields(
+				organizer, title, speaker, startDate, startTime, duration, location, capacity);
+
 		scf.addSession(s);
 
 		// In the end, go back to the details view

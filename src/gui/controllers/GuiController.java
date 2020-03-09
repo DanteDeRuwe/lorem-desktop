@@ -11,14 +11,7 @@ public abstract class GuiController {
 
 	private Facade facade;
 	private GuiController parentController;
-
-	public Facade getFacade() {
-		return facade;
-	}
-
-	public GuiController getParentController() {
-		return parentController;
-	}
+	private MainController mainController;
 
 	// Injections
 	// return this after injecting to make chainable
@@ -32,10 +25,18 @@ public abstract class GuiController {
 		return this;
 	}
 
+	public GuiController injectMainController(MainController mc) {
+		this.mainController = mc;
+		return this;
+	}
+
 	public AnchorPane loadFXML(String relativeFXMLPath, GuiController controllerToAppoint, Facade facadeToAppoint) {
 		try {
+
 			// The FXML that will be loaded will be a child of "this"
-			controllerToAppoint.injectParentController(this).injectFacade(facadeToAppoint);
+			controllerToAppoint.injectParentController(this)
+					.injectFacade(facadeToAppoint)
+					.injectMainController(this.getMainController());
 
 			// load the AnchorPane and set it's controller
 			FXMLLoader loader = new FXMLLoader(GuiController.class.getResource("/resources/fxml/" + relativeFXMLPath));
@@ -47,6 +48,22 @@ public abstract class GuiController {
 			e.printStackTrace();
 			return new AnchorPane(new Label("Error loading..."));
 		}
+	}
+
+	/*
+	 * Getters and setters
+	 */
+
+	public Facade getFacade() {
+		return facade;
+	}
+
+	public GuiController getParentController() {
+		return parentController;
+	}
+
+	public MainController getMainController() {
+		return mainController;
 	}
 
 }
