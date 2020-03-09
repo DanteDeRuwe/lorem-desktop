@@ -22,14 +22,11 @@ public class SessionSceneController extends GuiController {
 
 	// FXML vars
 	@FXML private AnchorPane leftPane, middlePane, rightPane;
-
-	@FXML public TableView<Session> sessionTable; // public since child controllers will need access to it
-
+	@FXML protected TableView<Session> sessionTable;
 	@FXML private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
 			locationColumn, capacityColumn;
 
 	/*
-	 * -----------------------------------------------------------------------------
 	 * Init
 	 */
 
@@ -55,9 +52,7 @@ public class SessionSceneController extends GuiController {
 		// Right panel: default for tabs
 		displayOnRightPane("SessionTabs");
 
-		/*
-		 * Set event handlers
-		 */
+		// Event Handlers
 		sessionTable.setOnMouseClicked(e -> showSessionInfo());
 
 	}
@@ -91,13 +86,12 @@ public class SessionSceneController extends GuiController {
 	public void displayOnRightPane(String key) {
 		AnchorPane pane;
 
-		if (key.equals("SessionTabs")) {
+		if (key.equals("SessionTabs"))
 			GuiUtil.bindAnchorPane(sessionTabs, rightPane);
-		} else if (key.equals("NewSession")) {
+		else if (key.equals("NewSession"))
 			GuiUtil.bindAnchorPane(newSession, rightPane);
-		} else {
+		else
 			throw new RuntimeException("key not valid");
-		}
 
 	}
 

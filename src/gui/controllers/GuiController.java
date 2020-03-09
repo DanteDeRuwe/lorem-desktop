@@ -13,28 +13,12 @@ public abstract class GuiController {
 	private GuiController parentController;
 	private MainController mainController;
 
-	// Injections
-	// return this after injecting to make chainable
-	public GuiController injectParentController(GuiController controller) {
-		this.parentController = controller;
-		return this;
-	}
-
-	public GuiController injectFacade(Facade facade) {
-		this.facade = facade;
-		return this;
-	}
-
-	public GuiController injectMainController(MainController mc) {
-		this.mainController = mc;
-		return this;
-	}
-
-	public AnchorPane loadFXML(String relativeFXMLPath, GuiController controllerToAppoint, Facade facadeToAppoint) {
+	protected AnchorPane loadFXML(String relativeFXMLPath, GuiController controllerToAppoint, Facade facadeToAppoint) {
 		try {
 
 			// The FXML that will be loaded will be a child of "this"
-			controllerToAppoint.injectParentController(this)
+			controllerToAppoint
+					.injectParentController(this)
 					.injectFacade(facadeToAppoint)
 					.injectMainController(this.getMainController());
 
@@ -51,18 +35,37 @@ public abstract class GuiController {
 	}
 
 	/*
-	 * Getters and setters
+	 * Injections return "this" after injecting to make chainable
 	 */
 
-	public Facade getFacade() {
+	protected GuiController injectParentController(GuiController controller) {
+		this.parentController = controller;
+		return this;
+	}
+
+	protected GuiController injectFacade(Facade facade) {
+		this.facade = facade;
+		return this;
+	}
+
+	protected GuiController injectMainController(MainController mc) {
+		this.mainController = mc;
+		return this;
+	}
+
+	/*
+	 * Getters
+	 */
+
+	protected Facade getFacade() {
 		return facade;
 	}
 
-	public GuiController getParentController() {
+	protected GuiController getParentController() {
 		return parentController;
 	}
 
-	public MainController getMainController() {
+	protected MainController getMainController() {
 		return mainController;
 	}
 

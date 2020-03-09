@@ -11,35 +11,35 @@ import main.services.PropertyValueFactoryWrapperCellFactory;
 
 public class CalendarSceneController extends GuiController {
 
-	// TODO: temporary facade tot getFacade werkt
-	private SessionCalendarFacade tempFacade = new SessionCalendarFacade();
 	private ObservableList<SessionCalendar> calendarList;
 
-	@FXML
-	private ListView<SessionCalendar> calendarListView;
+	@FXML private ListView<SessionCalendar> calendarListView;
 
-	@FXML
-	private Button selectButton, editButton;
+	@FXML private Button selectButton, editButton;
 
 	@FXML
 	public void initialize() {
+
 		fillList();
-		addButtonHandlers();
-	}
 
-	private void fillList() {
-		calendarList = FXCollections.observableArrayList(tempFacade.getAllSessionCalendars());
-		calendarListView.setCellFactory(new PropertyValueFactoryWrapperCellFactory<>("academicYear"));
-		calendarListView.setItems(calendarList);
-	}
-
-	private void addButtonHandlers() {
+		// Event Listeners
 		selectButton.setOnAction((event) -> handleSelectButton());
 		editButton.setOnAction((event) -> handleEditButton());
 	}
 
+	/*
+	 * Private Helpers
+	 */
+
+	private void fillList() {
+		calendarList = FXCollections
+				.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessionCalendars());
+		calendarListView.setCellFactory(new PropertyValueFactoryWrapperCellFactory<>("academicYear"));
+		calendarListView.setItems(calendarList);
+	}
+
 	private void handleSelectButton() {
-		tempFacade.setCalendar(calendarListView.getSelectionModel().getSelectedItem());
+		((SessionCalendarFacade) getFacade()).setCalendar(calendarListView.getSelectionModel().getSelectedItem());
 		// TODO: the sessions tab list has to be updated after changing calendars
 		// TODO: switch to sessions tab for UX bonus points
 	}

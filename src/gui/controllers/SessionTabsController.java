@@ -6,6 +6,6 @@ public class SessionTabsController extends GuiController {
 
 	@FXML
 	public void initialize() {
-
+		// TODO
 	}
 }

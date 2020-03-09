@@ -10,24 +10,25 @@ import javafx.scene.control.Label;
 
 public class SessionFiltersController extends GuiController {
 
-	@FXML
-	private Label academicYear;
-	@FXML
-	private JFXButton newSessionButton;
-	@FXML
-	private JFXTextField titleFilter, speakerFilter, locationFilter;
+	@FXML private Label academicYear;
+	@FXML private JFXButton newSessionButton;
+	@FXML private JFXTextField titleFilter, speakerFilter, locationFilter;
 
-	@FXML
-	private JFXDatePicker startdateFilter;
-	@FXML
-	private JFXTimePicker startTimefilter;
+	@FXML private JFXDatePicker startdateFilter;
+	@FXML private JFXTimePicker startTimefilter;
 
 	@FXML
 	public void initialize() {
 
-		newSessionButton.setOnAction((e) -> {
-			// open up the newsession view on the right
-			((SessionSceneController) getParentController()).displayOnRightPane("NewSession");
-		});
+		// Event Listeners
+		newSessionButton.setOnAction(e -> handleNewSession());
+
+		// TODO filters
+		// titleFilter.textProperty().addListener((obs, oldText, newText) -> { });
+
+	}
+
+	private void handleNewSession() {
+		((SessionSceneController) getParentController()).displayOnRightPane("NewSession");
 	}
 }

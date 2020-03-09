@@ -26,26 +26,22 @@ public class NewSessionController extends GuiController {
 	@FXML private JFXButton confirmButton, cancelButton;
 
 	/*
-	 * -----------------------------------------------------------------------------
 	 * Init
 	 */
 	@FXML
 	public void initialize() {
-
-		// Cancel
-		cancelButton.setOnAction((e) -> {
-			((SessionSceneController) getParentController()).displayOnRightPane("SessionTabs");
-		});
-
-		// Add
+		// Event Listeners
+		cancelButton.setOnAction(e -> goBackToSessionTabs());
 		confirmButton.setOnAction(e -> handleConfirm());
-
 	}
 
 	/*
-	 * -----------------------------------------------------------------------------
 	 * Private helpers
 	 */
+
+	private void goBackToSessionTabs() {
+		((SessionSceneController) getParentController()).displayOnRightPane("SessionTabs");
+	}
 
 	private boolean allFieldsOk() {
 		boolean titleFilledIn = DataValidation.textFilledIn(titleField, validationLabel, "Titel is verplicht");
@@ -92,8 +88,8 @@ public class NewSessionController extends GuiController {
 
 		scf.addSession(s);
 
-		// In the end, go back to the details view
-		((SessionSceneController) getParentController()).displayOnRightPane("SessionTabs");
+		// In the end, go back to the session Tabs
+		goBackToSessionTabs();
 	}
 
 }
