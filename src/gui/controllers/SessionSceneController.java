@@ -14,16 +14,19 @@ public class SessionSceneController extends GuiController {
 
 	// Controllers
 	private GuiController sessionFiltersController, sessionTabsController, newSessionController,
-			modifySessionController, infoTabController, announcementTabController, feedbackTabController;
+			modifySessionController, announcementTabController, feedbackTabController;
 
 	// Own vars
 	private AnchorPane sessionFilters, sessionTabs, newSession;
 	private ObservableList<Session> sessionList;
 
 	// FXML vars
-	@FXML private AnchorPane leftPane, middlePane, rightPane;
-	@FXML protected TableView<Session> sessionTable;
-	@FXML private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
+	@FXML
+	private AnchorPane leftPane, middlePane, rightPane;
+	@FXML
+	protected TableView<Session> sessionTable;
+	@FXML
+	private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
 			locationColumn, capacityColumn;
 
 	/*
@@ -63,9 +66,8 @@ public class SessionSceneController extends GuiController {
 	 */
 
 	private void showSessionInfo() {
-		Session selectedsession = sessionTable.getSelectionModel().getSelectedItem();
-
-		// TODO update infotab
+		//((InfoTabController) infoTabController).setInspectedSession(sessionTable.getSelectionModel().getSelectedItem());
+		((SessionTabsController) sessionTabsController).showSessionInfo(sessionTable.getSelectionModel().getSelectedItem());
 	}
 
 	private void fillTableColumns() {
@@ -84,8 +86,6 @@ public class SessionSceneController extends GuiController {
 	}
 
 	public void displayOnRightPane(String key) {
-		AnchorPane pane;
-
 		if (key.equals("SessionTabs"))
 			GuiUtil.bindAnchorPane(sessionTabs, rightPane);
 		else if (key.equals("NewSession"))

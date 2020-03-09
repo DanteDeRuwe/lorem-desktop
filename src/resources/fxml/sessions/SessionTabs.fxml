@@ -11,29 +11,17 @@
          <tabs>
             <Tab text="Info">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <fx:include source="tabs/InfoTab.fxml" />
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="infoTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
                </content>
             </Tab>
             <Tab text="Aankondigingen">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <fx:include source="tabs/AnnouncementTab.fxml" />
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="announcementTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
                </content>
             </Tab>
             <Tab text="Feedback">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <fx:include source="tabs/FeedbackTab.fxml" />
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="feedbackTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
                </content>
             </Tab>
          </tabs>
