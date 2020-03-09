@@ -7,32 +7,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Member{
+@NamedQueries({
+		@NamedQuery(name = "Member.findByUsername", query = "select m from Member m where m.username = :username") })
+public class Member {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long member_id;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long member_id;
 	private String username;
 	private String firstName;
 	private String lastName;
-	
-	@OneToMany(
-			mappedBy = "organizer")
-	private Set<Session> sessions;
+
+	@OneToMany(mappedBy = "organizer") private Set<Session> sessions;
 
 	private MemberType memberType;
-	
-	public Member() { };
+
+	public Member() {
+	};
 
 	public Member(String username, String firstName, String lastName, MemberType memberType) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.memberType = memberType;
-		
+
 		sessions = new HashSet<Session>();
 	}
 
@@ -63,7 +64,7 @@ public class Member{
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}
-	
+
 	public void addSession(Session session) {
 		sessions.add(session);
 	}
