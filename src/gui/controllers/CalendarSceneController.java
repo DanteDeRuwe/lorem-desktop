@@ -40,8 +40,8 @@ public class CalendarSceneController extends GuiController {
 
 	private void handleSelectButton() {
 		tempFacade.setCalendar(calendarListView.getSelectionModel().getSelectedItem());
-		//TODO: the sessions tab list has to be updated after changing calendars
-		//TODO: switch to sessions tab for UX bonus points
+		// TODO: the sessions tab list has to be updated after changing calendars
+		// TODO: switch to sessions tab for UX bonus points
 	}
 
 	private void handleEditButton() {

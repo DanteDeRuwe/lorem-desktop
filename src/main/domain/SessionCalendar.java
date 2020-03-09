@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import persistence.GenericDaoJpa;
 import persistence.SessionDaoJpa;
 
 @Entity
@@ -78,9 +79,9 @@ public class SessionCalendar {
 	public void addSession(Session session) {
 		session.setCalendar(this);
 		SessionDaoJpa sessionRepo = new SessionDaoJpa();
-		SessionDaoJpa.startTransaction();
+		GenericDaoJpa.startTransaction();
 		sessionRepo.insert(session);
-		SessionDaoJpa.commitTransaction();
+		GenericDaoJpa.commitTransaction();
 	}
 
 	public int[] getAcademicYear() {
