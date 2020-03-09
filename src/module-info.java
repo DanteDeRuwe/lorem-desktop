@@ -7,10 +7,10 @@ open module javag09 {
 	exports main;
 
 	requires transitive javafx.fxml;
-	requires javafx.base;
+	requires transitive javafx.base;
 	requires transitive javafx.controls;
 	requires transitive javafx.graphics;
-	requires com.jfoenix;
+	requires transitive com.jfoenix;
 
 	requires java.persistence;
 	requires java.instrument;
