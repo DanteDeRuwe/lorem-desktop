@@ -70,4 +70,8 @@ public class SessionCalendarFacade implements Facade {
 		this.calendar = calendar;
 	}
 
+	public String getAcademicYear() {
+		return calendar.getAcademicYear()[0] + " - " + calendar.getAcademicYear()[1];
+	}
+
 }

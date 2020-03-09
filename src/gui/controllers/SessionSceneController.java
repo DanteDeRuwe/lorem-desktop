@@ -21,12 +21,9 @@ public class SessionSceneController extends GuiController {
 	private ObservableList<Session> sessionList;
 
 	// FXML vars
-	@FXML
-	private AnchorPane leftPane, middlePane, rightPane;
-	@FXML
-	protected TableView<Session> sessionTable;
-	@FXML
-	private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
+	@FXML private AnchorPane leftPane, middlePane, rightPane;
+	@FXML protected TableView<Session> sessionTable;
+	@FXML private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
 			locationColumn, capacityColumn;
 
 	/*
@@ -66,11 +63,13 @@ public class SessionSceneController extends GuiController {
 	 */
 
 	private void showSessionInfo() {
-		//((InfoTabController) infoTabController).setInspectedSession(sessionTable.getSelectionModel().getSelectedItem());
-		((SessionTabsController) sessionTabsController).showSessionInfo(sessionTable.getSelectionModel().getSelectedItem());
+		// ((InfoTabController)
+		// infoTabController).setInspectedSession(sessionTable.getSelectionModel().getSelectedItem());
+		((SessionTabsController) sessionTabsController)
+				.showSessionInfo(sessionTable.getSelectionModel().getSelectedItem());
 	}
 
-	public void fillTableColumns() {
+	void fillTableColumns() {
 		sessionList = FXCollections.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessions());
 
 		GuiUtil.fillColumn(titleColumn, "title", 300, 500);
@@ -85,7 +84,7 @@ public class SessionSceneController extends GuiController {
 
 	}
 
-	public void displayOnRightPane(String key) {
+	void displayOnRightPane(String key) {
 		if (key.equals("SessionTabs"))
 			GuiUtil.bindAnchorPane(sessionTabs, rightPane);
 		else if (key.equals("NewSession"))
@@ -93,6 +92,13 @@ public class SessionSceneController extends GuiController {
 		else
 			throw new RuntimeException("key not valid");
 
+	}
+
+	void update() {
+		// gets called when selecting new calendar
+
+		fillTableColumns();
+		((SessionFiltersController) sessionFiltersController).UpdateAcademicYear();
 	}
 
 }

@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTimePicker;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import main.domain.facades.SessionCalendarFacade;
 
 public class SessionFiltersController extends GuiController {
 
@@ -20,11 +21,20 @@ public class SessionFiltersController extends GuiController {
 	@FXML
 	public void initialize() {
 
+		// Change Label
+		UpdateAcademicYear();
+
 		// Event Listeners
 		newSessionButton.setOnAction(e -> handleNewSession());
 
 		// TODO filters
 		// titleFilter.textProperty().addListener((obs, oldText, newText) -> { });
+
+	}
+
+	public void UpdateAcademicYear() {
+		academicYear
+				.setText(((SessionCalendarFacade) getMainController().getSessionCalendarFacade()).getAcademicYear());
 
 	}
 
