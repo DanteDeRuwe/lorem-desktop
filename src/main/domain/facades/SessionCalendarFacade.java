@@ -1,5 +1,6 @@
 package main.domain.facades;
 
+import java.util.List;
 import java.util.Set;
 
 import main.domain.Session;
@@ -36,6 +37,10 @@ public class SessionCalendarFacade implements Facade {
 
 	public Set<Session> getAllSessions() {
 		return calendar.getSessions();
+	}
+	
+	public List<SessionCalendar> getAllSessionCalendars() {
+		return sesCalRepo.findAll();
 	}
 
 	public SessionCalendar getCalendar() {
