@@ -59,6 +59,7 @@ public class SessionSceneController extends GuiController {
 		 * Set event handlers
 		 */
 		sessionTable.setOnMouseClicked(e -> showSessionInfo());
+
 	}
 
 	/*
@@ -75,15 +76,16 @@ public class SessionSceneController extends GuiController {
 	private void fillTableColumns() {
 		sessionList = FXCollections.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessions());
 
-		GuiUtil.fillColumn(titleColumn, "title", 200, 400);
+		GuiUtil.fillColumn(titleColumn, "title", 300, 500);
 		GuiUtil.fillColumn(startColumn, "start", 120, 120);
 		GuiUtil.fillColumn(durationColumn, "duration", 45, 45);
-		GuiUtil.fillColumn(organizerColumn, "organizer", 100, 200);
+		GuiUtil.fillColumn(organizerColumn, "organizer", 150, 300);
 		GuiUtil.fillColumn(speakerColumn, "speaker", 100, 200);
 		GuiUtil.fillColumn(locationColumn, "location", 100, 200);
-		GuiUtil.fillColumn(capacityColumn, "capacity", 100, 200);
+		GuiUtil.fillColumn(capacityColumn, "capacity", 50, 50);
 
 		sessionTable.setItems(sessionList);
+
 	}
 
 	public void displayOnRightPane(String key) {
