@@ -62,7 +62,7 @@ public class SessionSceneController extends GuiController {
 
 	/*
 	 * -----------------------------------------------------------------------------
-	 * Private helpers
+	 * Helpers
 	 */
 
 	private void showSessionInfo() {
@@ -70,7 +70,7 @@ public class SessionSceneController extends GuiController {
 		((SessionTabsController) sessionTabsController).showSessionInfo(sessionTable.getSelectionModel().getSelectedItem());
 	}
 
-	private void fillTableColumns() {
+	public void fillTableColumns() {
 		sessionList = FXCollections.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessions());
 
 		GuiUtil.fillColumn(titleColumn, "title", 300, 500);

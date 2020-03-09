@@ -1,6 +1,9 @@
 package gui.controllers;
 
+import com.jfoenix.controls.JFXTabPane;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import main.domain.facades.Facade;
 import main.domain.facades.MemberFacade;
@@ -38,9 +41,16 @@ public class MainController extends GuiController {
 	private GuiController sessionSceneController, calendarSceneController;
 
 	// Nodes
-	@FXML private AnchorPane root;
-	@FXML private AnchorPane sessionTab, calendarTab, userTab, accountTab, statsTab, aboutTab;
+	@FXML
+	private AnchorPane root;
+	@FXML
+	private AnchorPane sessionTab, calendarTab, userTab, accountTab, statsTab, aboutTab;
 
+	@FXML
+	private JFXTabPane navigationTabs;
+	@FXML
+	private Tab sessionNavigationTab;
+	
 	/*
 	 * INIT
 	 */
@@ -73,6 +83,10 @@ public class MainController extends GuiController {
 
 	}
 
+	public void switchToSessionTab() {
+		navigationTabs.getSelectionModel().select(sessionNavigationTab);
+	}
+	
 	/*
 	 * Getters and setters
 	 */
@@ -91,6 +105,10 @@ public class MainController extends GuiController {
 
 	public void setMemberFacade(Facade memberFacade) {
 		this.memberFacade = memberFacade;
+	}
+
+	public SessionSceneController getSessionSceneController() {
+		return (SessionSceneController) sessionSceneController;
 	}
 
 }
