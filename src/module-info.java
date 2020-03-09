@@ -8,7 +8,7 @@ open module javag09 {
 
 	requires transitive javafx.fxml;
 	requires javafx.base;
-	requires javafx.controls;
+	requires transitive javafx.controls;
 	requires transitive javafx.graphics;
 	requires com.jfoenix;
 
