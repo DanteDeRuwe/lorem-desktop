@@ -21,24 +21,22 @@ public class SessionSceneController extends GuiController {
 	private ObservableList<Session> sessionList;
 
 	// FXML vars
-	@FXML
-	private AnchorPane leftPane, middlePane, rightPane;
+	@FXML private AnchorPane leftPane, middlePane, rightPane;
 
-	@FXML
-	public TableView<Session> sessionTable; // public since child controllers will need access to it
+	@FXML public TableView<Session> sessionTable; // public since child controllers will need access to it
 
-	@FXML
-	private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
+	@FXML private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
 			locationColumn, capacityColumn;
 
 	/*
-	 * INIT
+	 * -----------------------------------------------------------------------------
+	 * Init
 	 */
 
 	@FXML
 	public void initialize() {
 
-		// Initialize swappable controllers
+		// Initialize controllers
 		sessionFiltersController = new SessionFiltersController();
 		sessionTabsController = new SessionTabsController();
 		newSessionController = new NewSessionController();
@@ -48,16 +46,30 @@ public class SessionSceneController extends GuiController {
 		newSession = loadFXML("sessions/NewSession.fxml", newSessionController, this.getFacade());
 		sessionTabs = loadFXML("sessions/SessionTabs.fxml", sessionTabsController, this.getFacade());
 
-		// Bind left panel
+		// Left Panel
 		GuiUtil.bindAnchorPane(sessionFilters, leftPane);
 
-		// Default, right panel is for tabs
-		displayOnRightPane("SessionTabs");
-
+		// Center Panel
 		fillTableColumns();
 
-		sessionTable.setOnMouseClicked((event) -> {
-			/* UPDATE INFO RIGHT PANE */ });
+		// Right panel: default for tabs
+		displayOnRightPane("SessionTabs");
+
+		/*
+		 * Set event handlers
+		 */
+		sessionTable.setOnMouseClicked(e -> showSessionInfo());
+	}
+
+	/*
+	 * -----------------------------------------------------------------------------
+	 * Private helpers
+	 */
+
+	private void showSessionInfo() {
+		Session selectedsession = sessionTable.getSelectionModel().getSelectedItem();
+
+		// TODO update infotab
 	}
 
 	private void fillTableColumns() {

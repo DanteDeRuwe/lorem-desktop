@@ -1,50 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MainController">
+<AnchorPane fx:controller="gui.controllers.MainController" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <JFXTabPane prefHeight="480.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
          <Tab text="Kalender">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" >
-                  	<children>
-                        <fx:include fx:id="calendarScene" source="calendar/CalendarScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="calendarTab" prefHeight="200.0" prefWidth="200.0" />
                </content>
                </Tab>
             <Tab text="Sessies">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" >
-                     <children>
-                        <fx:include fx:id="sessionScene" source="sessions/SessionScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                     </children></AnchorPane>
+                  <AnchorPane fx:id="sessionTab" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </Tab>
             
             <Tab text="Gebruikers">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" >
-                  <children>
-                        <fx:include fx:id="userScene" source="users/UserScene.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                     </children></AnchorPane>
+                  <AnchorPane fx:id="userTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
             <Tab text="Mijn Account">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane fx:id="accountTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
             <Tab text="Statistieken">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane fx:id="statsTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
             <Tab text="Over Lorem">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane fx:id="aboutTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
          </tabs>
       </JFXTabPane>
