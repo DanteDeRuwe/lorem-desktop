@@ -39,8 +39,15 @@ public class CalendarSceneController extends GuiController {
 	}
 
 	private void handleSelectButton() {
+
+		// Set the calendar
 		((SessionCalendarFacade) getFacade()).setCalendar(calendarListView.getSelectionModel().getSelectedItem());
+
+		// Update the session scene
 		getMainController().getSessionSceneController().update();
+
+		// Set session tabs enabled and switch to it
+		getMainController().setSessionTabEnabled(true);
 		getMainController().switchToSessionTab();
 	}
 

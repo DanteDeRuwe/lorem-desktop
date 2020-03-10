@@ -41,16 +41,12 @@ public class MainController extends GuiController {
 	private GuiController sessionSceneController, calendarSceneController;
 
 	// Nodes
-	@FXML
-	private AnchorPane root;
-	@FXML
-	private AnchorPane sessionTab, calendarTab, userTab, accountTab, statsTab, aboutTab;
+	@FXML private AnchorPane root;
+	@FXML private AnchorPane sessionTab, calendarTab, userTab, accountTab, statsTab, aboutTab;
 
-	@FXML
-	private JFXTabPane navigationTabs;
-	@FXML
-	private Tab sessionNavigationTab;
-	
+	@FXML private JFXTabPane navigationTabs;
+	@FXML private Tab sessionNavigationTab;
+
 	/*
 	 * INIT
 	 */
@@ -81,12 +77,19 @@ public class MainController extends GuiController {
 		GuiUtil.bindAnchorPane(sessionSceneRoot, sessionTab);
 		GuiUtil.bindAnchorPane(calendarSceneRoot, calendarTab);
 
+		// Set all tabs disabled in the beginning
+		setSessionTabEnabled(false);
+
+	}
+
+	public void setSessionTabEnabled(boolean b) {
+		navigationTabs.getTabs().get(1).setDisable(!b);
 	}
 
 	public void switchToSessionTab() {
 		navigationTabs.getSelectionModel().select(sessionNavigationTab);
 	}
-	
+
 	/*
 	 * Getters and setters
 	 */
