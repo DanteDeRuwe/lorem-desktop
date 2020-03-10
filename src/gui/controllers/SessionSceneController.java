@@ -58,7 +58,6 @@ public class SessionSceneController extends GuiController {
 	}
 
 	/*
-	 * -----------------------------------------------------------------------------
 	 * Helpers
 	 */
 
@@ -72,13 +71,13 @@ public class SessionSceneController extends GuiController {
 	void fillTableColumns() {
 		sessionList = FXCollections.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessions());
 
-		GuiUtil.fillColumn(titleColumn, "title", 300, 500);
-		GuiUtil.fillColumn(startColumn, "start", 120, 120);
-		GuiUtil.fillColumn(durationColumn, "duration", 45, 45);
-		GuiUtil.fillColumn(organizerColumn, "organizer", 150, 300);
-		GuiUtil.fillColumn(speakerColumn, "speaker", 100, 200);
-		GuiUtil.fillColumn(locationColumn, "location", 100, 200);
-		GuiUtil.fillColumn(capacityColumn, "capacity", 50, 50);
+		GuiUtil.fillColumn(titleColumn, "title", 40, 500);
+		GuiUtil.fillColumn(startColumn, "start", 40, 150);
+		GuiUtil.fillColumn(durationColumn, "duration", 60, 60);
+		GuiUtil.fillColumn(organizerColumn, "organizer", 40, 300);
+		GuiUtil.fillColumn(speakerColumn, "speaker", 40, 200);
+		GuiUtil.fillColumn(locationColumn, "location", 40, 200);
+		GuiUtil.fillColumn(capacityColumn, "capacity", 40, 60);
 
 		sessionTable.setItems(sessionList);
 
@@ -91,7 +90,6 @@ public class SessionSceneController extends GuiController {
 			GuiUtil.bindAnchorPane(newSession, rightPane);
 		else
 			throw new RuntimeException("key not valid");
-
 	}
 
 	void update() {
