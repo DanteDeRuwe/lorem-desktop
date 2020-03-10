@@ -4,33 +4,33 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:controller="gui.controllers.MainController" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.MainController">
    <children>
-      <JFXTabPane fx:id="navigationTabs" prefHeight="480.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <JFXTabPane fx:id="navigationTabs" prefHeight="480.0" prefWidth="640.0" stylesheets="@../css/style.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
-         <Tab text="Kalender">
+         <Tab text="Kalender" styleClass="navtab">
                <content>
                   <AnchorPane fx:id="calendarTab" prefHeight="200.0" prefWidth="200.0" />
                </content>
                </Tab>
-            <Tab fx:id="sessionNavigationTab" text="Sessies">
+            <Tab fx:id="sessionNavigationTab" styleClass="navtab" text="Sessies">
                <content>
                   <AnchorPane fx:id="sessionTab" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </Tab>
-            <Tab text="Gebruikers">
+            <Tab text="Gebruikers" styleClass="navtab">
                <content>
                   <AnchorPane fx:id="userTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
-            <Tab text="Mijn Account">
+            <Tab text="Mijn Account" styleClass="navtab">
                <content>
                   <AnchorPane fx:id="accountTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
-            <Tab text="Statistieken">
+            <Tab text="Statistieken" styleClass="navtab">
                <content>
                   <AnchorPane fx:id="statsTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>
-            <Tab text="Over Lorem">
+            <Tab text="Over Lorem" styleClass="navtab">
                <content>
                   <AnchorPane fx:id="aboutTab" prefHeight="200.0" prefWidth="200.0" />
                </content></Tab>

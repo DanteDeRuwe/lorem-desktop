@@ -26,9 +26,13 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 
 		Scene scene = new Scene(rootNode);
+
+		scene.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());
+
 		stage.setScene(scene);
 		stage.setMaximized(true);
 		stage.setTitle("Lorem");
+
 		stage.show();
 
 		stage.setOnCloseRequest(e -> handleExit());

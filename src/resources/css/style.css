@@ -1,0 +1,25 @@
+/*
+    * BLUE #0081C5
+    * YELLOW #FFEA00
+    * BLUE 50% lightness #317294
+*/
+
+.jfx-tab-pane {
+	-jfx-disable-animation: true;
+}
+
+.jfx-tab-pane .headers-region {
+    -fx-background-color: #0081C5;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #0081C5;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #FFEA00;
+    -fx-stroke-width: 3pt;
+}
+
+.jfx-tab-pane .navtab:disabled .tab-label{
+	 -fx-text-fill: #317294;
+}
+
