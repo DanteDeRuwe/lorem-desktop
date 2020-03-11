@@ -53,7 +53,8 @@ public class SessionSceneController extends GuiController {
 		displayOnRightPane("SessionTabs");
 
 		// Event Handlers
-		sessionTable.setOnMouseClicked(e -> showSessionInfo());
+		sessionTable.getSelectionModel().selectedItemProperty()
+				.addListener((x, y, session) -> showSessionInfo(session));
 
 	}
 
@@ -61,11 +62,11 @@ public class SessionSceneController extends GuiController {
 	 * Helpers
 	 */
 
-	private void showSessionInfo() {
+	private void showSessionInfo(Session session) {
 		// ((InfoTabController)
 		// infoTabController).setInspectedSession(sessionTable.getSelectionModel().getSelectedItem());
 		((SessionTabsController) sessionTabsController)
-				.showSessionInfo(sessionTable.getSelectionModel().getSelectedItem());
+				.showSessionInfo(session);
 	}
 
 	void fillTableColumns() {
@@ -96,6 +97,7 @@ public class SessionSceneController extends GuiController {
 		// gets called when selecting new calendar
 
 		fillTableColumns();
+		sessionTable.getSelectionModel().selectFirst();
 		((SessionFiltersController) sessionFiltersController).UpdateAcademicYear();
 	}
 
