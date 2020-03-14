@@ -1,5 +1,8 @@
 package gui.controllers;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,8 +26,10 @@ public class SessionSceneController extends GuiController {
 	// FXML vars
 	@FXML private AnchorPane leftPane, middlePane, rightPane;
 	@FXML protected TableView<Session> sessionTable;
-	@FXML private TableColumn<Session, String> titleColumn, startColumn, durationColumn, organizerColumn, speakerColumn,
+	@FXML private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn,
 			locationColumn, capacityColumn;
+	@FXML private TableColumn<Session, LocalDateTime> startColumn;
+	@FXML private TableColumn<Session, Duration> durationColumn;
 
 	/*
 	 * Init
@@ -73,8 +78,8 @@ public class SessionSceneController extends GuiController {
 		sessionList = FXCollections.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessions());
 
 		GuiUtil.fillColumn(titleColumn, "title", 40, 500);
-		GuiUtil.fillColumn(startColumn, "start", 40, 150);
-		GuiUtil.fillColumn(durationColumn, "duration", 60, 60);
+		GuiUtil.fillColumnWithDateTime(startColumn, "start", 40, 150);
+		GuiUtil.fillColumnWithDuration(durationColumn, "duration", 60, 100);
 		GuiUtil.fillColumn(organizerColumn, "organizer", 40, 300);
 		GuiUtil.fillColumn(speakerColumn, "speaker", 40, 200);
 		GuiUtil.fillColumn(locationColumn, "location", 40, 200);

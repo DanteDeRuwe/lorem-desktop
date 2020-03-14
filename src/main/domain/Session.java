@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import main.services.Util;
@@ -23,15 +25,9 @@ import main.services.Util;
 		@NamedQuery(name = "Session.findByTitle", query = "select s from Session s where s.title = :sessionTitle") })
 public class Session {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	@ManyToOne
-    @JoinColumn(name="member_id", nullable=false)
-	private Member organizer;
-	@ManyToOne
-    @JoinColumn(name="calendar_id", nullable=false)
-	private SessionCalendar calendar;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long id;
+	@ManyToOne @JoinColumn(name = "member_id", nullable = false) private Member organizer;
+	@ManyToOne @JoinColumn(name = "calendar_id", nullable = false) private SessionCalendar calendar;
 	private String location, title, speakerName;
 	private LocalDateTime startTime, endTime;
 	private int capacity;
@@ -144,7 +140,7 @@ public class Session {
 	public void setCapacity(int value) {
 		this.capacity = value;
 	}
-	
+
 	public void setCalendar(SessionCalendar cal) {
 		this.calendar = cal;
 	}
@@ -173,15 +169,13 @@ public class Session {
 					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
 	}
 
-	public StringProperty startProperty() {
-		return new SimpleStringProperty(startTime.format(Util.DATETIMEFORMATTER));
+	public ObjectProperty<LocalDateTime> startProperty() {
+		return new SimpleObjectProperty<LocalDateTime>(startTime);
 	}
 
-	public StringProperty durationProperty() {
+	public ObjectProperty<Duration> durationProperty() {
 		Duration duration = Duration.between(startTime, endTime);
-		int durationHours = duration.toHoursPart();
-		int durationMinutes = duration.toMinutesPart();
-		return new SimpleStringProperty(String.format("%dh %dm", durationHours, durationMinutes));
+		return new SimpleObjectProperty<Duration>(duration);
 	}
 
 	public StringProperty organizerProperty() {
@@ -195,7 +189,7 @@ public class Session {
 	public StringProperty locationProperty() {
 		return new SimpleStringProperty(location);
 	}
-	
+
 	public StringProperty capacityProperty() {
 		return new SimpleStringProperty(Integer.toString(capacity));
 	}

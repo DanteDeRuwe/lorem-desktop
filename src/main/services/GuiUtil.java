@@ -1,5 +1,9 @@
 package main.services;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -26,4 +30,49 @@ public class GuiUtil {
 		col.setMaxWidth(maxWidth);
 		col.setResizable(true);
 	}
+
+	public static <T> void fillColumnWithDateTime(TableColumn<T, LocalDateTime> col, String propname, int minWidth,
+			int maxWidth) {
+		col.setCellValueFactory(new PropertyValueFactory<>(propname));
+		col.setMinWidth(minWidth);
+		col.setMaxWidth(maxWidth);
+		col.setResizable(true);
+		col.setCellFactory(tc -> new TableCell<T, LocalDateTime>() {
+			@Override
+			protected void updateItem(LocalDateTime dateTime, boolean empty) {
+				super.updateItem(dateTime, empty);
+				if (empty) {
+					setText(null);
+				} else {
+					setText(Util.DATETIMEFORMATTER.format(dateTime));
+				}
+			}
+		});
+	}
+
+	public static <T> void fillColumnWithDuration(TableColumn<T, Duration> col, String propname, int minWidth,
+			int maxWidth) {
+		col.setCellValueFactory(new PropertyValueFactory<>(propname));
+		col.setMinWidth(minWidth);
+		col.setMaxWidth(maxWidth);
+		col.setResizable(true);
+		col.setCellFactory(tc -> new TableCell<T, Duration>() {
+			@Override
+			protected void updateItem(Duration duration, boolean empty) {
+				super.updateItem(duration, empty);
+				if (empty) {
+					setText(null);
+				} else {
+
+					int durationHours = duration.toHoursPart();
+					int durationMinutes = duration.toMinutesPart();
+					setText(durationHours > 0
+							? String.format("%du %dm", durationHours, durationMinutes)
+							: String.format("%dm", durationMinutes));
+
+				}
+			}
+		});
+	}
+
 }
