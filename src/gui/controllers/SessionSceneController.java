@@ -68,10 +68,7 @@ public class SessionSceneController extends GuiController {
 	 */
 
 	private void showSessionInfo(Session session) {
-		// ((InfoTabController)
-		// infoTabController).setInspectedSession(sessionTable.getSelectionModel().getSelectedItem());
-		((SessionTabsController) sessionTabsController)
-				.showSessionInfo(session);
+		((SessionTabsController) sessionTabsController).showSessionInfo(session);
 	}
 
 	void fillTableColumns() {
@@ -99,11 +96,15 @@ public class SessionSceneController extends GuiController {
 	}
 
 	void update() {
-		// gets called when selecting new calendar
-
+		// update the view
 		fillTableColumns();
-		sessionTable.getSelectionModel().selectFirst();
 		((SessionFiltersController) sessionFiltersController).UpdateAcademicYear();
+		sessionTable.getSelectionModel().selectFirst(); // select first session
+	}
+
+	void updateWithSession(Session s) {
+		update();
+		sessionTable.getSelectionModel().select(s); // select newly added session
 	}
 
 }

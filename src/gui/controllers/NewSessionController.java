@@ -2,6 +2,7 @@ package gui.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -10,6 +11,7 @@ import com.jfoenix.controls.JFXTimePicker;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import main.domain.Member;
 import main.domain.Session;
 import main.domain.facades.MemberFacade;
@@ -30,17 +32,28 @@ public class NewSessionController extends GuiController {
 	 */
 	@FXML
 	public void initialize() {
+
 		// Event Listeners
-		cancelButton.setOnAction(e -> goBackToSessionTabs());
-		confirmButton.setOnAction(e -> handleConfirm());
+		cancelButton.setOnAction(e -> goBack());
+		confirmButton.setOnAction(e -> onNewSessionConfirm());
 	}
 
 	/*
 	 * Private helpers
 	 */
 
-	private void goBackToSessionTabs() {
+	private void goBack() {
+		// clears fields and goes back to details view
+		clearFields();
 		((SessionSceneController) getParentController()).displayOnRightPane("SessionTabs");
+	}
+
+	private void clearFields() {
+		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField)
+				.forEach(tf -> tf.setText(""));
+
+		startDateField.setValue(null);
+		startTimeField.setValue(null);
 	}
 
 	private boolean allFieldsOk() {
@@ -61,7 +74,7 @@ public class NewSessionController extends GuiController {
 				&& capacityNumeric;
 	}
 
-	private void handleConfirm() {
+	private void onNewSessionConfirm() {
 		// Do validation
 		validationLabel.setText("");
 		if (!allFieldsOk())
@@ -86,10 +99,12 @@ public class NewSessionController extends GuiController {
 		Session s = scf.createSessionFromFields(
 				organizer, title, speaker, startDate, startTime, duration, location, capacity);
 
+		// Add session
 		scf.addSession(s);
 
-		// In the end, go back to the session Tabs
-		goBackToSessionTabs();
+		// finally
+		getMainController().getSessionSceneController().updateWithSession(s); // update tableview with new session
+		goBack(); // clears fields and goes back to details view
 	}
 
 }

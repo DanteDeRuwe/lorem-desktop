@@ -23,8 +23,8 @@ public class CalendarSceneController extends GuiController {
 		fillList();
 
 		// Event Listeners
-		selectButton.setOnAction((event) -> handleSelectButton());
-		editButton.setOnAction((event) -> handleEditButton());
+		selectButton.setOnAction((event) -> onCalendarSelect());
+		editButton.setOnAction((event) -> onCalendarEdit());
 	}
 
 	/*
@@ -38,7 +38,7 @@ public class CalendarSceneController extends GuiController {
 		calendarListView.setItems(calendarList);
 	}
 
-	private void handleSelectButton() {
+	private void onCalendarSelect() {
 
 		// Set the calendar
 		((SessionCalendarFacade) getFacade()).setCalendar(calendarListView.getSelectionModel().getSelectedItem());
@@ -51,7 +51,7 @@ public class CalendarSceneController extends GuiController {
 		getMainController().switchToSessionTab();
 	}
 
-	private void handleEditButton() {
+	private void onCalendarEdit() {
 		// TODO: edit dialog using current selected session
 	}
 

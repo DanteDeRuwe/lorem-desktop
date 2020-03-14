@@ -31,6 +31,9 @@ public class InfoTabController extends GuiController {
 	}
 
 	private void updateLabels() {
+		if (inspectedSession == null)
+			return;
+
 		sessionTitle.setText(inspectedSession.getTitle());
 		sessionDate.setText(inspectedSession.getStart().format(Util.DATEFORMATTER));
 		sessionTime.setText(inspectedSession.getStart().format(Util.TIMEFORMATTER));
