@@ -41,7 +41,7 @@ public class DataValidation {
 	}
 
 	public static boolean textNumeric(TextField inputTextField, Label validationLabel, String validationText) {
-		if (!inputTextField.getText().matches("[0-9]+\\.[0-9]+")) {
+		if (!inputTextField.getText().matches("[0-9]+\\.?[0-9]+")) {
 			validationLabel.setText(validationLabel.getText() + "\n" + validationText);
 			return false;
 		}
