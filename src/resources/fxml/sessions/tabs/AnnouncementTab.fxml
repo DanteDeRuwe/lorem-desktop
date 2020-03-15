@@ -10,22 +10,22 @@
    <children>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="376.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="330.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="837.0" style="-fx-background-color: #4059a9;" text="Nieuwe Aankondiging" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="addAnnouncementButton" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="837.0" style="-fx-background-color: #4059a9;" text="Nieuwe Aankondiging" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" />
                </HBox.margin>
             </JFXButton>
          </children>
       </HBox>
-      <ListView layoutY="56.0" prefHeight="306.0" prefWidth="330.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ListView fx:id="announcementListView" layoutY="56.0" prefHeight="306.0" prefWidth="330.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <HBox alignment="CENTER" layoutY="359.20001220703125" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="modifyAnnouncementButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="deleteAnnouncementButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
