@@ -15,13 +15,13 @@
                </children></AnchorPane>
             <AnchorPane fx:id="middlePane" minWidth="300.0">
                <children>
-                  <TableView prefHeight="598.4" prefWidth="385.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="userTable" prefHeight="598.4" prefWidth="385.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Naam" />
-                      <TableColumn prefWidth="75.0" text="Voormaan" />
-                        <TableColumn prefWidth="75.0" text="Gebruikersnaam" />
-                        <TableColumn prefWidth="75.0" text="Type" />
-                        <TableColumn prefWidth="75.0" text="Status" />
+                      <TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Naam" />
+                      <TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="Voormaan" />
+                        <TableColumn fx:id="usernameColumn" prefWidth="75.0" text="Gebruikersnaam" />
+                        <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+                        <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY" />
@@ -29,11 +29,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="sessionDetails">
-               <children>
-                  <fx:include source="UserDetails.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
+            <AnchorPane fx:id="rightPane" />
          </items>
       </SplitPane>
    </children>

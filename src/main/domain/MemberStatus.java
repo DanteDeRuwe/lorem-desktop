@@ -1,21 +1,22 @@
 package main.domain;
 
-public enum MemberType {
-	USER {
+public enum MemberStatus {
+	ACTIVE {
 		public String toString() {
-			return "Gebruiker";
+			return "Actief";
 		}
 	},
 	
-	ADMIN {
+	INACTIVE {
 		public String toString() {
-			return "Admin";
+			return "Inactief";
 		}
 	},
 	
-	HEADADMIN {
+	BLOCKED {
 		public String toString() {
-			return "Hoofd Admin";
+			return "Geblokkeerd";
 		}
 	}
+	
 }

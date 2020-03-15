@@ -1,5 +1,8 @@
 package main.domain.facades;
 
+import java.util.List;
+
+import javafx.util.Callback;
 import main.domain.Member;
 import persistence.MemberDao;
 import persistence.MemberDaoJpa;
@@ -27,6 +30,10 @@ public class MemberFacade implements Facade {
 
 	public void setLoggedInMember(Member loggedInMember) {
 		this.loggedInMember = loggedInMember;
+	}
+
+	public List<Member> getAllMembers() {
+		return memberRepo.findAll();
 	}
 
 }

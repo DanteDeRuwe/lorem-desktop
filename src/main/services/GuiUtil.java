@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import main.domain.MemberType;
 
 public class GuiUtil {
 
@@ -70,6 +71,25 @@ public class GuiUtil {
 							? String.format("%du %dm", durationHours, durationMinutes)
 							: String.format("%dm", durationMinutes));
 
+				}
+			}
+		});
+	}
+	
+	public static <T> void fillColumnWithObjectToString(TableColumn<T, Object> col, String propname, int minWidth, int maxWidth) {
+		col.setCellValueFactory(new PropertyValueFactory<>(propname));
+		col.setMinWidth(minWidth);
+		col.setMaxWidth(maxWidth);
+		col.setResizable(true);
+		
+		col.setCellFactory(tc -> new TableCell<T, Object>() {
+			@Override
+			protected void updateItem(Object object, boolean empty) {
+				super.updateItem(object, empty);
+				if (empty) {
+					setText(null);
+				} else {
+					setText(object.toString());
 				}
 			}
 		});

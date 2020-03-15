@@ -24,17 +24,24 @@ public class Member {
 	@OneToMany(mappedBy = "organizer") private Set<Session> sessions;
 
 	private MemberType memberType;
+	
+	private MemberStatus memberStatus;
 
 	public Member() {
 	};
 
-	public Member(String username, String firstName, String lastName, MemberType memberType) {
+	public Member(String username, String firstName, String lastName, MemberType memberType, MemberStatus memberStatus) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.memberType = memberType;
+		this.setMemberType(memberType);
+		this.memberStatus = memberStatus;
 
 		sessions = new HashSet<Session>();
+	}
+	
+	public Member(String username, String firstName, String lastName, MemberType memberType) {
+		this(username, firstName, lastName, memberType, MemberStatus.ACTIVE);
 	}
 
 	public String getUsername() {
@@ -67,6 +74,22 @@ public class Member {
 
 	public void addSession(Session session) {
 		sessions.add(session);
+	}
+
+	public MemberStatus getMemberStatus() {
+		return memberStatus;
+	}
+
+	public void setMemberStatus(MemberStatus memberStatus) {
+		this.memberStatus = memberStatus;
+	}
+
+	public MemberType getMemberType() {
+		return memberType;
+	}
+
+	public void setMemberType(MemberType memberType) {
+		this.memberType = memberType;
 	}
 
 }
