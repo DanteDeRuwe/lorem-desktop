@@ -24,12 +24,16 @@ public class SessionSceneController extends GuiController {
 	private ObservableList<Session> sessionList;
 
 	// FXML vars
-	@FXML private AnchorPane leftPane, middlePane, rightPane;
-	@FXML protected TableView<Session> sessionTable;
-	@FXML private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn,
-			locationColumn, capacityColumn;
-	@FXML private TableColumn<Session, LocalDateTime> startColumn;
-	@FXML private TableColumn<Session, Duration> durationColumn;
+	@FXML
+	private AnchorPane leftPane, middlePane, rightPane;
+	@FXML
+	protected TableView<Session> sessionTable;
+	@FXML
+	private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn, capacityColumn;
+	@FXML
+	private TableColumn<Session, LocalDateTime> startColumn;
+	@FXML
+	private TableColumn<Session, Duration> durationColumn;
 
 	/*
 	 * Init
@@ -58,18 +62,14 @@ public class SessionSceneController extends GuiController {
 		displayOnRightPane("SessionTabs");
 
 		// Event Handlers
-		sessionTable.getSelectionModel().selectedItemProperty()
-				.addListener((x, y, session) -> showSessionInfo(session));
+		sessionTable.getSelectionModel().selectedItemProperty().addListener(
+				(x, y, session) -> ((SessionTabsController) sessionTabsController).setInspectedSession(session));
 
 	}
 
 	/*
 	 * Helpers
 	 */
-
-	private void showSessionInfo(Session session) {
-		((SessionTabsController) sessionTabsController).showSessionInfo(session);
-	}
 
 	void fillTableColumns() {
 		sessionList = FXCollections.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessions());

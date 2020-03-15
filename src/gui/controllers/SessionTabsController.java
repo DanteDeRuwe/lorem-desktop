@@ -12,6 +12,8 @@ public class SessionTabsController extends GuiController {
 	private InfoTabController infoTabController;
 	private AnnouncementTabController announcementTabController;
 
+	private Session inspectedSession;
+
 	@FXML
 	public void initialize() {
 		infoTabController = new InfoTabController();
@@ -23,9 +25,16 @@ public class SessionTabsController extends GuiController {
 		GuiUtil.bindAnchorPane(infoTabRoot, infoTab);
 		GuiUtil.bindAnchorPane(announcementTabRoot, announcementTab);
 	}
-
-	public void showSessionInfo(Session session) {
+	
+	public void setInspectedSession(Session session) {
+		inspectedSession = session;
+		//update tabs
 		infoTabController.setInspectedSession(session);
+		announcementTabController.setInspectedSession(session);
+	}
+	
+	public Session getInspectedSession(Session session) {
+		return inspectedSession;
 	}
 
 }
