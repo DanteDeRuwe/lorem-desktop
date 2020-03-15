@@ -34,7 +34,11 @@ public class CalendarSceneController extends GuiController {
 	private void fillList() {
 		calendarList = FXCollections
 				.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessionCalendars());
-		calendarListView.setCellFactory(new PropertyValueFactoryWrapperCellFactory<>("academicYear"));
+
+		calendarListView.setCellFactory(
+				new PropertyValueFactoryWrapperCellFactory<SessionCalendar>("academicYear", this::onCalendarSelect)
+		);
+
 		calendarListView.setItems(calendarList);
 	}
 
