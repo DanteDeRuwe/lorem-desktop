@@ -91,6 +91,11 @@ public class SessionCalendar {
 	}
 
 	public void deleteSession(Session session) {
+
+		// remove from this calendar
+		sessions.remove(session);
+
+		// persist
 		SessionDaoJpa sessionRepo = new SessionDaoJpa();
 		GenericDaoJpa.startTransaction();
 		sessionRepo.delete(session);
