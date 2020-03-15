@@ -1,12 +1,18 @@
 package gui.controllers;
 
+import java.util.Optional;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import main.domain.Session;
+import main.domain.facades.SessionCalendarFacade;
 import main.services.Util;
 
 public class InfoTabController extends GuiController {
@@ -23,6 +29,20 @@ public class InfoTabController extends GuiController {
 
 	@FXML
 	public void initialize() {
+		deleteSessionButton.setOnMouseClicked((event) -> handleDeleteSession());
+	}
+
+	private void handleDeleteSession() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Sessie verwijderen");
+		alert.setHeaderText("Waarschuwing");
+		alert.setContentText(String.format("Ben je zeker dat je de sessie \"%s\" wilt verwijderen?", inspectedSession.getTitle()));
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			((SessionCalendarFacade) getFacade()).deleteSession(inspectedSession);
+			getMainController().getSessionSceneController().update();
+		}
 	}
 
 	public void setInspectedSession(Session session) {

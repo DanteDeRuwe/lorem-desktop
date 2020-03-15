@@ -74,4 +74,8 @@ public class SessionCalendarFacade implements Facade {
 		return calendar.getAcademicYear()[0] + " - " + calendar.getAcademicYear()[1];
 	}
 
+	public void deleteSession(Session session) {
+		calendar.deleteSession(session);
+	}
+
 }
