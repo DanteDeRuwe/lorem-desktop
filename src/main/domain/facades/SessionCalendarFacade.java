@@ -9,6 +9,7 @@ import java.util.Set;
 import main.domain.Member;
 import main.domain.Session;
 import main.domain.SessionCalendar;
+import main.exceptions.InvalidSessionException;
 import persistence.GenericDaoJpa;
 import persistence.SessionCalendarDaoJpa;
 import persistence.SessionDaoJpa;
@@ -25,19 +26,32 @@ public class SessionCalendarFacade implements Facade {
 		// TODO: this will throw an exception if there is no sessionCalendar for right
 		// now, change this so the user gets taken to NEW CALENDAR screen
 		setCalendar(sessionCalendarRepo.getCurrentSessionCalendar());
-
 	}
 
 	public Session createSessionFromFields(Member organizer, String title, String speakerName, LocalDate startDate,
-			LocalTime startTime, String duration, String location, String capacity) {
+			LocalTime startTime, String duration, String location, String capacity) throws InvalidSessionException {
 
-		LocalDateTime start = LocalDateTime.of(startDate, startTime);
+		try {
+			LocalDateTime start = LocalDateTime.of(startDate, startTime);
 
-		double durationInHours = Double.parseDouble(duration);
-		int durationInSeconds = (int) (durationInHours * 3600);
-		LocalDateTime end = start.plusSeconds(durationInSeconds);
+			double durationInHours = Double.parseDouble(duration);
+			int durationInSeconds = (int) (durationInHours * 3600);
+			LocalDateTime end = start.plusSeconds(durationInSeconds);
 
-		return new Session(organizer, title, speakerName, start, end, location, Integer.parseInt(capacity));
+			return new Session(organizer, title, speakerName, start, end, location, Integer.parseInt(capacity));
+
+		} catch (IllegalArgumentException iae) {
+			switch (iae.getMessage()) {
+			case "start in past":
+				throw new InvalidSessionException("Startdatum ligt in het verleden", iae);
+			case "start less than 1 day in future":
+				throw new InvalidSessionException("Start moet minstens 1 dag in de toekomst liggen", iae);
+			case "start and end do not meet minimum period requirement":
+				throw new InvalidSessionException("Duurtijd is minstens 30 minuten", iae);
+			default:
+				throw new InvalidSessionException(iae.getMessage(), iae);
+			}
+		}
 	}
 
 	public SessionCalendarFacade(SessionCalendar calendar) {
@@ -45,6 +59,7 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public void addSession(Session session) {
+		// add to calendar
 		calendar.addSession(session);
 
 		// persist

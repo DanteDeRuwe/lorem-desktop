@@ -16,6 +16,7 @@ import main.domain.Member;
 import main.domain.Session;
 import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionCalendarFacade;
+import main.exceptions.InvalidSessionException;
 import main.services.DataValidation;
 
 public class NewSessionController extends GuiController {
@@ -44,11 +45,12 @@ public class NewSessionController extends GuiController {
 
 	private void goBack() {
 		// clears fields and goes back to details view
-		clearFields();
+		resetView();
 		((SessionSceneController) getParentController()).displayOnRightPane("SessionTabs");
 	}
 
-	private void clearFields() {
+	private void resetView() {
+		validationLabel.setText("");
 		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField)
 				.forEach(tf -> tf.setText(""));
 
@@ -90,21 +92,28 @@ public class NewSessionController extends GuiController {
 		String capacity = capacityField.getText();
 
 		// Create a new session via facades
-		// TODO deal with business logic exceptions
 		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
 		MemberFacade mf = (MemberFacade) getMainController().getMemberFacade();
 
 		Member organizer = mf.getLoggedInMember();
 
-		Session s = scf.createSessionFromFields(
-				organizer, title, speaker, startDate, startTime, duration, location, capacity);
+		try {
+			// Construct session
+			Session s = scf.createSessionFromFields(
+					organizer, title, speaker, startDate, startTime, duration, location, capacity);
 
-		// Add session
-		scf.addSession(s);
+			// Add session
+			scf.addSession(s);
 
-		// finally
-		getMainController().getSessionSceneController().updateWithSession(s); // update tableview with new session
-		goBack(); // clears fields and goes back to details view
+			// if adding is succesful
+			getMainController().getSessionSceneController().updateWithSession(s); // update tableview with new session
+			goBack(); // clears fields and goes back to details view
+
+		} catch (InvalidSessionException e) {
+			validationLabel.setText(e.getMessage());
+			System.err.println("Invalid Session Exception, caused by " + e.getCause().getClass().getName()
+					+ "\nWith message: " + e.getMessage() + "\n");
+		}
 	}
 
 }

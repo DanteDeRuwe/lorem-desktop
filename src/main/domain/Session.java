@@ -43,18 +43,19 @@ public class Session {
 	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
 			String location, int capacity) {
 
-		this.organizer = null;
-		if (!meetsMinimumPeriodRequirement(start, end))
+		if (!meetsMinimumPeriodRequirement(start, end)) {
 			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
+		} else {
+			setStart(start);
+			setEnd(end);
+		}
 
 		this.organizer = organizer;
 		setTitle(title);
 		setSpeakerName(speakerName);
 		setLocation(location);
-
-		setStart(start);
-		setEnd(end);
 		setCapacity(capacity);
+
 	}
 
 	private boolean meetsMinimumPeriodRequirement(LocalDateTime start, LocalDateTime end) {
