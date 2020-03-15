@@ -14,22 +14,17 @@ import javax.persistence.OneToMany;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import persistence.GenericDaoJpa;
-import persistence.SessionDaoJpa;
 
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "SessionCalendar.getCurrentSessionCalendar", query = "select c from SessionCalendar c where CURRENT_DATE between c.startDate and c.endDate") })
 public class SessionCalendar {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long calendar_id;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long calendar_id;
 	private int[] academicYear;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	@OneToMany(mappedBy = "calendar")
-	private Set<Session> sessions;
+	@OneToMany(mappedBy = "calendar") private Set<Session> sessions;
 
 	public SessionCalendar() {
 	}
@@ -82,24 +77,10 @@ public class SessionCalendar {
 
 		// add the session to this calendar
 		sessions.add(session);
-
-		// persist
-		SessionDaoJpa sessionRepo = new SessionDaoJpa();
-		GenericDaoJpa.startTransaction();
-		sessionRepo.insert(session);
-		GenericDaoJpa.commitTransaction();
 	}
 
 	public void deleteSession(Session session) {
-
-		// remove from this calendar
 		sessions.remove(session);
-
-		// persist
-		SessionDaoJpa sessionRepo = new SessionDaoJpa();
-		GenericDaoJpa.startTransaction();
-		sessionRepo.delete(session);
-		GenericDaoJpa.commitTransaction();
 	}
 
 	public int[] getAcademicYear() {

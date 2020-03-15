@@ -9,19 +9,22 @@ import java.util.Set;
 import main.domain.Member;
 import main.domain.Session;
 import main.domain.SessionCalendar;
+import persistence.GenericDaoJpa;
 import persistence.SessionCalendarDaoJpa;
+import persistence.SessionDaoJpa;
 
 public class SessionCalendarFacade implements Facade {
 
-	SessionCalendarDaoJpa sesCalRepo = new SessionCalendarDaoJpa();
+	SessionCalendarDaoJpa sessionCalendarRepo = new SessionCalendarDaoJpa();
+	SessionDaoJpa sessionRepo = new SessionDaoJpa();
 	SessionCalendar calendar;
 
 	public SessionCalendarFacade() {
 
 		// set calendar to current calendar by default
 		// TODO: this will throw an exception if there is no sessionCalendar for right
-		// now, maybe a try catch or something.
-		setCalendar(sesCalRepo.getCurrentSessionCalendar());
+		// now, change this so the user gets taken to NEW CALENDAR screen
+		setCalendar(sessionCalendarRepo.getCurrentSessionCalendar());
 
 	}
 
@@ -43,13 +46,24 @@ public class SessionCalendarFacade implements Facade {
 
 	public void addSession(Session session) {
 		calendar.addSession(session);
+
+		// persist
+		GenericDaoJpa.startTransaction();
+		sessionRepo.insert(session);
+		GenericDaoJpa.commitTransaction();
 	}
 
-	public void removeSession(int id) {
-		// TODO remove session from database
+	public void deleteSession(Session session) {
+		// delete from calendar
+		calendar.deleteSession(session);
+
+		// persist
+		GenericDaoJpa.startTransaction();
+		sessionRepo.delete(session);
+		GenericDaoJpa.commitTransaction();
 	}
 
-	public Session getSession(int id) {
+	public Session getSessionById(int id) {
 		// TODO getSession from database
 		return null;
 	}
@@ -59,7 +73,7 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public List<SessionCalendar> getAllSessionCalendars() {
-		return sesCalRepo.findAll();
+		return sessionCalendarRepo.findAll();
 	}
 
 	public SessionCalendar getCalendar() {
@@ -72,10 +86,6 @@ public class SessionCalendarFacade implements Facade {
 
 	public String getAcademicYear() {
 		return calendar.getAcademicYear()[0] + " - " + calendar.getAcademicYear()[1];
-	}
-
-	public void deleteSession(Session session) {
-		calendar.deleteSession(session);
 	}
 
 }

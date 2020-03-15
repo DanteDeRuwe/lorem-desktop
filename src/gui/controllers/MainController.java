@@ -62,19 +62,16 @@ public class MainController extends GuiController {
 		memberFacade = new MemberFacade();
 
 		// initialize controllers
-		sessionSceneController = new SessionSceneController();
 		calendarSceneController = new CalendarSceneController();
+		sessionSceneController = new SessionSceneController();
 		userSceneController = new UserSceneController();
-		
 
 		// Load the FXML
 		// (this injects a parentcontroller and a facade into the controllers)
-		AnchorPane sessionSceneRoot = loadFXML("sessions/SessionScene.fxml", sessionSceneController,
-				sessionCalendarFacade);
-
 		AnchorPane calendarSceneRoot = loadFXML("calendar/CalendarScene.fxml", calendarSceneController,
 				sessionCalendarFacade);
-		
+		AnchorPane sessionSceneRoot = loadFXML("sessions/SessionScene.fxml", sessionSceneController,
+				sessionCalendarFacade);
 		AnchorPane userSceneRoot = loadFXML("users/UserScene.fxml", userSceneController,
 				memberFacade);
 
