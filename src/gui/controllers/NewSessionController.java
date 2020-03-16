@@ -19,6 +19,7 @@ import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
 import main.services.DataValidation;
+import main.services.GuiUtil;
 
 public class NewSessionController extends GuiController {
 
@@ -35,6 +36,9 @@ public class NewSessionController extends GuiController {
 	 */
 	@FXML
 	public void initialize() {
+
+		// 24hour view on the time picker
+		GuiUtil.fixTimePicker(startTimeField);
 
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());

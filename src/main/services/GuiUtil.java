@@ -2,13 +2,16 @@ package main.services;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import main.domain.MemberType;
+import javafx.util.converter.LocalTimeStringConverter;
 
 public class GuiUtil {
 
@@ -23,6 +26,11 @@ public class GuiUtil {
 		setAnchorsZero(child);
 		parent.getChildren().clear();
 		parent.getChildren().add(child);
+	}
+
+	public static void fixTimePicker(JFXTimePicker picker) {
+		picker.set24HourView(true);
+		picker.setConverter(new LocalTimeStringConverter(FormatStyle.SHORT, Locale.FRANCE));
 	}
 
 	public static <T> void fillColumn(TableColumn<T, String> col, String propname, int minWidth, int maxWidth) {

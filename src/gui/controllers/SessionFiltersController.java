@@ -15,7 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
-import main.services.Util;
+import main.services.GuiUtil;
 
 public class SessionFiltersController extends GuiController {
 
@@ -33,6 +33,10 @@ public class SessionFiltersController extends GuiController {
 
 	@FXML
 	public void initialize() {
+
+		// 24hour view on the time picker
+		GuiUtil.fixTimePicker(startTimeFilterField);
+
 		// Change Label
 		UpdateAcademicYear();
 

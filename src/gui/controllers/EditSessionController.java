@@ -21,6 +21,7 @@ import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
 import main.services.DataValidation;
+import main.services.GuiUtil;
 
 public class EditSessionController extends GuiController {
 
@@ -40,6 +41,9 @@ public class EditSessionController extends GuiController {
 	 */
 	@FXML
 	public void initialize() {
+
+		// 24hour view on the time picker
+		GuiUtil.fixTimePicker(startTimeField);
 
 		// get the session
 		sessionToEdit = getMainController().getSessionSceneController().getInspectedSession();
