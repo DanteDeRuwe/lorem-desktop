@@ -9,8 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="infoTabRoot" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane fx:id="infoTabRoot" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="418.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -19,7 +20,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" top="20.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </Label>
             <HBox>
@@ -66,22 +67,22 @@
                   </Label>
                </children>
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
             <Separator prefWidth="200.0">
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" top="15.0" />
                </VBox.margin>
             </Separator>
-            <Text fx:id="sessionDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="300.0">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-            </Text>
+            <TextFlow>
+               <children>
+                  <Text fx:id="sessionDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="300.0" />
+               </children>
+            </TextFlow>
             <Separator layoutX="25.0" layoutY="93.0" prefWidth="200.0">
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" top="15.0" />
                </VBox.margin>
             </Separator>
             <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="300.0">
@@ -98,10 +99,13 @@
                   </JFXButton>
                </children>
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </HBox>
          </children>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
       </VBox>
    </children>
 </AnchorPane>

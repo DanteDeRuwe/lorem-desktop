@@ -18,14 +18,14 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </ImageView>
-            <Label text="Naam Achternaam">
+            <Label fx:id="nameLabel" text="Naam Achternaam">
                <font>
                   <Font name="System Bold" size="28.0" />
                </font>
             </Label>
             <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="366.0">
                <children>
-                  <Label text="Membertype" textFill="#979797">
+                  <Label fx:id="membertypeLabel" text="Membertype" textFill="#979797">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
@@ -35,7 +35,7 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Label>
-                  <Label layoutX="10.0" layoutY="10.0" text="username" textFill="#979797">
+                  <Label fx:id="usernameLabel" layoutX="10.0" layoutY="10.0" text="username" textFill="#979797">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
@@ -49,12 +49,12 @@
       </VBox>
       <HBox alignment="CENTER" layoutY="520.0" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="editUserButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="deleteUserButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
