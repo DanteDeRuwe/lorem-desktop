@@ -11,7 +11,7 @@
          <items>
             <AnchorPane fx:id="leftPane" maxWidth="300.0" minWidth="0.0" prefWidth="200.0">
                <children>
-                  <fx:include source="UserFilters.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <fx:include fx:id="userFilters" source="UserFilters.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>
             <AnchorPane fx:id="middlePane" minWidth="300.0">
                <children>

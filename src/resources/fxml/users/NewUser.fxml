@@ -22,17 +22,17 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <JFXTextField labelFloat="true" prefWidth="220.0" promptText="Voornaam">
+            <JFXTextField fx:id="firstNameField" labelFloat="true" prefWidth="220.0" promptText="Voornaam">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField labelFloat="true" prefHeight="26.0" prefWidth="220.0" promptText="Naam">
+            <JFXTextField fx:id="lastNameField" labelFloat="true" prefHeight="26.0" prefWidth="220.0" promptText="Naam">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Gebruikersnaam Chamilo">
+            <JFXTextField fx:id="usernameField" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Gebruikersnaam Chamilo">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -42,12 +42,12 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
                <children>
-                  <JFXComboBox prefWidth="220.0" promptText="Type">
+                  <JFXComboBox fx:id="userTypeField" prefWidth="220.0" promptText="Type">
                      <HBox.margin>
                         <Insets right="30.0" />
                      </HBox.margin>
                   </JFXComboBox>
-                  <JFXComboBox prefWidth="220.0" promptText="Status" />
+                  <JFXComboBox fx:id="userStatusField" prefWidth="220.0" promptText="Status" />
                </children>
             </HBox>
             <HBox>
@@ -57,7 +57,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <JFXButton prefHeight="0.0" prefWidth="62.0" style="-fx-background-color: #c1c1c1;" text="Upload..." />
+                  <JFXButton fx:id="photoUploadButton" prefHeight="0.0" prefWidth="62.0" style="-fx-background-color: #c1c1c1;" text="Upload..." />
                   <Label layoutX="10.0" layoutY="10.0" prefHeight="27.0" prefWidth="107.0" text="C://profielfoto.png" textFill="#676767">
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -68,6 +68,7 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="30.0" />
                </VBox.margin>
             </HBox>
+            <Label fx:id="validationLabel" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="252.0" text="" textFill="#c92118" />
          </children>
          <padding>
             <Insets top="50.0" />
@@ -75,12 +76,12 @@
       </VBox>
       <HBox alignment="CENTER" layoutX="10.0" layoutY="369.20001220703125" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Voeg Toe" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="addUserButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Voeg Toe" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #c1c1c1;" text="Annuleer" textAlignment="CENTER">
+            <JFXButton fx:id="cancelButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #c1c1c1;" text="Annuleer" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>

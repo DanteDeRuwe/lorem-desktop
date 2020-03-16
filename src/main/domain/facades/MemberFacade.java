@@ -4,6 +4,7 @@ import java.util.List;
 
 import javafx.util.Callback;
 import main.domain.Member;
+import persistence.GenericDaoJpa;
 import persistence.MemberDao;
 import persistence.MemberDaoJpa;
 
@@ -34,6 +35,12 @@ public class MemberFacade implements Facade {
 
 	public List<Member> getAllMembers() {
 		return memberRepo.findAll();
+	}
+	
+	public void addMember(Member member) {
+		GenericDaoJpa.startTransaction();
+		memberRepo.insert(member);
+		GenericDaoJpa.commitTransaction();
 	}
 
 }

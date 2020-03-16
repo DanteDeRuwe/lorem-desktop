@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import persistence.EmfHelper;
+import persistence.GenericDaoJpa;
 
 public class Main extends Application {
 
@@ -40,7 +41,7 @@ public class Main extends Application {
 	}
 
 	private void handleExit() {
-		EmfHelper.getEmf().close();
+		GenericDaoJpa.closePersistency();
 		Platform.exit();
 		System.exit(0);
 	}

@@ -14,11 +14,11 @@ import main.services.GuiUtil;
 public class UserSceneController extends GuiController {
 	
 	// Controllers
-	private GuiController userDetailsController;
+	private GuiController userDetailsController, newUserController, userFiltersController;
 	
 	// Own vars
 	private ObservableList<Member> userList;
-	private AnchorPane userDetails;
+	private AnchorPane userDetails, newUser, userFilters;
 	
 	// FXML vars
 	@FXML private AnchorPane leftPane, middlePane, rightPane;
@@ -37,15 +37,23 @@ public class UserSceneController extends GuiController {
 		
 		// initialize controllers
 		userDetailsController = new UserDetailsController();
+		newUserController = new NewUserController();
+		userFiltersController = new UserFiltersController();
 		
 		// load FXML once, this also sets parentcontrollers and facades
 		userDetails = loadFXML("users/UserDetails.fxml", userDetailsController, this.getFacade());
+		newUser = loadFXML("users/NewUser.fxml", newUserController, this.getFacade());
+		userFilters = loadFXML("users/UserFilters.fxml", userFiltersController, this.getFacade());
+		
 
 		// Center Panel
 		fillTableColumns();
 		
 		// Right panel
 		GuiUtil.bindAnchorPane(userDetails, rightPane);
+		
+		// Left Panel
+		GuiUtil.bindAnchorPane(userFilters, leftPane);
 		
 		// Event Handlers
 		userTable.getSelectionModel().selectedItemProperty().addListener(
@@ -69,6 +77,26 @@ public class UserSceneController extends GuiController {
 		GuiUtil.fillColumnWithObjectToString(statusColumn, "memberStatus", 40, 200);
 		
 		userTable.setItems(userList);
+	}
+	
+	void update() {
+		// update the view
+		fillTableColumns();
+		userTable.getSelectionModel().selectFirst(); // select first user
+	}
+
+	void updateWithMember(Member m) {
+		update();
+		userTable.getSelectionModel().select(m); // select newly added session
+	}
+
+	void displayOnRightPane(String key) {
+		if (key.equals("UserDetails"))
+			GuiUtil.bindAnchorPane(userDetails, rightPane);
+		else if (key.equals("NewUser"))
+			GuiUtil.bindAnchorPane(newUser, rightPane);
+		else
+			throw new RuntimeException("key not valid");
 	}
 	
 }

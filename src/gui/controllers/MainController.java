@@ -116,5 +116,9 @@ public class MainController extends GuiController {
 	public SessionSceneController getSessionSceneController() {
 		return (SessionSceneController) sessionSceneController;
 	}
+	
+	public UserSceneController getUserSceneController() {
+		return (UserSceneController) userSceneController;
+	}
 
 }
