@@ -51,12 +51,14 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXComboBox maxWidth="1.7976931348623157E308" promptText="Type">
+            <Label text="Type"></Label>
+            <JFXComboBox fx:id="typeFilterBox" maxWidth="1.7976931348623157E308" promptText="Type">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXComboBox>
-            <JFXComboBox layoutX="25.0" layoutY="327.0" maxWidth="1.7976931348623157E308" promptText="Status">
+            <Label text="Status"></Label>
+            <JFXComboBox fx:id="statusFilterBox" layoutX="25.0" layoutY="327.0" maxWidth="1.7976931348623157E308" promptText="Status">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>

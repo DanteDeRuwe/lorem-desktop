@@ -9,13 +9,13 @@ public enum MemberType {
 	
 	ADMIN {
 		public String toString() {
-			return "Admin";
+			return "Verantwoordelijke";
 		}
 	},
 	
 	HEADADMIN {
 		public String toString() {
-			return "Hoofd Admin";
+			return "Hoofdverantwoordelijke";
 		}
 	}
 }
