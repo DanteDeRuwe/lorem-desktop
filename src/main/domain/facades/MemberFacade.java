@@ -2,9 +2,7 @@ package main.domain.facades;
 
 import java.util.List;
 
-import javafx.util.Callback;
 import main.domain.Member;
-import persistence.GenericDaoJpa;
 import persistence.MemberDao;
 import persistence.MemberDaoJpa;
 
@@ -38,17 +36,15 @@ public class MemberFacade implements Facade {
 	}
 
 	public void addMember(Member member) {
-		GenericDaoJpa.startTransaction();
 		memberRepo.insert(member);
-		GenericDaoJpa.commitTransaction();
 	}
 
 	public void deleteUser(Member member) {
 		if (member.equals(loggedInMember))
 			throw new IllegalArgumentException();
-		GenericDaoJpa.startTransaction();
+
 		memberRepo.delete(member);
-		GenericDaoJpa.commitTransaction();
+
 	}
 
 }
