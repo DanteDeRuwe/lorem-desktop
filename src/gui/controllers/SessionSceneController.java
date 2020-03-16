@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,23 +17,20 @@ import main.services.GuiUtil;
 public class SessionSceneController extends GuiController {
 
 	// Controllers
-	private GuiController sessionFiltersController, sessionTabsController, newSessionController,
-			modifySessionController, announcementTabController, feedbackTabController;
+	private GuiController sessionFiltersController, sessionTabsController, newSessionController, editSessionController;
 
 	// Own vars
-	private AnchorPane sessionFilters, sessionTabs, newSession;
+	private AnchorPane sessionFilters, sessionTabs, newSession, editSession;
+	private ObservableList<Session> sessionList;
+	private Session inspectedSession;
 
 	// FXML vars
-	@FXML
-	private AnchorPane leftPane, middlePane, rightPane;
-	@FXML
-	protected TableView<Session> sessionTable;
-	@FXML
-	private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn, capacityColumn;
-	@FXML
-	private TableColumn<Session, LocalDateTime> startColumn;
-	@FXML
-	private TableColumn<Session, Duration> durationColumn;
+	@FXML private AnchorPane leftPane, middlePane, rightPane;
+	@FXML protected TableView<Session> sessionTable;
+	@FXML private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn,
+			capacityColumn;
+	@FXML private TableColumn<Session, LocalDateTime> startColumn;
+	@FXML private TableColumn<Session, Duration> durationColumn;
 
 	/*
 	 * Init
@@ -47,7 +45,7 @@ public class SessionSceneController extends GuiController {
 
 		// load FXML once, this also sets parentcontrollers and facades
 		sessionFilters = loadFXML("sessions/SessionFilters.fxml", sessionFiltersController, this.getFacade());
-		newSession = loadFXML("sessions/NewSession.fxml", newSessionController, this.getFacade());
+		newSession = loadFXML("sessions/EditOrCreateSession.fxml", newSessionController, this.getFacade());
 		sessionTabs = loadFXML("sessions/SessionTabs.fxml", sessionTabsController, this.getFacade());
 
 		// Left Panel
@@ -61,7 +59,11 @@ public class SessionSceneController extends GuiController {
 
 		// Event Handlers
 		sessionTable.getSelectionModel().selectedItemProperty().addListener(
-				(x, y, session) -> ((SessionTabsController) sessionTabsController).setInspectedSession(session));
+				(x, y, session) -> {
+					setInspectedSession(session);
+					((SessionTabsController) sessionTabsController).updateInspectedSession(session);
+				}
+		);
 
 	}
 
@@ -86,20 +88,35 @@ public class SessionSceneController extends GuiController {
 			GuiUtil.bindAnchorPane(sessionTabs, rightPane);
 		else if (key.equals("NewSession"))
 			GuiUtil.bindAnchorPane(newSession, rightPane);
-		else
-			throw new RuntimeException("key not valid");
+		else if (key.equals("EditSession")) {
+			// editing a session relies heavily on a selected session.
+			// That's why we only load it when needed.
+			editSessionController = new EditSessionController();
+			editSession = loadFXML("sessions/EditOrCreateSession.fxml", editSessionController, this.getFacade());
+			GuiUtil.bindAnchorPane(editSession, rightPane);
+		} else
+			throw new RuntimeException("displayOnRightPane: key not valid");
 	}
 
 	void update() {
 		// update the view
 		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
 		((SessionFiltersController) sessionFiltersController).UpdateAcademicYear();
+		sessionTable.refresh();
 		sessionTable.getSelectionModel().selectFirst(); // select first session
 	}
 
 	void updateWithSession(Session s) {
 		update();
 		sessionTable.getSelectionModel().select(s); // select newly added session
+	}
+
+	public Session getInspectedSession() {
+		return inspectedSession;
+	}
+
+	public void setInspectedSession(Session inspectedSession) {
+		this.inspectedSession = inspectedSession;
 	}
 
 }

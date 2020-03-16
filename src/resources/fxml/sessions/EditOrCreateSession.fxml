@@ -17,7 +17,7 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutX="108.0" layoutY="24.0" prefHeight="544.0" prefWidth="270.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Nieuwe Sessie" VBox.vgrow="NEVER">
+            <Label fx:id="headerText" text="Nieuwe Sessie" VBox.vgrow="NEVER">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

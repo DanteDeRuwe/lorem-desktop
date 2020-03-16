@@ -25,25 +25,31 @@ public class InfoTabController extends GuiController {
 
 	@FXML
 	public void initialize() {
-		deleteSessionButton.setOnMouseClicked((event) -> handleDeleteSession());
+		SessionSceneController ssc = getMainController().getSessionSceneController();
+
+		// Event handlers
+		deleteSessionButton.setOnMouseClicked((e) -> handleDeleteSession());
+		editSessionButton.setOnMouseClicked(
+				(e) -> { ssc.displayOnRightPane("EditSession"); }
+		);
 	}
 
 	private void handleDeleteSession() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Sessie verwijderen");
 		alert.setHeaderText("Waarschuwing");
-		alert.setContentText(String.format("Ben je zeker dat je de sessie \"%s\" wilt verwijderen?", inspectedSession.getTitle()));
+		alert.setContentText(
+				String.format(
+						"Ben je zeker dat je de sessie \"%s\" wilt verwijderen?",
+						inspectedSession.getTitle()
+				)
+		);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			((SessionCalendarFacade) getFacade()).deleteSession(inspectedSession);
 			getMainController().getSessionSceneController().update();
 		}
-	}
-
-	public void setInspectedSession(Session session) {
-		inspectedSession = session;
-		updateLabels();
 	}
 
 	private void updateLabels() {
@@ -56,6 +62,15 @@ public class InfoTabController extends GuiController {
 		sessionLocation.setText(inspectedSession.getLocation());
 		sessionSpeaker.setText(inspectedSession.getSpeakerName());
 		sessionDescription.setText(inspectedSession.getDescription());
+	}
+
+	public Session getInspectedSession() {
+		return inspectedSession;
+	}
+
+	public void setInspectedSession(Session inspectedSession) {
+		this.inspectedSession = inspectedSession;
+		updateLabels();
 	}
 
 }

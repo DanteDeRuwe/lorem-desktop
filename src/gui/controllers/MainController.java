@@ -68,12 +68,18 @@ public class MainController extends GuiController {
 
 		// Load the FXML
 		// (this injects a parentcontroller and a facade into the controllers)
-		AnchorPane calendarSceneRoot = loadFXML("calendar/CalendarScene.fxml", calendarSceneController,
-				sessionCalendarFacade);
-		AnchorPane sessionSceneRoot = loadFXML("sessions/SessionScene.fxml", sessionSceneController,
-				sessionCalendarFacade);
-		AnchorPane userSceneRoot = loadFXML("users/UserScene.fxml", userSceneController,
-				memberFacade);
+		AnchorPane calendarSceneRoot = loadFXML(
+				"calendar/CalendarScene.fxml", calendarSceneController,
+				sessionCalendarFacade
+		);
+		AnchorPane sessionSceneRoot = loadFXML(
+				"sessions/SessionScene.fxml", sessionSceneController,
+				sessionCalendarFacade
+		);
+		AnchorPane userSceneRoot = loadFXML(
+				"users/UserScene.fxml", userSceneController,
+				memberFacade
+		);
 
 		// Bind the panes to the tabs
 		GuiUtil.bindAnchorPane(sessionSceneRoot, sessionTab);

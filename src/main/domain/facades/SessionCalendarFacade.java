@@ -78,9 +78,8 @@ public class SessionCalendarFacade implements Facade {
 		sessionRepo.delete(session);
 	}
 
-	public Session getSessionById(int id) {
-		// TODO getSession from database
-		return null;
+	public Session getSessionByTitle(String title) {
+		return sessionRepo.getSessionByTitle(title);
 	}
 
 	public Set<Session> getAllSessions() {
@@ -101,6 +100,28 @@ public class SessionCalendarFacade implements Facade {
 
 	public String getAcademicYear() {
 		return calendar.getAcademicYear()[0] + " - " + calendar.getAcademicYear()[1];
+	}
+
+	public Session editSession(Session session, Session newSession) {
+		// delete the old session from the runtime calendar
+		calendar.deleteSession(session);
+
+		// update the session
+		session.setLocation(newSession.getLocation());
+		session.setTitle(newSession.getTitle());
+		session.setSpeakerName(newSession.getSpeakerName());
+		session.setDescription(newSession.getDescription());
+		session.setStart(newSession.getStart());
+		session.setEnd(newSession.getEnd());
+		session.setCapacity(newSession.getCapacity());
+
+		// add it again with updated info
+		calendar.addSession(session);
+
+		// persist
+		sessionRepo.update(session);
+
+		return session;
 	}
 
 }
