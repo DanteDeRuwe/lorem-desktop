@@ -36,17 +36,17 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <JFXTextField labelFloat="true" promptText="Naam">
+            <JFXTextField fx:id="lastNameFilterField" labelFloat="true" promptText="Naam">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Voornaam">
+            <JFXTextField fx:id="firstNameFilterField" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Voornaam">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField labelFloat="true" promptText="Gebruikersnaam">
+            <JFXTextField fx:id="usernameFilterField" labelFloat="true" promptText="Gebruikersnaam">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
