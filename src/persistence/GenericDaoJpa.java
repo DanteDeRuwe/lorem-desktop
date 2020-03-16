@@ -47,19 +47,24 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
 	}
 
 	@Override
-	public T update(T object) {
-		return em.merge(object);
+	public void update(T object) {
+		startTransaction();
+		em.merge(object);
+		commitTransaction();
 	}
 
 	@Override
 	public void delete(T object) {
+		startTransaction();
 		em.remove(em.merge(object));
+		commitTransaction();
 	}
 
 	@Override
 	public void insert(T object) {
+		startTransaction();
 		em.persist(object);
-		
+		commitTransaction();
 	}
 
 	@Override
@@ -68,5 +73,4 @@ public class GenericDaoJpa<T> implements GenericDao<T> {
 		return entity != null;
 	}
 
-	
 }

@@ -10,7 +10,6 @@ import main.domain.Member;
 import main.domain.Session;
 import main.domain.SessionCalendar;
 import main.exceptions.InvalidSessionException;
-import persistence.GenericDaoJpa;
 import persistence.SessionCalendarDaoJpa;
 import persistence.SessionDaoJpa;
 
@@ -67,9 +66,8 @@ public class SessionCalendarFacade implements Facade {
 		calendar.addSession(session);
 
 		// persist
-		GenericDaoJpa.startTransaction();
 		sessionRepo.insert(session);
-		GenericDaoJpa.commitTransaction();
+
 	}
 
 	public void deleteSession(Session session) {
@@ -77,9 +75,7 @@ public class SessionCalendarFacade implements Facade {
 		calendar.deleteSession(session);
 
 		// persist
-		GenericDaoJpa.startTransaction();
 		sessionRepo.delete(session);
-		GenericDaoJpa.commitTransaction();
 	}
 
 	public Session getSessionById(int id) {
