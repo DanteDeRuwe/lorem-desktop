@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,12 +17,17 @@ import main.services.GuiUtil;
 
 public class SessionFiltersController extends GuiController {
 
-	@FXML private Label academicYear;
-	@FXML private JFXButton newSessionButton;
-	@FXML private JFXTextField titleFilterField, speakerFilterField, locationFilterField;
+	@FXML
+	private Label academicYear;
+	@FXML
+	private JFXButton newSessionButton;
+	@FXML
+	private JFXTextField titleFilterField, speakerFilterField, locationFilterField;
 
-	@FXML private JFXDatePicker fromFilterField;
-	@FXML private JFXDatePicker toFilterField;
+	@FXML
+	private JFXDatePicker fromFilterField;
+	@FXML
+	private JFXDatePicker toFilterField;
 
 	@FXML
 	public void initialize() {
@@ -38,48 +44,30 @@ public class SessionFiltersController extends GuiController {
 
 		// Filtering
 		titleFilterField.textProperty().addListener(
-				(obs, oldText, newText) -> {
-					((SessionSceneController) getParentController()).fillTableColumns(filter());
-				}
-		);
+				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		speakerFilterField.textProperty().addListener(
-				(obs, oldText, newText) -> {
-					((SessionSceneController) getParentController()).fillTableColumns(filter());
-				}
-		);
+				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		locationFilterField.textProperty().addListener(
-				(obs, oldText, newText) -> {
-					((SessionSceneController) getParentController()).fillTableColumns(filter());
-				}
-		);
-		// TODO: filter on start date and time
-
-		/*
-		 * startDateFilterField.valueProperty().addListener((obs, oldText, newText) -> {
-		 * ((SessionSceneController) getParentController()).fillTableColumns(filter());
-		 * }); startTimeFilterField.valueProperty().addListener((obs, oldText, newText)
-		 * -> { ((SessionSceneController)
-		 * getParentController()).fillTableColumns(filter()); });
-		 */
+				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
+		fromFilterField.valueProperty().addListener(
+				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
+		toFilterField.valueProperty().addListener(
+				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 	}
 
 	private Set<Session> filter() {
 		String titleFilter = titleFilterField.getText();
 		String speakerFilter = speakerFilterField.getText();
 		String locationFilter = locationFilterField.getText();
-		// LocalDateTime startDateTimeFilter =
-		// LocalDateTime.of(startDateFilterField.getValue(),
-		// startTimeFilterField.getValue());
+		LocalDate fromFilter = fromFilterField.getValue();
+		LocalDate toFilter = toFilterField.getValue();
 		Set<Session> sessionSet = new HashSet<>(((SessionCalendarFacade) getFacade()).getAllSessions());
 		return sessionSet.stream().filter(s -> s.getTitle().toLowerCase().contains((titleFilter.toLowerCase().trim())))
 				.filter(s -> s.getSpeakerName().toLowerCase().contains((speakerFilter.toLowerCase().trim())))
-				.filter(s -> s.getLocation().toLowerCase().contains((locationFilter.toLowerCase().trim())))
-				/*
-				 * .filter(s -> s.getStart().toLocalDate().format(Util.DATEFORMATTER)
-				 * .equals(startDateTimeFilter.format(Util.DATEFORMATTER))) .filter(s ->
-				 * s.getStart().toLocalTime().format(Util.TIMEFORMATTER)
-				 * .equals(startDateTimeFilter.format(Util.TIMEFORMATTER)))
-				 */
+				.filter(s -> s.getLocation().toLowerCase().contains((locationFilter.toLowerCase().trim()))).filter(
+						s -> (fromFilter == null || toFilter == null) ? true
+								: fromFilter.compareTo(s.getStart().toLocalDate())
+										* s.getStart().toLocalDate().compareTo(toFilter) >= 0)
 				.collect(Collectors.toSet());
 	}
 
