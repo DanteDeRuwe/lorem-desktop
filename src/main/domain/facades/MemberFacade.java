@@ -36,10 +36,18 @@ public class MemberFacade implements Facade {
 	public List<Member> getAllMembers() {
 		return memberRepo.findAll();
 	}
-	
+
 	public void addMember(Member member) {
 		GenericDaoJpa.startTransaction();
 		memberRepo.insert(member);
+		GenericDaoJpa.commitTransaction();
+	}
+
+	public void deleteUser(Member member) {
+		if (member.equals(loggedInMember))
+			throw new IllegalArgumentException();
+		GenericDaoJpa.startTransaction();
+		memberRepo.delete(member);
 		GenericDaoJpa.commitTransaction();
 	}
 
