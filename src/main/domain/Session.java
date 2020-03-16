@@ -28,7 +28,7 @@ public class Session {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long id;
 	@ManyToOne @JoinColumn(name = "member_id", nullable = false) private Member organizer;
 	@ManyToOne @JoinColumn(name = "calendar_id", nullable = false) private SessionCalendar calendar;
-	private String location, title, speakerName;
+	private String location, title, speakerName, description;
 	private LocalDateTime startTime, endTime;
 	private int capacity;
 
@@ -40,8 +40,11 @@ public class Session {
 	public Session() {
 	};
 
-	public Session(Member organizer, String title, String speakerName, LocalDateTime start, LocalDateTime end,
-			String location, int capacity) {
+	public Session(
+			Member organizer, String title, String description, String speakerName, LocalDateTime start,
+			LocalDateTime end,
+			String location, int capacity
+	) {
 
 		if (!meetsMinimumPeriodRequirement(start, end)) {
 			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
@@ -51,6 +54,7 @@ public class Session {
 		}
 
 		this.organizer = organizer;
+		setDescription(description);
 		setTitle(title);
 		setSpeakerName(speakerName);
 		setLocation(location);
@@ -142,6 +146,10 @@ public class Session {
 		this.capacity = value;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public void setCalendar(SessionCalendar cal) {
 		this.calendar = cal;
 	}
@@ -167,7 +175,8 @@ public class Session {
 			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER));
 		else
 			return new SimpleStringProperty(
-					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
+					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER)
+			);
 	}
 
 	public ObjectProperty<LocalDateTime> startProperty() {

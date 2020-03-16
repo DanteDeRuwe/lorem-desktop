@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 
@@ -22,6 +23,7 @@ import main.services.DataValidation;
 public class NewSessionController extends GuiController {
 
 	// Nodes
+	@FXML private JFXTextArea descriptionArea;
 	@FXML private JFXTextField titleField, speakerField, durationField, locationField, capacityField;
 	@FXML private JFXDatePicker startDateField;
 	@FXML private JFXTimePicker startTimeField;
@@ -61,16 +63,24 @@ public class NewSessionController extends GuiController {
 	private boolean allFieldsOk() {
 		boolean titleFilledIn = DataValidation.textFilledIn(titleField, validationLabel, "Titel is verplicht");
 		boolean durationFilledIn = DataValidation.textFilledIn(durationField, validationLabel, "Duurtijd is verplicht");
-		boolean durationNumeric = DataValidation.textNumeric(durationField, validationLabel,
-				"Duurtijd moet een getal zijn");
+		boolean durationNumeric = DataValidation.textNumeric(
+				durationField, validationLabel,
+				"Duurtijd moet een getal zijn"
+		);
 
-		boolean startDateFilledIn = DataValidation.dateFilledIn(startDateField, validationLabel,
-				"Startdatum is verplicht");
-		boolean startTimeFilledIn = DataValidation.timeFilledIn(startTimeField, validationLabel,
-				"Starttijd is verplicht");
+		boolean startDateFilledIn = DataValidation.dateFilledIn(
+				startDateField, validationLabel,
+				"Startdatum is verplicht"
+		);
+		boolean startTimeFilledIn = DataValidation.timeFilledIn(
+				startTimeField, validationLabel,
+				"Starttijd is verplicht"
+		);
 
-		boolean capacityNumeric = DataValidation.textNumeric(capacityField, validationLabel,
-				"Capaciteit moet een getal zijn");
+		boolean capacityNumeric = DataValidation.textNumeric(
+				capacityField, validationLabel,
+				"Capaciteit moet een getal zijn"
+		);
 
 		return titleFilledIn && durationFilledIn && durationNumeric && startDateFilledIn && startTimeFilledIn
 				&& capacityNumeric;
@@ -84,6 +94,7 @@ public class NewSessionController extends GuiController {
 
 		// Get fields
 		String title = titleField.getText();
+		String description = descriptionArea.getText();
 		String speaker = speakerField.getText();
 		LocalDate startDate = startDateField.getValue();
 		LocalTime startTime = startTimeField.getValue();
@@ -100,7 +111,8 @@ public class NewSessionController extends GuiController {
 		try {
 			// Construct session
 			Session s = scf.createSessionFromFields(
-					organizer, title, speaker, startDate, startTime, duration, location, capacity);
+					organizer, title, description, speaker, startDate, startTime, duration, location, capacity
+			);
 
 			// Add session
 			scf.addSession(s);
@@ -111,8 +123,10 @@ public class NewSessionController extends GuiController {
 
 		} catch (InvalidSessionException e) {
 			validationLabel.setText(e.getMessage());
-			System.err.println("Invalid Session Exception, caused by " + e.getCause().getClass().getName()
-					+ "\nWith message: " + e.getMessage() + "\n");
+			System.err.println(
+					"Invalid Session Exception, caused by " + e.getCause().getClass().getName()
+							+ "\nWith message: " + e.getMessage() + "\n"
+			);
 		}
 	}
 

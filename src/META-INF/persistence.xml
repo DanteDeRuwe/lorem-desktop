@@ -20,9 +20,9 @@
 				value="9BecD@6939Bd" />
 			<!-- EclipseLink should create the database schema automatically -->
 			<property name="eclipselink.ddl-generation"
-				value="none" />
+				value="none" ></property>
 			<property name="eclipselink.ddl-generation.output-mode"
-				value="database" />
+				value="database" ></property>
 
 
 		</properties>
