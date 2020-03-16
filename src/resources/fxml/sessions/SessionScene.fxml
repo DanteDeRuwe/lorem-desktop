@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,7 +9,7 @@
    <children>
       <SplitPane dividerPositions="0.20489977728285078, 0.7126948775055679" layoutX="4.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <AnchorPane fx:id="leftPane" maxWidth="300.0" minWidth="0.0" prefWidth="200.0">
+            <AnchorPane fx:id="leftPane" maxWidth="300.0" minWidth="0.0" prefWidth="200.0" stylesheets="@../../css/style.css">
                <children>
                   <fx:include fx:id="sessionFilters" source="SessionFilters.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
@@ -19,13 +18,13 @@
                <children>
                   <TableView fx:id="sessionTable" prefHeight="598.4" prefWidth="498.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="titleColumn" 			text="Sessie" />
-                      <TableColumn fx:id="startColumn"  		text="Begin" />
-                      <TableColumn fx:id="durationColumn" 		text="Duur" />
-                      <TableColumn fx:id="organizerColumn" 		text="Organizator" />
-                      <TableColumn fx:id="speakerColumn"  		text="Spreker" />
-                      <TableColumn fx:id="locationColumn"  		text="Locatie" />
-                      <TableColumn fx:id="capacityColumn"  		text="#" />
+                      <TableColumn fx:id="titleColumn" text="Sessie" />
+                      <TableColumn fx:id="startColumn" text="Begin" />
+                      <TableColumn fx:id="durationColumn" text="Duur" />
+                      <TableColumn fx:id="organizerColumn" text="Organizator" />
+                      <TableColumn fx:id="speakerColumn" text="Spreker" />
+                      <TableColumn fx:id="locationColumn" text="Locatie" />
+                      <TableColumn fx:id="capacityColumn" text="#" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY" />

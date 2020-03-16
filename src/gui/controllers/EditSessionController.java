@@ -45,6 +45,9 @@ public class EditSessionController extends GuiController {
 		// 24hour view on the time picker
 		GuiUtil.fixTimePicker(startTimeField);
 
+		// Date picker formats
+		GuiUtil.fixDatePicker(startDateField);
+
 		// get the session
 		sessionToEdit = getMainController().getSessionSceneController().getInspectedSession();
 

@@ -5,12 +5,15 @@ import java.time.LocalDateTime;
 import java.time.format.FormatStyle;
 import java.util.Locale;
 
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
+
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 
 public class GuiUtil {
@@ -28,6 +31,10 @@ public class GuiUtil {
 		parent.getChildren().add(child);
 	}
 
+	public static void fixDatePicker(JFXDatePicker picker) {
+		picker.setConverter(new LocalDateStringConverter(FormatStyle.SHORT, Locale.FRANCE, null));
+	}
+
 	public static void fixTimePicker(JFXTimePicker picker) {
 		picker.set24HourView(true);
 		picker.setConverter(new LocalTimeStringConverter(FormatStyle.SHORT, Locale.FRANCE));
@@ -40,8 +47,10 @@ public class GuiUtil {
 		col.setResizable(true);
 	}
 
-	public static <T> void fillColumnWithDateTime(TableColumn<T, LocalDateTime> col, String propname, int minWidth,
-			int maxWidth) {
+	public static <T> void fillColumnWithDateTime(
+			TableColumn<T, LocalDateTime> col, String propname, int minWidth,
+			int maxWidth
+	) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
@@ -59,8 +68,10 @@ public class GuiUtil {
 		});
 	}
 
-	public static <T> void fillColumnWithDuration(TableColumn<T, Duration> col, String propname, int minWidth,
-			int maxWidth) {
+	public static <T> void fillColumnWithDuration(
+			TableColumn<T, Duration> col, String propname, int minWidth,
+			int maxWidth
+	) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
@@ -75,21 +86,25 @@ public class GuiUtil {
 
 					int durationHours = duration.toHoursPart();
 					int durationMinutes = duration.toMinutesPart();
-					setText(durationHours > 0
-							? String.format("%du %dm", durationHours, durationMinutes)
-							: String.format("%dm", durationMinutes));
+					setText(
+							durationHours > 0
+									? String.format("%du %dm", durationHours, durationMinutes)
+									: String.format("%dm", durationMinutes)
+					);
 
 				}
 			}
 		});
 	}
-	
-	public static <T> void fillColumnWithObjectToString(TableColumn<T, Object> col, String propname, int minWidth, int maxWidth) {
+
+	public static <T> void fillColumnWithObjectToString(
+			TableColumn<T, Object> col, String propname, int minWidth, int maxWidth
+	) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
 		col.setResizable(true);
-		
+
 		col.setCellFactory(tc -> new TableCell<T, Object>() {
 			@Override
 			protected void updateItem(Object object, boolean empty) {

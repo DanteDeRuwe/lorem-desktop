@@ -38,7 +38,7 @@
             </Label>
             <JFXTextField fx:id="lastNameFilterField" labelFloat="true" promptText="Naam">
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="25.0" />
                </VBox.margin>
             </JFXTextField>
             <JFXTextField fx:id="firstNameFilterField" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Voornaam">
@@ -51,16 +51,14 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <Label text="Type"></Label>
-            <JFXComboBox fx:id="typeFilterBox" maxWidth="1.7976931348623157E308" promptText="Type">
+            <JFXComboBox fx:id="typeFilterBox" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Type">
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="25.0" />
                </VBox.margin>
             </JFXComboBox>
-            <Label text="Status"></Label>
-            <JFXComboBox fx:id="statusFilterBox" layoutX="25.0" layoutY="327.0" maxWidth="1.7976931348623157E308" promptText="Status">
+            <JFXComboBox fx:id="statusFilterBox" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Status">
                <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="25.0" />
                </VBox.margin>
             </JFXComboBox>
          </children>

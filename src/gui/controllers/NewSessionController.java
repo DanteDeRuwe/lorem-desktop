@@ -40,6 +40,9 @@ public class NewSessionController extends GuiController {
 		// 24hour view on the time picker
 		GuiUtil.fixTimePicker(startTimeField);
 
+		// Date picker formats
+		GuiUtil.fixDatePicker(startDateField);
+
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
 		confirmButton.setOnAction(e -> onNewSessionConfirm());
