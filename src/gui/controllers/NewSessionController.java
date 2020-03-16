@@ -56,6 +56,7 @@ public class NewSessionController extends GuiController {
 		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField)
 				.forEach(tf -> tf.setText(""));
 
+		descriptionArea.setText("");
 		startDateField.setValue(null);
 		startTimeField.setValue(null);
 	}

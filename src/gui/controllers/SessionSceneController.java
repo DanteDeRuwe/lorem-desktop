@@ -2,9 +2,9 @@ package gui.controllers;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,7 +21,6 @@ public class SessionSceneController extends GuiController {
 
 	// Own vars
 	private AnchorPane sessionFilters, sessionTabs, newSession;
-	private ObservableList<Session> sessionList;
 
 	// FXML vars
 	@FXML
@@ -41,7 +40,6 @@ public class SessionSceneController extends GuiController {
 
 	@FXML
 	public void initialize() {
-
 		// Initialize controllers
 		sessionFiltersController = new SessionFiltersController();
 		sessionTabsController = new SessionTabsController();
@@ -56,7 +54,7 @@ public class SessionSceneController extends GuiController {
 		GuiUtil.bindAnchorPane(sessionFilters, leftPane);
 
 		// Center Panel
-		fillTableColumns();
+		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
 
 		// Right panel: default for tabs
 		displayOnRightPane("SessionTabs");
@@ -71,9 +69,7 @@ public class SessionSceneController extends GuiController {
 	 * Helpers
 	 */
 
-	void fillTableColumns() {
-		sessionList = FXCollections.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessions());
-
+	void fillTableColumns(Set<Session> sessions) {
 		GuiUtil.fillColumn(titleColumn, "title", 40, 500);
 		GuiUtil.fillColumnWithDateTime(startColumn, "start", 40, 150);
 		GuiUtil.fillColumnWithDuration(durationColumn, "duration", 60, 100);
@@ -82,8 +78,7 @@ public class SessionSceneController extends GuiController {
 		GuiUtil.fillColumn(locationColumn, "location", 40, 200);
 		GuiUtil.fillColumn(capacityColumn, "capacity", 40, 60);
 
-		sessionTable.setItems(sessionList);
-
+		sessionTable.setItems(FXCollections.observableArrayList(sessions));
 	}
 
 	void displayOnRightPane(String key) {
@@ -97,7 +92,7 @@ public class SessionSceneController extends GuiController {
 
 	void update() {
 		// update the view
-		fillTableColumns();
+		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
 		((SessionFiltersController) sessionFiltersController).UpdateAcademicYear();
 		sessionTable.getSelectionModel().selectFirst(); // select first session
 	}

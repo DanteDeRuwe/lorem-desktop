@@ -41,27 +41,27 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="titleFilter" labelFloat="true" promptText="Titel">
+            <JFXTextField fx:id="titleFilterField" labelFloat="true" promptText="Titel">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField fx:id="speakerFilter" labelFloat="true" promptText="Spreker">
+            <JFXTextField fx:id="speakerFilterField" labelFloat="true" promptText="Spreker">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXDatePicker fx:id="startdateFilter" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Startdatum">
+            <JFXDatePicker fx:id="startDateFilterField" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Startdatum">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXDatePicker>
-            <JFXTimePicker fx:id="startTimefilter" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Starttijd">
+            <JFXTimePicker fx:id="startTimeFilterField" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Starttijd">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
             </JFXTimePicker>
-            <JFXTextField fx:id="locationFilter" labelFloat="true" promptText="Locatie">
+            <JFXTextField fx:id="locationFilterField" labelFloat="true" promptText="Locatie">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
