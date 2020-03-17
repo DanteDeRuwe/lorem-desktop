@@ -3,7 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -11,101 +11,110 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="infoTabRoot" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane prefHeight="528.0" prefWidth="762.0" styleClass="session-tab-root" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="418.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="-14.0" layoutY="-14.0" prefHeight="497.6" prefWidth="346.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="sessionTitle" text="Lorem Ipsum Event">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
-            <HBox>
+            <AnchorPane fx:id="infoTabRoot" prefHeight="270.0" prefWidth="732.0" VBox.vgrow="NEVER">
                <children>
-                  <Label fx:id="sessionDate" text="datum" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label ellipsisString="" text="—" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="sessionTime" text="uur" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label ellipsisString="" layoutX="44.0" layoutY="10.0" text="—" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="sessionLocation" text="locatie" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label ellipsisString="" text="—" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="door" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="sessionSpeaker" layoutX="134.0" layoutY="10.0" text="Spreker" textFill="#a4a4a4">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Label>
+                  <VBox prefHeight="245.6" prefWidth="732.0" styleClass="container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="sessionTitle" text="Lorem Ipsum Event" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox>
+                           <children>
+                              <Label text="door" textFill="#a4a4a4">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="sessionSpeaker" text="Spreker" textFill="#a4a4a4">
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label fx:id="sessionDate" text="datum" textFill="#a4a4a4">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label ellipsisString="" text="—" textFill="#a4a4a4">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="sessionTime" text="uur" textFill="#a4a4a4">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label ellipsisString="" layoutX="44.0" layoutY="10.0" text="—" textFill="#a4a4a4">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="sessionLocation" text="locatie" textFill="#a4a4a4">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="168.0" prefWidth="702.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                           <content>
+                              <TextFlow maxHeight="1.7976931348623157E308" prefHeight="125.0" prefWidth="316.0">
+                                 <children>
+                                    <Text fx:id="sessionDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="685.775390625" />
+                                 </children>
+                              </TextFlow>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </VBox>
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0">
-               <VBox.margin>
-                  <Insets bottom="15.0" top="15.0" />
-               </VBox.margin>
-            </Separator>
-            <TextFlow>
+            </AnchorPane>
+            <AnchorPane>
                <children>
-                  <Text fx:id="sessionDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." wrappingWidth="300.0" />
+                  <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="272.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <JFXButton fx:id="editSessionButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXButton fx:id="deleteSessionButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                </children>
-            </TextFlow>
-            <Separator layoutX="25.0" layoutY="93.0" prefWidth="200.0">
-               <VBox.margin>
-                  <Insets bottom="15.0" top="15.0" />
-               </VBox.margin>
-            </Separator>
-            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="300.0">
-               <children>
-                  <JFXButton fx:id="editSessionButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="deleteSessionButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
-            </HBox>
+            </AnchorPane>
          </children>
-         <padding>
-            <Insets left="15.0" right="15.0" />
-         </padding>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
 </AnchorPane>

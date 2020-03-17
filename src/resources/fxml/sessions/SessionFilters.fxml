@@ -5,66 +5,82 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="-Infinity" styleClass="session-filters" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="-Infinity" prefHeight="651.0" prefWidth="300.0" styleClass="session-filters" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="108.0" layoutY="24.0" prefHeight="544.0" prefWidth="270.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" layoutX="108.0" layoutY="24.0" prefHeight="700.0" prefWidth="316.0" AnchorPane.bottomAnchor="-49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="academicYear" alignment="CENTER" prefHeight="30.0" prefWidth="276.0" text="2018 - 2019" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
-            <Separator layoutX="10.0" layoutY="80.0" prefHeight="34.0" prefWidth="270.0">
-               <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
-               </VBox.margin></Separator>
-            <JFXButton fx:id="newSessionButton" prefHeight="43.0" prefWidth="130.0" style="-fx-background-color: #4059a9;" text="Nieuwe Sessie" textFill="WHITE">
+            <AnchorPane prefHeight="151.0" prefWidth="276.0" styleClass="container">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
-            </JFXButton>
-            <Separator prefWidth="200.0">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin></Separator>
-            <Label alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="34.0" prefWidth="98.0" text="Zoek/Filter">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <JFXTextField fx:id="titleFilterField" labelFloat="true" promptText="Titel">
+               <children>
+                  <VBox alignment="CENTER" layoutY="29.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="academicYear" alignment="CENTER" prefHeight="28.0" prefWidth="276.0" text="2018 - 2019" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="newSessionButton" alignment="CENTER" prefHeight="43.0" prefWidth="130.0" style="-fx-background-color: #4059a9;" styleClass="primary-button" text="Nieuwe Sessie" textAlignment="CENTER" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="407.0" prefWidth="316.0" styleClass="container">
+               <children>
+                  <VBox layoutY="56.0" prefHeight="407.0" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="TOP_CENTER" prefHeight="34.0" prefWidth="98.0" text="Zoek/Filter">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="titleFilterField" labelFloat="true" promptText="Titel">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="speakerFilterField" labelFloat="true" promptText="Spreker">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXDatePicker fx:id="fromFilterField" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Vanaf">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXDatePicker>
+                        <JFXDatePicker fx:id="toFilterField" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Tot">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXDatePicker>
+                        <JFXTextField fx:id="locationFilterField" labelFloat="true" promptText="Locatie">
+                           <VBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </VBox>
+               </children>
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
-            </JFXTextField>
-            <JFXTextField fx:id="speakerFilterField" labelFloat="true" promptText="Spreker">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <JFXDatePicker fx:id="fromFilterField" defaultColor="#4059a9" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Vanaf">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-            </JFXDatePicker>
-            <JFXDatePicker fx:id="toFilterField" defaultColor="#4059a9" layoutX="25.0" layoutY="359.0" maxWidth="1.7976931348623157E308" minWidth="0.0" promptText="Tot">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-            </JFXDatePicker>
-            <JFXTextField fx:id="locationFilterField" labelFloat="true" promptText="Locatie">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-               </VBox.margin>
-            </JFXTextField>
+            </AnchorPane>
          </children>
       </VBox>
    </children>

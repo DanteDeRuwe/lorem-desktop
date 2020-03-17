@@ -1,49 +1,85 @@
 
 
 *{
-	-primary-blue: #0081C5;
+	/*-primary-blue: #0081C5;*/
+	-primary-blue: #4049a9;
+	-primary-button-color: #4049a9;
 	-secondary-yellow: #FFEA00;
-	-darker-blue: derive(-primary-blue, -50%);
+	-darker-blue: derive(-primary-blue, -70%);
+	-lighter-blue: #ebebfa;
+	
+	
+	-select-bgcolor: -primary-blue;
+	-select-bgcolor2: -lighter-blue;
+	-select-txtcolor: -darker-blue;
+
 	
 }
 
 
+/* Split Panes */
+.split-pane-divider {
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 0); /*trick to make the handles bigger */
+    -fx-padding: 0 0 0 0;
+}
+
+/* Tabs */
 .jfx-tab-pane {
 	-jfx-disable-animation: true;
 }
 
 .jfx-tab-pane .headers-region {
-    -fx-background-color: #0081C5;
+    -fx-background-color: -primary-blue;
 }
 .jfx-tab-pane .tab-header-background {
-    -fx-background-color: #0081C5;
+    -fx-background-color: -primary-blue;
 }
 .jfx-tab-pane .tab-selected-line {
-    -fx-stroke: #FFEA00;
-    -fx-stroke-width: 3pt;
+    -fx-background-color: -secondary-yellow;
+}
+
+.jfx-tab-pane .tab-label{
+	-fx-text-fill: white;
 }
 
 .jfx-tab-pane .navtab:disabled .tab-label{
-	 -fx-text-fill: #317294;
+	 -fx-text-fill: -darker-blue;
 }
 
+.jfx-tab-pane .tab-header-area .jfx-rippler{
+    -jfx-rippler-fill : -secondary-yellow;
+}
 
+/* List views */
 
-/* Table View */
+.list-view:focused .list-cell:selected{
+    -fx-text-fill: -select-txtcolor;
+    -fx-background-color: -select-bgcolor, -select-bgcolor2;
+  	-fx-background-insets: 0, 0 0 0 3;
+}
+
+/* Table Views */
 
 .table-view {
     -fx-table-color: rgba(82, 100, 174, 0.4);
     -fx-table-rippler-color: rgba(82, 100, 174, 0.6);
+    -fx-border-style: none;
+    -fx-background-color:white;
+	-fx-border-width: 0;
 }
 
 .table-view:focused .table-row-cell:selected{
-    -fx-background-color: -primary-blue;
-    -fx-table-cell-border-color: -primary-blue;
-    -fx-text-fill: WHITE;
+	-fx-table-cell-border-color: -select-bgcolor2;
+    -fx-text-fill: -select-txtcolor;
+    -fx-background-color: -select-bgcolor, -select-bgcolor2;
+  	-fx-background-insets: 0, 0 0 0 3;
 }
 
 .table-view:focused .table-row-cell:selected .table-cell {
-    -fx-text-fill: WHITE;
+    -fx-text-fill: -select-txtcolor;
 }
 
 .table-view .column-header,
@@ -125,5 +161,51 @@
 .table-view .menu-item .label {
     -fx-padding: 5 0 5 0;
 }
+
+/* Scroll Panes */
+.scroll-pane .viewport {  
+   -fx-background-color: transparent;
+}
+
+
+/* Containers are like cards in bootstrap */
+.container{
+	-fx-background-color: white;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 30, 0, 0, 0);
+}
+
+/* Buttons */
+
+.primary-button{
+	-fx-background-color: -primary-button-color
+}
+
+
+
+
+
+
+.calendar-listview .list-cell {
+	-fx-padding: 10 0 10 10;
+}
+
+
+
+
+
+.bg, .session-filters, .session-tab-root, .right-panel-bg {
+	-fx-background-color: #FEFEFE;
+	-fx-border-style: none;
+}
+
+.session-filters .label{
+
+}
+
+.session-filters .jfx-text-field{
+	-jfx-focus-color: -primary-blue;
+}
+
+
 
 

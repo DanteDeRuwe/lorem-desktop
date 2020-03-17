@@ -4,24 +4,23 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <JFXTabPane layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <JFXTabPane layoutX="10.0" layoutY="10.0" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab text="Info">
                <content>
-                  <AnchorPane fx:id="infoTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                  <AnchorPane fx:id="infoTab" minHeight="0.0" minWidth="0.0" prefHeight="547.0" prefWidth="336.0" styleClass="session-tab-root" />
                </content>
             </Tab>
             <Tab text="Aankondigingen">
                <content>
-                  <AnchorPane fx:id="announcementTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                  <AnchorPane fx:id="announcementTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="session-tab-root" />
                </content>
             </Tab>
             <Tab text="Feedback">
                <content>
-                  <AnchorPane fx:id="feedbackTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                  <AnchorPane fx:id="feedbackTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="session-tab-root" />
                </content>
             </Tab>
          </tabs>

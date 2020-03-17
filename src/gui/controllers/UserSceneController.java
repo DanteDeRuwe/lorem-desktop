@@ -43,7 +43,7 @@ public class UserSceneController extends GuiController {
 
 		// load FXML once, this also sets parentcontrollers and facades
 		userDetails = loadFXML("users/UserDetails.fxml", userDetailsController, this.getFacade());
-		newUser = loadFXML("users/NewUser.fxml", newUserController, this.getFacade());
+		newUser = loadFXML("users/EditOrCreateUser.fxml", newUserController, this.getFacade());
 		userFilters = loadFXML("users/UserFilters.fxml", userFiltersController, this.getFacade());
 
 		// Center Panel
