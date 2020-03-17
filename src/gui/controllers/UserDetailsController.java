@@ -9,6 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import main.domain.Member;
 import main.domain.facades.MemberFacade;
 
@@ -26,6 +28,8 @@ public class UserDetailsController extends GuiController {
 	private JFXButton editUserButton;
 	@FXML
 	private JFXButton deleteUserButton;
+    @FXML
+    private ImageView profilePicView;
 
 	@FXML
 	public void initialize() {
@@ -67,5 +71,13 @@ public class UserDetailsController extends GuiController {
 		nameLabel.setText(inspectedUser.getFullName());
 		membertypeLabel.setText(inspectedUser.getMemberType().toString());
 		usernameLabel.setText(inspectedUser.getUsername());
+		
+		// Set profile picture
+		
+		if (inspectedUser.getProfilePicPath() == null || inspectedUser.getProfilePicPath().isEmpty()) {
+			profilePicView.setImage(new Image("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"));
+		} else {
+			profilePicView.setImage(new Image(inspectedUser.getProfilePicPath()));
+		}
 	}
 }
