@@ -5,8 +5,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import persistence.EmfHelper;
 import persistence.GenericDaoJpa;
 
 public class Main extends Application {
@@ -33,8 +34,12 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.setMaximized(true);
 		stage.setTitle("Lorem");
-
 		stage.show();
+
+		stage.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+			if (KeyCode.F11.equals(e.getCode()))
+				stage.setFullScreen(!stage.isFullScreen());
+		});
 
 		stage.setOnCloseRequest(e -> handleExit());
 
