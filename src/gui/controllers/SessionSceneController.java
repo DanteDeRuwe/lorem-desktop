@@ -63,6 +63,7 @@ public class SessionSceneController extends GuiController {
 				(x, y, session) -> {
 					setInspectedSession(session);
 					((SessionTabsController) sessionTabsController).updateInspectedSession(session);
+					displayOnRightPane("SessionTabs");
 				}
 		);
 		sessionTable.setOnMouseClicked(mouseClickedEvent -> {
