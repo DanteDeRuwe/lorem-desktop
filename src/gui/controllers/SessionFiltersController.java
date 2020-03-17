@@ -62,12 +62,20 @@ public class SessionFiltersController extends GuiController {
 		LocalDate fromFilter = fromFilterField.getValue();
 		LocalDate toFilter = toFilterField.getValue();
 		Set<Session> sessionSet = new HashSet<>(((SessionCalendarFacade) getFacade()).getAllSessions());
-		return sessionSet.stream().filter(s -> s.getTitle().toLowerCase().contains((titleFilter.toLowerCase().trim())))
+		return sessionSet.stream()
+				.filter(s -> s.getTitle().toLowerCase().contains((titleFilter.toLowerCase().trim())))
 				.filter(s -> s.getSpeakerName().toLowerCase().contains((speakerFilter.toLowerCase().trim())))
-				.filter(s -> s.getLocation().toLowerCase().contains((locationFilter.toLowerCase().trim()))).filter(
-						s -> (fromFilter == null || toFilter == null) ? true
-								: fromFilter.compareTo(s.getStart().toLocalDate())
-										* s.getStart().toLocalDate().compareTo(toFilter) >= 0)
+				.filter(s -> s.getLocation().toLowerCase().contains((locationFilter.toLowerCase().trim())))
+				.filter(
+						s -> (fromFilter == null && toFilter == null)
+								? true
+								: (toFilter == null)
+										? s.getStart().toLocalDate().compareTo(fromFilter) >= 0
+										: (fromFilter == null)
+												? s.getStart().toLocalDate().compareTo(toFilter) <= 0
+												: s.getStart().toLocalDate().compareTo(fromFilter) >= 0 && s.getStart().toLocalDate().compareTo(toFilter) <= 0
+
+				)
 				.collect(Collectors.toSet());
 	}
 
