@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
@@ -64,6 +65,12 @@ public class SessionSceneController extends GuiController {
 					((SessionTabsController) sessionTabsController).updateInspectedSession(session);
 				}
 		);
+		sessionTable.setOnMouseClicked(mouseClickedEvent -> {
+			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY)
+					&& mouseClickedEvent.getClickCount() == 2) {
+				displayOnRightPane("EditSession");
+			}
+		});
 
 	}
 
