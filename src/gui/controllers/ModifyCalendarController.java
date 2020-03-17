@@ -9,16 +9,14 @@ import main.domain.facades.SessionCalendarFacade;
 
 public class ModifyCalendarController extends GuiController {
 
-	@FXML
-	private JFXDatePicker startDatePicker, endDatePicker;
-	@FXML
-	private Button saveButton, cancelButton;
+	@FXML private JFXDatePicker startDatePicker, endDatePicker;
+	@FXML private Button saveButton, cancelButton;
 
 	@FXML
 	public void initialize() {
 		fillInFields();
-		saveButton.setOnMouseClicked((event) -> handleSave());
-		cancelButton.setOnMouseClicked((event) -> handleCancel());
+		saveButton.setOnMouseClicked((e) -> handleSave());
+		cancelButton.setOnMouseClicked((e) -> goBack());
 	}
 
 	private void fillInFields() {
@@ -28,16 +26,17 @@ public class ModifyCalendarController extends GuiController {
 	}
 
 	private void handleSave() {
-		((SessionCalendarFacade) getMainController().getCalendarSceneController().getFacade()).editSessionCalendar(
+		((SessionCalendarFacade) getFacade()).editSessionCalendar(
 				getMainController().getCalendarSceneController().getInspectedCalendar(), startDatePicker.getValue(),
-				endDatePicker.getValue());
+				endDatePicker.getValue()
+		);
 		fillInFields();
-		getMainController().getCalendarSceneController().goBack();
+		getMainController().getCalendarSceneController().update();
+		goBack();
 	}
 
-	private void handleCancel() {
-		fillInFields();
-		getMainController().getCalendarSceneController().goBack();
+	private void goBack() {
+		getMainController().getCalendarSceneController().displayCalendarList();
 	}
 
 }

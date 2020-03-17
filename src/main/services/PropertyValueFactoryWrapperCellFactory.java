@@ -36,7 +36,9 @@ public class PropertyValueFactoryWrapperCellFactory<T> implements Callback<ListV
 			public void updateItem(T item, boolean empty) {
 				super.updateItem(item, empty);
 				textProperty().unbind();
-				if (item == null) {
+				if (item == null || empty) {
+					setGraphic(null);
+					setText(null);
 					return;
 				}
 

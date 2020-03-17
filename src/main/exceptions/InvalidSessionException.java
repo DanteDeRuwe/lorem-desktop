@@ -6,8 +6,10 @@ public class InvalidSessionException extends Exception {
 		super();
 	}
 
-	public InvalidSessionException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
+	public InvalidSessionException(
+			String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace
+	) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
 

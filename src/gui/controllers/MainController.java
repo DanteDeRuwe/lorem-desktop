@@ -63,36 +63,41 @@ public class MainController extends GuiController {
 
 		// initialize controllers
 		calendarSceneController = new CalendarSceneController();
-		sessionSceneController = new SessionSceneController();
 		userSceneController = new UserSceneController();
 
-		// Load the FXML
-		// (this injects a parentcontroller and a facade into the controllers)
+		// Load the calendar pane
 		AnchorPane calendarSceneRoot = loadFXML(
 				"calendar/CalendarScene.fxml", calendarSceneController,
 				sessionCalendarFacade
 		);
-		AnchorPane sessionSceneRoot = loadFXML(
-				"sessions/SessionScene.fxml", sessionSceneController,
-				sessionCalendarFacade
-		);
+
+		// load the user pane
 		AnchorPane userSceneRoot = loadFXML(
 				"users/UserScene.fxml", userSceneController,
 				memberFacade
 		);
 
 		// Bind the panes to the tabs
-		GuiUtil.bindAnchorPane(sessionSceneRoot, sessionTab);
 		GuiUtil.bindAnchorPane(calendarSceneRoot, calendarTab);
 		GuiUtil.bindAnchorPane(userSceneRoot, userTab);
 
-		// Set all tabs disabled in the beginning
+		// Set sessiontab disabled in the beginning
 		setSessionTabEnabled(false);
 
 	}
 
-	public void setSessionTabEnabled(boolean b) {
-		navigationTabs.getTabs().get(1).setDisable(!b);
+	public void setSessionTabEnabled(boolean enable) {
+		if (enable) {
+			// Load everything for the session
+			sessionSceneController = new SessionSceneController();
+			AnchorPane sessionSceneRoot = loadFXML(
+					"sessions/SessionScene.fxml", sessionSceneController,
+					sessionCalendarFacade
+			);
+			GuiUtil.bindAnchorPane(sessionSceneRoot, sessionTab);
+		}
+
+		navigationTabs.getTabs().get(1).setDisable(!enable);
 	}
 
 	public void switchToSessionTab() {
@@ -122,11 +127,11 @@ public class MainController extends GuiController {
 	public SessionSceneController getSessionSceneController() {
 		return (SessionSceneController) sessionSceneController;
 	}
-	
+
 	public UserSceneController getUserSceneController() {
 		return (UserSceneController) userSceneController;
 	}
-	
+
 	public CalendarSceneController getCalendarSceneController() {
 		return (CalendarSceneController) calendarSceneController;
 	}

@@ -16,20 +16,72 @@ import persistence.SessionDaoJpa;
 
 public class SessionCalendarFacade implements Facade {
 
-	SessionCalendarDaoJpa sessionCalendarRepo = new SessionCalendarDaoJpa();
-	SessionDaoJpa sessionRepo = new SessionDaoJpa();
-	SessionCalendar calendar;
+	private SessionCalendarDaoJpa sessionCalendarRepo = new SessionCalendarDaoJpa();
+	private SessionDaoJpa sessionRepo = new SessionDaoJpa();
+	private SessionCalendar calendar;
 
 	public SessionCalendarFacade() {
-
-		// set calendar to current calendar by default
-		// TODO: this will throw an exception if there is no sessionCalendar for right
-		// now, change this so the user gets taken to NEW CALENDAR screen
-		setCalendar(sessionCalendarRepo.getCurrentSessionCalendar());
 	}
 
-	public Session createSessionFromFields(Member organizer, String title, String description, String speakerName,
-			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity)
+	/*
+	 * -----------------------------------------------------------------------------
+	 * Calendar
+	 * -----------------------------------------------------------------------------
+	 */
+
+	public SessionCalendar createSessionCalendar(LocalDate start, LocalDate end) {
+		return new SessionCalendar(start, end);
+	}
+
+	public List<SessionCalendar> getAllSessionCalendars() {
+		return sessionCalendarRepo.findAll();
+	}
+
+	public SessionCalendar getCalendar() {
+		return calendar;
+	}
+
+	public void setCalendar(SessionCalendar calendar) {
+		if (calendar == null) {
+			throw new IllegalArgumentException("calendar can't be null");
+		}
+		this.calendar = calendar;
+	}
+
+	public String getAcademicYear() {
+		return calendar.academicYearProperty().getValue();
+	}
+
+	public void addSessionCalendar(SessionCalendar calendar) {
+		// TODO we also need to check if there are no already existing sessionCalendars
+		// which would overlap with this one
+
+		GenericDaoJpa.startTransaction();
+		sessionCalendarRepo.insert(calendar);
+		GenericDaoJpa.commitTransaction();
+	}
+
+	public void editSessionCalendar(SessionCalendar calendar, LocalDate startDate, LocalDate endDate) {
+		GenericDaoJpa.startTransaction();
+		calendar.setStartDate(startDate);
+		calendar.setEndDate(endDate);
+		GenericDaoJpa.commitTransaction();
+	}
+
+	public void deleteSessionCalendar() {
+		// TODO deleteSessionCalendar
+	}
+
+	/*
+	 * -----------------------------------------------------------------------------
+	 * SESSION
+	 * -----------------------------------------------------------------------------
+	 */
+
+	public Session createSessionFromFields(
+			Member organizer, String title, String description, String speakerName,
+			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity
+	)
 			throws InvalidSessionException {
 
 		try {
@@ -39,8 +91,10 @@ public class SessionCalendarFacade implements Facade {
 			int durationInSeconds = (int) (durationInHours * 3600);
 			LocalDateTime end = start.plusSeconds(durationInSeconds);
 
-			return new Session(organizer, title, description, speakerName, start, end, location,
-					Integer.parseInt(capacity));
+			return new Session(
+					organizer, title, description, speakerName, start, end, location,
+					Integer.parseInt(capacity)
+			);
 
 		} catch (IllegalArgumentException iae) {
 			switch (iae.getMessage()) {
@@ -56,10 +110,6 @@ public class SessionCalendarFacade implements Facade {
 		}
 	}
 
-	public SessionCalendarFacade(SessionCalendar calendar) {
-		setCalendar(calendar);
-	}
-
 	public void addSession(Session session) {
 		// add to calendar
 		calendar.addSession(session);
@@ -70,41 +120,7 @@ public class SessionCalendarFacade implements Facade {
 		GenericDaoJpa.commitTransaction();
 	}
 
-	public void deleteSession(Session session) {
-		// delete from calendar
-		calendar.deleteSession(session);
-
-		// persist
-		GenericDaoJpa.startTransaction();
-		sessionRepo.delete(session);
-		GenericDaoJpa.commitTransaction();
-	}
-
-	public Session getSessionByTitle(String title) {
-		return sessionRepo.getSessionByTitle(title);
-	}
-
-	public Set<Session> getAllSessions() {
-		return calendar.getSessions();
-	}
-
-	public List<SessionCalendar> getAllSessionCalendars() {
-		return sessionCalendarRepo.findAll();
-	}
-
-	public SessionCalendar getCalendar() {
-		return calendar;
-	}
-
-	public void setCalendar(SessionCalendar calendar) {
-		this.calendar = calendar;
-	}
-
-	public String getAcademicYear() {
-		return calendar.getStartDate().getYear() + " - " + calendar.getEndDate().getYear();
-	}
-
-	public Session editSession(Session session, Session newSession) {
+	public void editSession(Session session, Session newSession) {
 		// delete the old session from the runtime calendar
 		calendar.deleteSession(session);
 
@@ -124,15 +140,24 @@ public class SessionCalendarFacade implements Facade {
 		GenericDaoJpa.startTransaction();
 		sessionRepo.update(session);
 		GenericDaoJpa.commitTransaction();
-
-		return session;
 	}
 
-	public void editSessionCalendar(SessionCalendar calendar, LocalDate startDate, LocalDate endDate) {
+	public void deleteSession(Session session) {
+		// delete from calendar
+		calendar.deleteSession(session);
+
+		// persist
 		GenericDaoJpa.startTransaction();
-		calendar.setStartDate(startDate);
-		calendar.setEndDate(endDate);
+		sessionRepo.delete(session);
 		GenericDaoJpa.commitTransaction();
+	}
+
+	public Session getSessionByTitle(String title) {
+		return sessionRepo.getSessionByTitle(title);
+	}
+
+	public Set<Session> getAllSessions() {
+		return calendar.getSessions();
 	}
 
 }

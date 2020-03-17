@@ -13,39 +13,50 @@ import main.services.PropertyValueFactoryWrapperCellFactory;
 
 public class CalendarSceneController extends GuiController {
 
+	@FXML private AnchorPane chooseCalendarPane, calendarSceneRoot;
+	@FXML private ListView<SessionCalendar> calendarListView;
+	@FXML private Button selectButton, editButton, addButton;
+
+	private NewCalendarController newCalendarController;
 	private ObservableList<SessionCalendar> calendarList;
-	private SessionCalendar inspectedCalendar;
-
-	@FXML
-	private AnchorPane chooseCalendarPane, modifyCalendarRoot, calendarSceneRoot;
-
-	@FXML
-	private ListView<SessionCalendar> calendarListView;
-	@FXML
-	private Button selectButton, editButton, addButton;
+	private AnchorPane editCalendar, newCalendar;
 
 	@FXML
 	public void initialize() {
+
+		// initialize controllers
+		newCalendarController = new NewCalendarController();
+
+		// load FXML once
+		newCalendar = loadFXML("calendar/EditOrCreateCalendar.fxml", newCalendarController, this.getFacade());
+
+		// fill and display the calendar list + get first item by default
 		fillList();
-
+		displayCalendarList();
 		calendarListView.getSelectionModel().selectFirst();
-		inspectedCalendar = calendarListView.getSelectionModel().getSelectedItem();
-		modifyCalendarRoot = loadFXML("calendar/ModifyCalendar.fxml", new ModifyCalendarController(), getFacade());
 
-		// Event Listeners
-		calendarListView.getSelectionModel().selectedItemProperty()
-				.addListener((x, y, sessionCalendar) -> inspectedCalendar = sessionCalendar);
+		// Buttons
 		selectButton.setOnAction((event) -> onCalendarSelect());
 		editButton.setOnAction((event) -> onCalendarEdit());
 		addButton.setOnAction((event) -> onCalendarAdd());
+	}
+
+	public void update() {
+		fillList();
+	}
+
+	public void displayCalendarList() {
+		GuiUtil.bindAnchorPane(chooseCalendarPane, calendarSceneRoot);
 	}
 
 	private void fillList() {
 		calendarList = FXCollections
 				.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessionCalendars());
 
+		// TODO order by academic year
 		calendarListView.setCellFactory(
-				new PropertyValueFactoryWrapperCellFactory<SessionCalendar>("academicYear", this::onCalendarSelect));
+				new PropertyValueFactoryWrapperCellFactory<SessionCalendar>("academicYear", this::onCalendarSelect)
+		);
 
 		calendarListView.setItems(calendarList);
 		calendarListView.refresh();
@@ -54,31 +65,26 @@ public class CalendarSceneController extends GuiController {
 	private void onCalendarSelect() {
 
 		// Set the calendar
-		((SessionCalendarFacade) getFacade()).setCalendar(calendarListView.getSelectionModel().getSelectedItem());
+		((SessionCalendarFacade) getFacade()).setCalendar(getInspectedCalendar());
 
-		// Update the session scene
-		getMainController().getSessionSceneController().update();
-
-		// Set session tabs enabled and switch to it
+		// Set session tabs enabled, update it, and switch to it
 		getMainController().setSessionTabEnabled(true);
+		getMainController().getSessionSceneController().update();
 		getMainController().switchToSessionTab();
 	}
 
 	private void onCalendarEdit() {
-		GuiUtil.bindAnchorPane(modifyCalendarRoot, calendarSceneRoot);
+		calendarSceneRoot.getChildren().clear();
+		editCalendar = loadFXML("calendar/EditOrCreateCalendar.fxml", new ModifyCalendarController(), getFacade());
+		GuiUtil.bindAnchorPane(editCalendar, calendarSceneRoot);
 	}
 
 	private void onCalendarAdd() {
-
+		GuiUtil.bindAnchorPane(newCalendar, calendarSceneRoot);
 	}
 
 	public SessionCalendar getInspectedCalendar() {
-		return inspectedCalendar;
-	}
-	
-	public void goBack() {
-		fillList();
-		GuiUtil.bindAnchorPane(chooseCalendarPane, calendarSceneRoot);
+		return calendarListView.getSelectionModel().getSelectedItem();
 	}
 
 }
