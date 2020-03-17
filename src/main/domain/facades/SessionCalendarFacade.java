@@ -28,10 +28,9 @@ public class SessionCalendarFacade implements Facade {
 		setCalendar(sessionCalendarRepo.getCurrentSessionCalendar());
 	}
 
-	public Session createSessionFromFields(
-			Member organizer, String title, String description, String speakerName, LocalDate startDate,
-			LocalTime startTime, String duration, String location, String capacity
-	) throws InvalidSessionException {
+	public Session createSessionFromFields(Member organizer, String title, String description, String speakerName,
+			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity)
+			throws InvalidSessionException {
 
 		try {
 			LocalDateTime start = LocalDateTime.of(startDate, startTime);
@@ -40,9 +39,8 @@ public class SessionCalendarFacade implements Facade {
 			int durationInSeconds = (int) (durationInHours * 3600);
 			LocalDateTime end = start.plusSeconds(durationInSeconds);
 
-			return new Session(
-					organizer, title, description, speakerName, start, end, location, Integer.parseInt(capacity)
-			);
+			return new Session(organizer, title, description, speakerName, start, end, location,
+					Integer.parseInt(capacity));
 
 		} catch (IllegalArgumentException iae) {
 			switch (iae.getMessage()) {
@@ -103,7 +101,7 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public String getAcademicYear() {
-		return calendar.getAcademicYear()[0] + " - " + calendar.getAcademicYear()[1];
+		return calendar.getStartDate().getYear() + " - " + calendar.getEndDate().getYear();
 	}
 
 	public Session editSession(Session session, Session newSession) {
@@ -128,6 +126,13 @@ public class SessionCalendarFacade implements Facade {
 		GenericDaoJpa.commitTransaction();
 
 		return session;
+	}
+
+	public void editSessionCalendar(SessionCalendar calendar, LocalDate startDate, LocalDate endDate) {
+		GenericDaoJpa.startTransaction();
+		calendar.setStartDate(startDate);
+		calendar.setEndDate(endDate);
+		GenericDaoJpa.commitTransaction();
 	}
 
 }

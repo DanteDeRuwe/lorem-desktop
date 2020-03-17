@@ -126,5 +126,9 @@ public class MainController extends GuiController {
 	public UserSceneController getUserSceneController() {
 		return (UserSceneController) userSceneController;
 	}
+	
+	public CalendarSceneController getCalendarSceneController() {
+		return (CalendarSceneController) calendarSceneController;
+	}
 
 }

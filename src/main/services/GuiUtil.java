@@ -47,10 +47,8 @@ public class GuiUtil {
 		col.setResizable(true);
 	}
 
-	public static <T> void fillColumnWithDateTime(
-			TableColumn<T, LocalDateTime> col, String propname, int minWidth,
-			int maxWidth
-	) {
+	public static <T> void fillColumnWithDateTime(TableColumn<T, LocalDateTime> col, String propname, int minWidth,
+			int maxWidth) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
@@ -68,10 +66,8 @@ public class GuiUtil {
 		});
 	}
 
-	public static <T> void fillColumnWithDuration(
-			TableColumn<T, Duration> col, String propname, int minWidth,
-			int maxWidth
-	) {
+	public static <T> void fillColumnWithDuration(TableColumn<T, Duration> col, String propname, int minWidth,
+			int maxWidth) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
@@ -86,20 +82,16 @@ public class GuiUtil {
 
 					int durationHours = duration.toHoursPart();
 					int durationMinutes = duration.toMinutesPart();
-					setText(
-							durationHours > 0
-									? String.format("%du %dm", durationHours, durationMinutes)
-									: String.format("%dm", durationMinutes)
-					);
+					setText(durationHours > 0 ? String.format("%du %dm", durationHours, durationMinutes)
+							: String.format("%dm", durationMinutes));
 
 				}
 			}
 		});
 	}
 
-	public static <T> void fillColumnWithObjectToString(
-			TableColumn<T, Object> col, String propname, int minWidth, int maxWidth
-	) {
+	public static <T> void fillColumnWithObjectToString(TableColumn<T, Object> col, String propname, int minWidth,
+			int maxWidth) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);

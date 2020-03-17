@@ -20,11 +20,13 @@ import javafx.beans.property.StringProperty;
 		@NamedQuery(name = "SessionCalendar.getCurrentSessionCalendar", query = "select c from SessionCalendar c where CURRENT_DATE between c.startDate and c.endDate") })
 public class SessionCalendar {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long calendar_id;
-	private int[] academicYear;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long calendar_id;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	@OneToMany(mappedBy = "calendar") private Set<Session> sessions;
+	@OneToMany(mappedBy = "calendar")
+	private Set<Session> sessions;
 
 	public SessionCalendar() {
 	}
@@ -35,7 +37,6 @@ public class SessionCalendar {
 		if (startDate == null || endDate == null) {
 			throw new IllegalArgumentException("startDate and endDdate must not be null.");
 		}
-		setAcademicYear(startDate.getYear(), endDate.getYear());
 		setStartDate(startDate);
 		setEndDate(endDate);
 		sessions = new HashSet<>();
@@ -83,30 +84,24 @@ public class SessionCalendar {
 		sessions.remove(session);
 	}
 
-	public int[] getAcademicYear() {
-		return academicYear;
-	}
-
-	private void setAcademicYear(int startYear, int endYear) {
-
-		if (startYear < 0 || endYear < 0) {
-			throw new IllegalArgumentException("The start and end years of an academic year must be positive");
-		}
-		// no need to check for null, because an int is a primitive and can't be null
-
-		if (endYear != startYear + 1) {
-			throw new IllegalArgumentException(
-					"Academic years must start and end in consecutive years(e.g if it starts in 2020, it must end in 2021)");
-		}
-
-		int[] academicYear = new int[2];
-		academicYear[0] = startYear;
-		academicYear[1] = endYear;
-		this.academicYear = academicYear;
-	}
+	/*
+	 * private void setAcademicYear(int startYear, int endYear) {
+	 * 
+	 * if (startYear < 0 || endYear < 0) { throw new
+	 * IllegalArgumentException("The start and end years of an academic year must be positive"
+	 * ); } // no need to check for null, because an int is a primitive and can't be
+	 * null
+	 * 
+	 * if (endYear != startYear + 1) { throw new IllegalArgumentException(
+	 * "Academic years must start and end in consecutive years(e.g if it starts in 2020, it must end in 2021)"
+	 * ); }
+	 * 
+	 * int[] academicYear = new int[2]; academicYear[0] = startYear; academicYear[1]
+	 * = endYear; }
+	 */
 
 	public StringProperty academicYearProperty() {
-		return new SimpleStringProperty(String.format("%d - %d", academicYear[0], academicYear[1]));
+		return new SimpleStringProperty(String.format("%d - %d", startDate.getYear(), endDate.getYear()));
 	}
 
 }

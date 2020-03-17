@@ -57,8 +57,4 @@ public class SessionCalendarTest {
 		assertEquals(new SessionCalendar(startDate, endDate).getEndDate(), endDate);
 	}
 
-	@Test
-	public void createCalendar_CorrectStartDateAndEndDate_ReturnsCorrectAcademicYear() {
-		assertArrayEquals(new SessionCalendar(startDate, endDate).getAcademicYear(), aYear);
-	}
 }
