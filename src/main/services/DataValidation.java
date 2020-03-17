@@ -56,5 +56,15 @@ public class DataValidation {
 		}
 		return true;
 	}
+	
+	public static boolean textImagePath(TextField inputTextField, Label validationLabel, String validationText) {
+
+		if (!inputTextField.getText().matches("^(http(s?):)?([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)(\\?.*)?$")) {
+			validationLabel.setText(validationLabel.getText() + "\n" + validationText);
+			return false;
+		}
+		return true;
+	}
+
 
 }

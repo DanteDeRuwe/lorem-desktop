@@ -26,22 +26,29 @@ public class Member {
 	private MemberType memberType;
 	
 	private MemberStatus memberStatus;
+	
+	private String profilePicPath;
 
 	public Member() {
 	};
 
-	public Member(String username, String firstName, String lastName, MemberType memberType, MemberStatus memberStatus) {
+	public Member(String username, String firstName, String lastName, MemberType memberType, MemberStatus memberStatus, String profilePicPath) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.setMemberType(memberType);
 		this.memberStatus = memberStatus;
+		this.profilePicPath = profilePicPath;
 
 		sessions = new HashSet<Session>();
 	}
 	
 	public Member(String username, String firstName, String lastName, MemberType memberType) {
 		this(username, firstName, lastName, memberType, MemberStatus.ACTIVE);
+	}
+	
+	public Member(String username, String firstName, String lastName, MemberType memberType, MemberStatus memberStatus) {
+		this(username, firstName, lastName, memberType, memberStatus, "");
 	}
 
 	public String getUsername() {
@@ -90,6 +97,14 @@ public class Member {
 
 	public void setMemberType(MemberType memberType) {
 		this.memberType = memberType;
+	}
+
+	public String getProfilePicPath() {
+		return profilePicPath;
+	}
+
+	public void setProfilePicPath(String profilePicPath) {
+		this.profilePicPath = profilePicPath;
 	}
 
 }

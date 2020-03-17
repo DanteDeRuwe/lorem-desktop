@@ -27,6 +27,8 @@ public class NewUserController extends GuiController {
 	private JFXComboBox<MemberType> userTypeField;
 	@FXML
 	private JFXComboBox<MemberStatus> userStatusField;
+    @FXML
+    private JFXTextField profilePicField;
 	@FXML
 	private JFXButton photoUploadButton;
 	@FXML
@@ -64,7 +66,8 @@ public class NewUserController extends GuiController {
 	}
 
 	private void resetView() {
-		Stream.<TextField>of(firstNameField, lastNameField, usernameField).forEach(tf -> tf.setText(""));
+		validationLabel.setText("");
+		Stream.<TextField>of(firstNameField, lastNameField, usernameField, profilePicField).forEach(tf -> tf.setText(""));
 		userTypeField.getSelectionModel().selectFirst();
 		userStatusField.getSelectionModel().selectFirst();
 	}
@@ -76,8 +79,14 @@ public class NewUserController extends GuiController {
 				"Achternaam is verplicht");
 		boolean usernameFilledIn = DataValidation.textFilledIn(usernameField, validationLabel,
 				"Gebruikersnaam is verplicht");
+		boolean profilePicOk;
+		if (profilePicField.getText() == "") {
+			profilePicOk = true;
+		} else {
+			profilePicOk = DataValidation.textImagePath(profilePicField, validationLabel, "URL voor profiel foto klopt niet");
+		}
 
-		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn;
+		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && profilePicOk;
 	}
 
 	private void onNewMemberConfirm() {
@@ -92,13 +101,19 @@ public class NewUserController extends GuiController {
 		String userName = usernameField.getText();
 		MemberType type = userTypeField.getValue();
 		MemberStatus status = userStatusField.getValue();
+		String profilePicPath = profilePicField.getText();
 
 		MemberFacade mf = (MemberFacade) getFacade();
 
 		// Construct member
-		Member m = new Member(userName, firstName, lastName, type, status);
-
-		// Add session
+		Member m;
+		if (profilePicPath == "") {
+			m = new Member(userName, firstName, lastName, type, status);
+		} else {
+			m = new Member(userName, firstName, lastName, type, status, profilePicPath);
+		}
+		
+		// Add user
 		mf.addMember(m);
 
 		getMainController().getUserSceneController().updateWithMember(m); // update tableview with new member
