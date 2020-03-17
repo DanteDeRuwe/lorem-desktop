@@ -81,6 +81,7 @@ public class SessionSceneController extends GuiController {
 		GuiUtil.fillColumn(capacityColumn, "capacity", 40, 60);
 
 		sessionTable.setItems(FXCollections.observableArrayList(sessions));
+		sessionTable.refresh();
 	}
 
 	void displayOnRightPane(String key) {
@@ -102,7 +103,6 @@ public class SessionSceneController extends GuiController {
 		// update the view
 		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
 		((SessionFiltersController) sessionFiltersController).UpdateAcademicYear();
-		sessionTable.refresh();
 		sessionTable.getSelectionModel().selectFirst(); // select first session
 	}
 
