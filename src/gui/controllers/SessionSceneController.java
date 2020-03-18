@@ -7,13 +7,11 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.TextAlignment;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
 import main.services.GuiUtil;
@@ -57,6 +55,7 @@ public class SessionSceneController extends GuiController {
 		GuiUtil.bindAnchorPane(sessionFilters, leftPane);
 
 		// Center Panel
+		GuiUtil.setTablePlaceholderText(sessionTable, "Het is hier nogal leeg...");
 		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
 
 		// Right panel: activated when selecting a session
@@ -69,12 +68,6 @@ public class SessionSceneController extends GuiController {
 				}
 		);
 
-		// Placeholder text when sessionTable is empty
-		Label placeholderLabel = new Label("Het is hier nogal leeg...\nProbeer eens een sessie toe te voegen!");
-		placeholderLabel.setTextAlignment(TextAlignment.CENTER);
-		placeholderLabel.setOpacity(0.7d);
-		sessionTable.setPlaceholder(placeholderLabel);
-		
 		// select the first session by default
 		sessionTable.getSelectionModel().selectFirst();
 

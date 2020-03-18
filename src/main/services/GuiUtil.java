@@ -8,11 +8,15 @@ import java.util.Locale;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.TextAlignment;
 import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 
@@ -116,6 +120,20 @@ public class GuiUtil {
 				}
 			}
 		});
+	}
+
+	public static <T> void setTablePlaceholderText(TableView<T> table, String text) {
+		Label placeholderLabel = new Label(text);
+		placeholderLabel.setTextAlignment(TextAlignment.CENTER);
+		placeholderLabel.setOpacity(0.7d);
+		table.setPlaceholder(placeholderLabel);
+	}
+
+	public static <T> void setListPlaceholderText(ListView<T> list, String text) {
+		Label placeholderLabel = new Label(text);
+		placeholderLabel.setTextAlignment(TextAlignment.CENTER);
+		placeholderLabel.setOpacity(0.7d);
+		list.setPlaceholder(placeholderLabel);
 	}
 
 }

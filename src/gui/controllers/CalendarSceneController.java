@@ -6,12 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.TextAlignment;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
 import main.services.GuiUtil;
@@ -33,10 +31,9 @@ public class CalendarSceneController extends GuiController {
 	@FXML
 	public void initialize() {
 		// Placeholder text when calendarListView is empty
-		Label placeholderLabel = new Label("Het is hier nogal leeg...\nProbeer eens een kalender toe te voegen!");
-		placeholderLabel.setTextAlignment(TextAlignment.CENTER);
-		placeholderLabel.setOpacity(0.7d);
-		calendarListView.setPlaceholder(placeholderLabel);
+		GuiUtil.setListPlaceholderText(
+				calendarListView, "Het is hier nogal leeg...\nProbeer eens een kalender toe te voegen!"
+		);
 
 		// initialize controllers
 		newCalendarController = new NewCalendarController();
@@ -74,7 +71,8 @@ public class CalendarSceneController extends GuiController {
 
 		// Set the listview
 		calendarListView.setCellFactory(
-				new PropertyValueFactoryWrapperCellFactory<SessionCalendar>("academicYear", this::onCalendarSelect));
+				new PropertyValueFactoryWrapperCellFactory<SessionCalendar>("academicYear", this::onCalendarSelect)
+		);
 
 		calendarListView.setItems(calendarList);
 		calendarListView.refresh();

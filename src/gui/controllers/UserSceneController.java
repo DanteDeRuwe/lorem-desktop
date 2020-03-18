@@ -4,12 +4,10 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.TextAlignment;
 import main.domain.Member;
 import main.domain.facades.MemberFacade;
 import main.services.GuiUtil;
@@ -55,6 +53,7 @@ public class UserSceneController extends GuiController {
 		userFilters = loadFXML("users/UserFilters.fxml", userFiltersController, this.getFacade());
 
 		// Center Panel
+		GuiUtil.setTablePlaceholderText(userTable, "Het is hier nogal leeg...");
 		fillTableColumns(((MemberFacade) getFacade()).getAllMembers());
 
 		// Right panel
