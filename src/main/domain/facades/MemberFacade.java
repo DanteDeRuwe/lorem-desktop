@@ -14,7 +14,7 @@ public class MemberFacade implements Facade {
 	private MemberDao memberRepo = new MemberDaoJpa();
 
 	public MemberFacade() {
-		loggedInMember = getMemberByUsername("freddi"); // TODO Hardcoded for now
+		loggedInMember = getMemberByUsername("harm.de.weirdt"); // TODO Hardcoded for now
 	}
 
 	public Member getMemberByUsername(String username) {
