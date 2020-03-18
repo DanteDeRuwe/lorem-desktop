@@ -4,18 +4,21 @@ import com.jfoenix.controls.JFXDatePicker;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
 import main.services.GuiUtil;
 
 public class ModifyCalendarController extends GuiController {
 
+	@FXML private Label topLabel;
 	@FXML private JFXDatePicker startDatePicker, endDatePicker;
 	@FXML private Button saveButton, cancelButton;
 
 	@FXML
 	public void initialize() {
-
+		topLabel.setText("Wijzig Kalender");
+		
 		// Date picker formats
 		GuiUtil.fixDatePicker(startDatePicker);
 		GuiUtil.fixDatePicker(endDatePicker);

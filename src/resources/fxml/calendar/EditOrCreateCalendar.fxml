@@ -15,7 +15,7 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutX="118.0" layoutY="34.0" prefHeight="300.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Wijzig Kalender">
+            <Label fx:id="topLabel">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
