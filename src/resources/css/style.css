@@ -176,6 +176,14 @@
 }
 
 
+/* Combo boxes */
+
+.combo-box-popup .list-view .list-cell:filled:hover 
+{
+	-fx-text-fill: -select-txtcolor;
+    -fx-background-color: -select-bgcolor2;
+}
+
 /* like cards in bootstrap */
 
 .card {
