@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
@@ -22,6 +23,7 @@ public class InfoTabController extends GuiController {
 	@FXML private Label sessionTitle, sessionDate, sessionTime, sessionLocation, sessionSpeaker;
 	@FXML private Text sessionDescription;
 	@FXML private Button editSessionButton, deleteSessionButton;
+	@FXML private HBox byLabels;
 
 	@FXML
 	public void initialize() {
@@ -60,8 +62,14 @@ public class InfoTabController extends GuiController {
 		sessionDate.setText(inspectedSession.getStart().format(Util.DATEFORMATTER));
 		sessionTime.setText(inspectedSession.getStart().format(Util.TIMEFORMATTER));
 		sessionLocation.setText(inspectedSession.getLocation());
-		sessionSpeaker.setText(inspectedSession.getSpeakerName());
 		sessionDescription.setText(inspectedSession.getDescription());
+		
+		// Hide "Door <Speaker>" labels when there is no speaker in session
+		if (!inspectedSession.getSpeakerName().isBlank()) {
+			byLabels.setVisible(true);
+			sessionSpeaker.setText(inspectedSession.getSpeakerName());
+		} else
+			byLabels.setVisible(false);
 	}
 
 	public Session getInspectedSession() {
