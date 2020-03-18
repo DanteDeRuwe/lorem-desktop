@@ -130,11 +130,9 @@ public class NewSessionController extends GuiController {
 			goBack(); // clears fields and goes back to details view
 
 		} catch (InvalidSessionException e) {
-			validationLabel.setText(e.getMessage());
-			System.err.println(
-					"Invalid Session Exception, caused by " + e.getCause().getClass().getName()
-							+ "\nWith message: " + e.getMessage() + "\n"
-			);
+			if (e.getMessage() != null) {
+				validationLabel.setText(e.getMessage());
+			}
 		}
 	}
 

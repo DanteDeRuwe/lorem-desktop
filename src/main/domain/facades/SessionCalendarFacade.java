@@ -10,6 +10,7 @@ import main.domain.Member;
 import main.domain.Session;
 import main.domain.SessionCalendar;
 import main.exceptions.InvalidSessionException;
+import main.services.Util;
 import persistence.GenericDaoJpa;
 import persistence.SessionCalendarDaoJpa;
 import persistence.SessionDaoJpa;
@@ -99,16 +100,40 @@ public class SessionCalendarFacade implements Facade {
 			throws InvalidSessionException {
 
 		try {
+
+			// get start
 			LocalDateTime start = LocalDateTime.of(startDate, startTime);
 
+			// calculate duration
 			String[] d = duration.split(":");
 			if (d.length != 2)
 				throw new IllegalArgumentException("duration has to be of format h:mm");
 			int durationHours = Integer.parseInt(d[0].trim());
 			int durationMinutes = Integer.parseInt(d[1].trim());
 
+			// get end
 			LocalDateTime end = start.plusHours(durationHours).plusMinutes(durationMinutes);
 
+			// check if start and end are ok for the current calendar
+			if (calendar.getStartDate().isAfter(start.toLocalDate())
+					|| start.toLocalDate().isAfter(calendar.getEndDate()))
+				throw new InvalidSessionException(
+						String.format(
+								"Startdatum moet binnen de data van de kalender liggen (nl. %s - %s)",
+								calendar.getStartDate().format(Util.DATEFORMATTER),
+								calendar.getEndDate().format(Util.DATEFORMATTER)
+						)
+				);
+
+			if (calendar.getEndDate().isBefore(end.toLocalDate()))
+				throw new InvalidSessionException(
+						String.format(
+								"Einddatum kan niet later zijn dan die van de kalender (nl. %s)",
+								calendar.getEndDate().format(Util.DATEFORMATTER)
+						)
+				);
+
+			// construct a session
 			return new Session(
 					organizer, title, description, speakerName, start, end, location,
 					Integer.parseInt(capacity)
