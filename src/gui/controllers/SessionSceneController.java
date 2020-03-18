@@ -66,6 +66,8 @@ public class SessionSceneController extends GuiController {
 					displayOnRightPane("SessionTabs");
 				}
 		);
+		
+		// Double click to edit session
 		sessionTable.setOnMouseClicked(mouseClickedEvent -> {
 			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY)
 					&& mouseClickedEvent.getClickCount() == 2) {

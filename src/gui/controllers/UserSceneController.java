@@ -6,18 +6,20 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import main.domain.Member;
+import main.domain.Session;
 import main.domain.facades.MemberFacade;
 import main.services.GuiUtil;
 
 public class UserSceneController extends GuiController {
 
 	// Controllers
-	private GuiController userDetailsController, newUserController, userFiltersController;
+	private GuiController userDetailsController, newUserController, userFiltersController, editUserController;
 
 	// Own vars
-	private AnchorPane userDetails, newUser, userFilters;
+	private AnchorPane userDetails, newUser, userFilters, editUser;
 
 	// FXML vars
 	@FXML
@@ -58,6 +60,14 @@ public class UserSceneController extends GuiController {
 		// Event Handlers
 		userTable.getSelectionModel().selectedItemProperty()
 				.addListener((x, y, user) -> ((UserDetailsController) userDetailsController).setInspectedUser(user));
+		
+		// Double click to edit user
+		userTable.setOnMouseClicked(mouseClickedEvent -> {
+			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY)
+					&& mouseClickedEvent.getClickCount() == 2) {
+				displayOnRightPane("EditUser");
+			}
+		});
 
 	}
 
@@ -91,8 +101,21 @@ public class UserSceneController extends GuiController {
 			GuiUtil.bindAnchorPane(userDetails, rightPane);
 		else if (key.equals("NewUser"))
 			GuiUtil.bindAnchorPane(newUser, rightPane);
+		else if (key.equals("EditUser")) {
+			// editing a user relies heavily on a selected session.
+			// That's why we only load it when needed.
+			editUserController = new EditUserController();
+			editUser = loadFXML("users/EditOrCreateUser.fxml", editUserController, this.getFacade());
+			GuiUtil.bindAnchorPane(editUser, rightPane);
+		}
 		else
 			throw new RuntimeException("key not valid");
 	}
+
+	public Member getInspectedUser() {
+		return ((UserDetailsController) userDetailsController).getInspectedUser();
+	}
+	
+	
 
 }

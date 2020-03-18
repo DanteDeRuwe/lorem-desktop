@@ -3,6 +3,7 @@ package main.domain.facades;
 import java.util.List;
 
 import main.domain.Member;
+import main.domain.Session;
 import persistence.GenericDaoJpa;
 import persistence.MemberDao;
 import persistence.MemberDaoJpa;
@@ -39,6 +40,27 @@ public class MemberFacade implements Facade {
 	public void addMember(Member member) {
 		GenericDaoJpa.startTransaction();
 		memberRepo.insert(member);
+		GenericDaoJpa.commitTransaction();
+	}
+	
+	public void editMember(Member member, Member newMember) {
+		// delete the old session from the runtime calendar
+		deleteUser(member);
+
+		// update the user
+		member.setFirstName(newMember.getFirstName());
+		member.setLastName(newMember.getLastName());
+		member.setUsername(newMember.getUsername());
+		member.setMemberType(newMember.getMemberType());
+		member.setMemberStatus(newMember.getMemberStatus());
+		member.setProfilePicPath(newMember.getProfilePicPath());
+		
+		// add it again with updated info
+		addMember(member);
+
+		// persist
+		GenericDaoJpa.startTransaction();
+		memberRepo.update(member);
 		GenericDaoJpa.commitTransaction();
 	}
 

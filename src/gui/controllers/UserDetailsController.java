@@ -33,7 +33,12 @@ public class UserDetailsController extends GuiController {
 
 	@FXML
 	public void initialize() {
+		UserSceneController usc = getMainController().getUserSceneController();
+		// Event handlers
 		deleteUserButton.setOnAction((event) -> handleDeleteUser());
+		editUserButton.setOnMouseClicked(
+				(e) -> { usc.displayOnRightPane("EditUser"); }
+		);
 	}
 
 	private void handleDeleteUser() {
@@ -80,4 +85,10 @@ public class UserDetailsController extends GuiController {
 			profilePicView.setImage(new Image(inspectedUser.getProfilePicPath()));
 		}
 	}
+
+	public Member getInspectedUser() {
+		return inspectedUser;
+	}
+	
+	
 }

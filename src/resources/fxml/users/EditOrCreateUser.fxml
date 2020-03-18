@@ -16,7 +16,7 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="384.0" prefWidth="305.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label prefHeight="0.0" prefWidth="170.0" text="Nieuwe Gebruiker">
+                  <Label fx:id="headerText" prefHeight="0.0" prefWidth="170.0" text="Nieuwe Gebruiker">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -55,7 +55,7 @@
                         <JFXComboBox fx:id="userStatusField" prefWidth="220.0" promptText="Status" />
                      </children>
                   </HBox>
-                  <JFXTextField fx:id="profilePicField" labelFloat="true" layoutX="25.0" layoutY="248.0" maxWidth="1.7976931348623157E308" promptText="Link Naar Profielfoto">
+                  <JFXTextField fx:id="profilePicField" labelFloat="true" layoutX="25.0" layoutY="248.0" maxWidth="1.7976931348623157E308" promptText="Link Naar Profielfoto (optioneel)">
                      <VBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </VBox.margin>
