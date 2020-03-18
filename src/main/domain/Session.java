@@ -230,7 +230,7 @@ public class Session {
 	}
 
 	public StringProperty capacityProperty() {
-		return new SimpleStringProperty(Integer.toString(capacity));
+		return new SimpleStringProperty(registrees.size() + "/" + capacity);
 	}
 
 	public SessionStatus getSessionStatus() {
