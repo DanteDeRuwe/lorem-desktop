@@ -60,6 +60,7 @@ public class UserSceneController extends GuiController {
 		// Event Handlers
 		userTable.getSelectionModel().selectedItemProperty()
 				.addListener((x, y, user) -> ((UserDetailsController) userDetailsController).setInspectedUser(user));
+		userTable.getSelectionModel().selectFirst();
 
 		// Double click to edit user
 		userTable.setOnMouseClicked(mouseClickedEvent -> {
