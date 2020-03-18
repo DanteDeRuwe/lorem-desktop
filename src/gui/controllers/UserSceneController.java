@@ -4,10 +4,12 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.TextAlignment;
 import main.domain.Member;
 import main.domain.facades.MemberFacade;
 import main.services.GuiUtil;
@@ -21,10 +23,14 @@ public class UserSceneController extends GuiController {
 	private AnchorPane userDetails, newUser, userFilters, editUser;
 
 	// FXML vars
-	@FXML private AnchorPane leftPane, middlePane, rightPane;
-	@FXML protected TableView<Member> userTable;
-	@FXML private TableColumn<Member, String> lastNameColumn, firstNameColumn, usernameColumn;
-	@FXML private TableColumn<Member, Object> typeColumn, statusColumn;
+	@FXML
+	private AnchorPane leftPane, middlePane, rightPane;
+	@FXML
+	protected TableView<Member> userTable;
+	@FXML
+	private TableColumn<Member, String> lastNameColumn, firstNameColumn, usernameColumn;
+	@FXML
+	private TableColumn<Member, Object> typeColumn, statusColumn;
 
 	/*
 	 * Init
@@ -32,6 +38,11 @@ public class UserSceneController extends GuiController {
 
 	@FXML
 	public void initialize() {
+		// Placeholder text when userTable is empty
+		Label placeholderLabel = new Label("Het is hier nogal leeg...\nProbeer eens een kalender toe te voegen!");
+		placeholderLabel.setTextAlignment(TextAlignment.CENTER);
+		placeholderLabel.setOpacity(0.7d);
+		userTable.setPlaceholder(placeholderLabel);
 
 		// initialize controllers
 		userDetailsController = new UserDetailsController();
@@ -58,8 +69,7 @@ public class UserSceneController extends GuiController {
 
 		// Double click to edit user
 		userTable.setOnMouseClicked(mouseClickedEvent -> {
-			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY)
-					&& mouseClickedEvent.getClickCount() == 2) {
+			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 2) {
 				displayOnRightPane("EditUser");
 			}
 		});
