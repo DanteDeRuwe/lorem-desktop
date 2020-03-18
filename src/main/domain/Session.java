@@ -3,7 +3,9 @@ package main.domain;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,10 +40,26 @@ public class Session {
 	private LocalDateTime startTime, endTime;
 	private int capacity;
 
-//	private List<Member> participants = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(
+			  name = "SESSION_REGISTREES", 
+			  joinColumns = @JoinColumn(name = "id"), 
+			  inverseJoinColumns = @JoinColumn(name = "member_id"))
+	private Set<Member> registrees;
+	
+	@ManyToMany
+	@JoinTable(
+			  name = "SESSION_ATTENDEES", 
+			  joinColumns = @JoinColumn(name = "id"), 
+			  inverseJoinColumns = @JoinColumn(name = "member_id"))
+	private Set<Member> attendees;
+	
+	
 	private List<MediaItem> media = new ArrayList<>();
 	private List<FeedbackEntry> feedbackEntries = new ArrayList<>();
 	private List<Announcement> announcements = new ArrayList<>();
+	
+	private SessionStatus sessionStatus;
 
 	public Session() {
 	};
@@ -63,7 +83,8 @@ public class Session {
 		setSpeakerName(speakerName);
 		setLocation(location);
 		setCapacity(capacity);
-
+		setRegistrees(new HashSet<Member>());
+		setAttendees(new HashSet<Member>());
 	}
 
 	private boolean meetsMinimumPeriodRequirement(LocalDateTime start, LocalDateTime end) {
@@ -211,4 +232,34 @@ public class Session {
 	public StringProperty capacityProperty() {
 		return new SimpleStringProperty(Integer.toString(capacity));
 	}
+
+	public SessionStatus getSessionStatus() {
+		return sessionStatus;
+	}
+
+	public void setSessionStatus(SessionStatus sessionStatus) {
+		this.sessionStatus = sessionStatus;
+	}
+
+	public Set<Member> getRegistrees() {
+		return registrees;
+	}
+
+	public void setRegistrees(Set<Member> registrees) {
+		this.registrees = registrees;
+	}
+
+	public Set<Member> getAttendees() {
+		return attendees;
+	}
+
+	public void setAttendees(Set<Member> attendees) {
+		this.attendees = attendees;
+	}
+
+	
+	
+	
+	
+	
 }

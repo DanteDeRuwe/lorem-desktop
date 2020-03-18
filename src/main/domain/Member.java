@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,6 +29,12 @@ public class Member {
 	private MemberStatus memberStatus;
 	
 	private String profilePicPath;
+	
+	@ManyToMany(mappedBy = "registrees")
+	private Set<Session> registrations;
+	
+	@ManyToMany(mappedBy = "attendees")
+	private Set<Session> attendances;
 
 	public Member() {
 	};
@@ -41,6 +48,8 @@ public class Member {
 		this.profilePicPath = profilePicPath;
 
 		sessions = new HashSet<Session>();
+		setRegistrations(new HashSet<Session>());
+		setAttendances(new HashSet<Session>());
 	}
 	
 	public Member(String username, String firstName, String lastName, MemberType memberType) {
@@ -106,5 +115,25 @@ public class Member {
 	public void setProfilePicPath(String profilePicPath) {
 		this.profilePicPath = profilePicPath;
 	}
+
+	public Set<Session> getRegistrations() {
+		return registrations;
+	}
+
+	public void setRegistrations(Set<Session> registrations) {
+		this.registrations = registrations;
+	}
+
+	public Set<Session> getAttendances() {
+		return attendances;
+	}
+
+	public void setAttendances(Set<Session> attendances) {
+		this.attendances = attendances;
+	}
+
+	
+	
+	
 
 }
