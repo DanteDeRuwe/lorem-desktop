@@ -5,11 +5,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,7 +30,9 @@ public class Session {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long id;
 	@ManyToOne @JoinColumn(name = "member_id", nullable = false) private Member organizer;
 	@ManyToOne @JoinColumn(name = "calendar_id", nullable = false) private SessionCalendar calendar;
-	private String location, title, speakerName, description;
+	private String location, title, speakerName;
+
+	@Lob @Column(length = 8000) private String description;
 	private LocalDateTime startTime, endTime;
 	private int capacity;
 
