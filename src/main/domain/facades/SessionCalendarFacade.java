@@ -78,6 +78,20 @@ public class SessionCalendarFacade implements Facade {
 	 * -----------------------------------------------------------------------------
 	 */
 
+	/**
+	 * 
+	 * @param organizer
+	 * @param title
+	 * @param description
+	 * @param speakerName
+	 * @param startDate
+	 * @param startTime
+	 * @param duration    has to be a string of format "hh:mm"!!!
+	 * @param location
+	 * @param capacity
+	 * @return
+	 * @throws InvalidSessionException
+	 */
 	public Session createSessionFromFields(
 			Member organizer, String title, String description, String speakerName,
 			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity
@@ -87,9 +101,13 @@ public class SessionCalendarFacade implements Facade {
 		try {
 			LocalDateTime start = LocalDateTime.of(startDate, startTime);
 
-			double durationInHours = Double.parseDouble(duration);
-			int durationInSeconds = (int) (durationInHours * 3600);
-			LocalDateTime end = start.plusSeconds(durationInSeconds);
+			String[] d = duration.split(":");
+			if (d.length != 2)
+				throw new IllegalArgumentException("duration has to be of format h:mm");
+			int durationHours = Integer.parseInt(d[0].trim());
+			int durationMinutes = Integer.parseInt(d[1].trim());
+
+			LocalDateTime end = start.plusHours(durationHours).plusMinutes(durationMinutes);
 
 			return new Session(
 					organizer, title, description, speakerName, start, end, location,

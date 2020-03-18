@@ -71,9 +71,9 @@ public class NewSessionController extends GuiController {
 	private boolean allFieldsOk() {
 		boolean titleFilledIn = DataValidation.textFilledIn(titleField, validationLabel, "Titel is verplicht");
 		boolean durationFilledIn = DataValidation.textFilledIn(durationField, validationLabel, "Duurtijd is verplicht");
-		boolean durationNumeric = DataValidation.textNumeric(
+		boolean durationIsDuration = DataValidation.isDuration(
 				durationField, validationLabel,
-				"Duurtijd moet een getal zijn"
+				"Duurtijd moet van het formaat (u)u:mm zijn"
 		);
 
 		boolean startDateFilledIn = DataValidation.dateFilledIn(
@@ -90,7 +90,7 @@ public class NewSessionController extends GuiController {
 				"Capaciteit moet een getal zijn"
 		);
 
-		return titleFilledIn && durationFilledIn && durationNumeric && startDateFilledIn && startTimeFilledIn
+		return titleFilledIn && durationFilledIn && durationIsDuration && startDateFilledIn && startTimeFilledIn
 				&& capacityNumeric;
 	}
 

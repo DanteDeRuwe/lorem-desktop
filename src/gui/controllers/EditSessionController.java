@@ -79,8 +79,9 @@ public class EditSessionController extends GuiController {
 		startTimeField.setValue(start.toLocalTime());
 
 		Duration duration = Duration.between(start, sessionToEdit.getEnd());
-		double durationInHours = duration.toSeconds() / 3600.0;
-		durationField.setText(String.format("%.2f", durationInHours));
+		long durationHours = duration.toDaysPart() * 24 + duration.toHoursPart();
+		int durationMinutes = duration.toMinutesPart();
+		durationField.setText(String.format("%d:%02d", durationHours, durationMinutes));
 	}
 
 	private void goBack() {
@@ -102,9 +103,9 @@ public class EditSessionController extends GuiController {
 	private boolean allFieldsOk() {
 		boolean titleFilledIn = DataValidation.textFilledIn(titleField, validationLabel, "Titel is verplicht");
 		boolean durationFilledIn = DataValidation.textFilledIn(durationField, validationLabel, "Duurtijd is verplicht");
-		boolean durationNumeric = DataValidation.textNumeric(
+		boolean durationIsDuration = DataValidation.isDuration(
 				durationField, validationLabel,
-				"Duurtijd moet een getal zijn"
+				"Duurtijd moet van het formaat (u)u:mm zijn"
 		);
 
 		boolean startDateFilledIn = DataValidation.dateFilledIn(
@@ -121,7 +122,7 @@ public class EditSessionController extends GuiController {
 				"Capaciteit moet een getal zijn"
 		);
 
-		return titleFilledIn && durationFilledIn && durationNumeric && startDateFilledIn && startTimeFilledIn
+		return titleFilledIn && durationFilledIn && durationIsDuration && startDateFilledIn && startTimeFilledIn
 				&& capacityNumeric;
 	}
 

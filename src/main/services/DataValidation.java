@@ -1,6 +1,7 @@
 package main.services;
 
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 
 import javafx.scene.control.Label;
@@ -56,7 +57,7 @@ public class DataValidation {
 		}
 		return true;
 	}
-	
+
 	public static boolean textImagePath(TextField inputTextField, Label validationLabel, String validationText) {
 
 		if (!inputTextField.getText().matches("^(http(s?):)?([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)(\\?.*)?$")) {
@@ -66,5 +67,12 @@ public class DataValidation {
 		return true;
 	}
 
+	public static boolean isDuration(JFXTextField inputTextField, Label validationLabel, String validationText) {
+		if (!inputTextField.getText().matches("\\d+:\\d{2}")) {
+			validationLabel.setText(validationLabel.getText() + "\n" + validationText);
+			return false;
+		}
+		return true;
+	}
 
 }
