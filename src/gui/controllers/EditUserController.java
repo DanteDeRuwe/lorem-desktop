@@ -107,7 +107,7 @@ public class EditUserController extends GuiController {
 		boolean usernameFilledIn = DataValidation.textFilledIn(usernameField, validationLabel,
 				"Gebruikersnaam is verplicht");
 		boolean profilePicOk;
-		if (profilePicField.getText() == "") {
+		if (profilePicField.getText().isBlank()) {
 			profilePicOk = true;
 		} else {
 			profilePicOk = DataValidation.textImagePath(profilePicField, validationLabel, "URL voor profiel foto klopt niet");
@@ -134,7 +134,7 @@ public class EditUserController extends GuiController {
 
 		// Construct member
 		Member template;
-		if (profilePicPath == "") {
+		if (profilePicPath.isBlank()) {
 			template = new Member(userName, firstName, lastName, type, status);
 		} else {
 			template = new Member(userName, firstName, lastName, type, status, profilePicPath);
