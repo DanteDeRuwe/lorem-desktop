@@ -22,7 +22,7 @@ public class SessionFiltersController extends GuiController {
 	@FXML
 	private JFXButton newSessionButton;
 	@FXML
-	private JFXTextField titleFilterField, speakerFilterField, locationFilterField;
+	private JFXTextField titleFilterField, speakerFilterField, locationFilterField, organizerFilterField;
 
 	@FXML
 	private JFXDatePicker fromFilterField;
@@ -49,6 +49,8 @@ public class SessionFiltersController extends GuiController {
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		locationFilterField.textProperty().addListener(
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
+		organizerFilterField.textProperty().addListener(
+				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		fromFilterField.valueProperty().addListener(
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		toFilterField.valueProperty().addListener(
@@ -59,24 +61,21 @@ public class SessionFiltersController extends GuiController {
 		String titleFilter = titleFilterField.getText();
 		String speakerFilter = speakerFilterField.getText();
 		String locationFilter = locationFilterField.getText();
+		String organizerFilter = organizerFilterField.getText();
 		LocalDate fromFilter = fromFilterField.getValue();
 		LocalDate toFilter = toFilterField.getValue();
 		Set<Session> sessionSet = new HashSet<>(((SessionCalendarFacade) getFacade()).getAllSessions());
-		return sessionSet.stream()
-				.filter(s -> s.getTitle().toLowerCase().contains((titleFilter.toLowerCase().trim())))
+		return sessionSet.stream().filter(s -> s.getTitle().toLowerCase().contains((titleFilter.toLowerCase().trim())))
 				.filter(s -> s.getSpeakerName().toLowerCase().contains((speakerFilter.toLowerCase().trim())))
 				.filter(s -> s.getLocation().toLowerCase().contains((locationFilter.toLowerCase().trim())))
-				.filter(
-						s -> (fromFilter == null && toFilter == null)
-								? true
-								: (toFilter == null)
-										? s.getStart().toLocalDate().compareTo(fromFilter) >= 0
-										: (fromFilter == null)
-												? s.getStart().toLocalDate().compareTo(toFilter) <= 0
-												: s.getStart().toLocalDate().compareTo(fromFilter) >= 0 && s.getStart().toLocalDate().compareTo(toFilter) <= 0
+				.filter(s -> s.getFullOrganizerName().toLowerCase().contains((organizerFilter.toLowerCase().trim())))
+				.filter(s -> (fromFilter == null && toFilter == null) ? true
+						: (toFilter == null) ? s.getStart().toLocalDate().compareTo(fromFilter) >= 0
+								: (fromFilter == null) ? s.getStart().toLocalDate().compareTo(toFilter) <= 0
+										: s.getStart().toLocalDate().compareTo(fromFilter) >= 0
+												&& s.getStart().toLocalDate().compareTo(toFilter) <= 0
 
-				)
-				.collect(Collectors.toSet());
+				).collect(Collectors.toSet());
 	}
 
 	public void UpdateAcademicYear() {
