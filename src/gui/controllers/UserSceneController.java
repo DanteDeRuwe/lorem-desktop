@@ -9,7 +9,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import main.domain.Member;
-import main.domain.Session;
 import main.domain.facades.MemberFacade;
 import main.services.GuiUtil;
 
@@ -22,14 +21,10 @@ public class UserSceneController extends GuiController {
 	private AnchorPane userDetails, newUser, userFilters, editUser;
 
 	// FXML vars
-	@FXML
-	private AnchorPane leftPane, middlePane, rightPane;
-	@FXML
-	protected TableView<Member> userTable;
-	@FXML
-	private TableColumn<Member, String> lastNameColumn, firstNameColumn, usernameColumn;
-	@FXML
-	private TableColumn<Member, Object> typeColumn, statusColumn;
+	@FXML private AnchorPane leftPane, middlePane, rightPane;
+	@FXML protected TableView<Member> userTable;
+	@FXML private TableColumn<Member, String> lastNameColumn, firstNameColumn, usernameColumn;
+	@FXML private TableColumn<Member, Object> typeColumn, statusColumn;
 
 	/*
 	 * Init
@@ -60,7 +55,7 @@ public class UserSceneController extends GuiController {
 		// Event Handlers
 		userTable.getSelectionModel().selectedItemProperty()
 				.addListener((x, y, user) -> ((UserDetailsController) userDetailsController).setInspectedUser(user));
-		
+
 		// Double click to edit user
 		userTable.setOnMouseClicked(mouseClickedEvent -> {
 			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY)
@@ -83,6 +78,7 @@ public class UserSceneController extends GuiController {
 		GuiUtil.fillColumnWithObjectToString(statusColumn, "memberStatus", 40, 200);
 
 		userTable.setItems(FXCollections.observableArrayList(members));
+		userTable.refresh();
 	}
 
 	void update() {
@@ -107,15 +103,12 @@ public class UserSceneController extends GuiController {
 			editUserController = new EditUserController();
 			editUser = loadFXML("users/EditOrCreateUser.fxml", editUserController, this.getFacade());
 			GuiUtil.bindAnchorPane(editUser, rightPane);
-		}
-		else
+		} else
 			throw new RuntimeException("key not valid");
 	}
 
 	public Member getInspectedUser() {
 		return ((UserDetailsController) userDetailsController).getInspectedUser();
 	}
-	
-	
 
 }
