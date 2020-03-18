@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
+import main.services.GuiUtil;
 
 public class NewCalendarController extends GuiController {
 
@@ -16,6 +17,11 @@ public class NewCalendarController extends GuiController {
 
 	@FXML
 	public void initialize() {
+		// Date picker format
+		GuiUtil.fixDatePicker(startDatePicker);
+		GuiUtil.fixDatePicker(endDatePicker);
+
+		// Event listeners
 		saveButton.setOnMouseClicked((event) -> handleCreate());
 		cancelButton.setOnMouseClicked((event) -> goBack());
 	}
