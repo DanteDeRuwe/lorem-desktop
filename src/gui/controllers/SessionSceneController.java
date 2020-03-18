@@ -7,6 +7,7 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
@@ -26,6 +27,7 @@ public class SessionSceneController extends GuiController {
 	private Session inspectedSession;
 
 	// FXML vars
+	@FXML private SplitPane splitpane;
 	@FXML private AnchorPane leftPane, middlePane, rightPane;
 	@FXML protected TableView<Session> sessionTable;
 	@FXML private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn,
@@ -55,10 +57,8 @@ public class SessionSceneController extends GuiController {
 		// Center Panel
 		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
 
-		// Right panel: default for tabs
-		displayOnRightPane("SessionTabs");
-
-		// Event Handlers
+		// Right panel: activated when selecting a session
+		displayOnRightPane("NothingAndShrink");
 		sessionTable.getSelectionModel().selectedItemProperty().addListener(
 				(x, y, session) -> {
 					setInspectedSession(session);
@@ -66,19 +66,21 @@ public class SessionSceneController extends GuiController {
 					displayOnRightPane("SessionTabs");
 				}
 		);
-		
-		// Double click to edit session
+
+		// select the first session by default
+		sessionTable.getSelectionModel().selectFirst();
+
+		// event handler for doubleclicking a session
 		sessionTable.setOnMouseClicked(mouseClickedEvent -> {
 			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY)
 					&& mouseClickedEvent.getClickCount() == 2) {
 				displayOnRightPane("EditSession");
 			}
 		});
-
 	}
 
 	/*
-	 * Helpers
+	 * Helpers, these are package private so other guicontrollers can access them
 	 */
 
 	void fillTableColumns(Set<Session> sessions) {
@@ -95,6 +97,15 @@ public class SessionSceneController extends GuiController {
 	}
 
 	void displayOnRightPane(String key) {
+
+		// If no sessions, and no plan to create one, just stay collapsed
+		if (((SessionCalendarFacade) getFacade()).getAllSessions().isEmpty() && !key.equals("NewSession"))
+			key = "NothingAndShrink";
+		// else show the right pane if it was previously collapsed
+		else if (splitpane.getDividerPositions()[1] == 1.0)
+			splitpane.setDividerPosition(1, 0.7);
+
+		// Look what to display
 		if (key.equals("SessionTabs"))
 			GuiUtil.bindAnchorPane(sessionTabs, rightPane);
 		else if (key.equals("NewSession"))
@@ -105,6 +116,9 @@ public class SessionSceneController extends GuiController {
 			editSessionController = new EditSessionController();
 			editSession = loadFXML("sessions/EditOrCreateSession.fxml", editSessionController, this.getFacade());
 			GuiUtil.bindAnchorPane(editSession, rightPane);
+		} else if (key.equals("NothingAndShrink")) {
+			rightPane.getChildren().clear();
+			splitpane.setDividerPosition(1, 1.0); // collapse to the right
 		} else
 			throw new RuntimeException("displayOnRightPane: key not valid");
 	}
