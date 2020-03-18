@@ -1,5 +1,7 @@
 package gui.controllers;
 
+import java.util.Comparator;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -50,10 +52,14 @@ public class CalendarSceneController extends GuiController {
 	}
 
 	private void fillList() {
+		// make a list
 		calendarList = FXCollections
 				.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessionCalendars());
 
-		// TODO order by academic year
+		// sort by start date
+		calendarList.sort(Comparator.comparing(SessionCalendar::getStartDate));
+
+		// Set the listview
 		calendarListView.setCellFactory(
 				new PropertyValueFactoryWrapperCellFactory<SessionCalendar>("academicYear", this::onCalendarSelect)
 		);
