@@ -78,7 +78,7 @@ public class NewUserController extends GuiController {
 		boolean usernameFilledIn = DataValidation.textFilledIn(usernameField, validationLabel,
 				"Gebruikersnaam is verplicht");
 		boolean profilePicOk;
-		if (profilePicField.getText() == "") {
+		if (profilePicField.getText() == null || profilePicField.getText().isBlank()) {
 			profilePicOk = true;
 		} else {
 			profilePicOk = DataValidation.textImagePath(profilePicField, validationLabel, "URL voor profiel foto klopt niet");
@@ -105,7 +105,7 @@ public class NewUserController extends GuiController {
 
 		// Construct member
 		Member m;
-		if (profilePicPath == "") {
+		if (profilePicPath == null || profilePicPath.isBlank()) {
 			m = new Member(userName, firstName, lastName, type, status);
 		} else {
 			m = new Member(userName, firstName, lastName, type, status, profilePicPath);
