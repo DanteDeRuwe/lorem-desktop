@@ -5,9 +5,11 @@ import java.util.Comparator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextAlignment;
 import main.domain.SessionCalendar;
@@ -90,9 +92,17 @@ public class CalendarSceneController extends GuiController {
 	}
 
 	private void onCalendarEdit() {
-		calendarSceneRoot.getChildren().clear();
-		editCalendar = loadFXML("calendar/EditOrCreateCalendar.fxml", new ModifyCalendarController(), getFacade());
-		GuiUtil.bindAnchorPane(editCalendar, calendarSceneRoot);
+		if (getInspectedCalendar().getSessions().size() > 0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Wijzig kalender");
+			alert.setHeaderText("Fout");
+			alert.setContentText("Je kan geen kalender met toegevoegde sessies wijzigen!");
+			alert.showAndWait();
+		} else {
+			calendarSceneRoot.getChildren().clear();
+			editCalendar = loadFXML("calendar/EditOrCreateCalendar.fxml", new ModifyCalendarController(), getFacade());
+			GuiUtil.bindAnchorPane(editCalendar, calendarSceneRoot);
+		}
 	}
 
 	private void onCalendarAdd() {
