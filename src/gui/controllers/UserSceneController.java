@@ -36,11 +36,6 @@ public class UserSceneController extends GuiController {
 
 	@FXML
 	public void initialize() {
-		// Placeholder text when userTable is empty
-		Label placeholderLabel = new Label("Het is hier nogal leeg...\nProbeer eens een kalender toe te voegen!");
-		placeholderLabel.setTextAlignment(TextAlignment.CENTER);
-		placeholderLabel.setOpacity(0.7d);
-		userTable.setPlaceholder(placeholderLabel);
 
 		// initialize controllers
 		userDetailsController = new UserDetailsController();
