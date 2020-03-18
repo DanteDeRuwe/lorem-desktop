@@ -19,26 +19,22 @@ public class UserDetailsController extends GuiController {
 	private Member inspectedUser;
 
 	@FXML
-	private Label nameLabel;
-	@FXML
-	private Label membertypeLabel;
-	@FXML
-	private Label usernameLabel;
+	private Label nameLabel, membertypeLabel, usernameLabel, statusLabel;
 	@FXML
 	private JFXButton editUserButton;
 	@FXML
 	private JFXButton deleteUserButton;
-    @FXML
-    private ImageView profilePicView;
+	@FXML
+	private ImageView profilePicView;
 
 	@FXML
 	public void initialize() {
 		UserSceneController usc = getMainController().getUserSceneController();
 		// Event handlers
 		deleteUserButton.setOnAction((event) -> handleDeleteUser());
-		editUserButton.setOnMouseClicked(
-				(e) -> { usc.displayOnRightPane("EditUser"); }
-		);
+		editUserButton.setOnMouseClicked((e) -> {
+			usc.displayOnRightPane("EditUser");
+		});
 	}
 
 	private void handleDeleteUser() {
@@ -76,11 +72,23 @@ public class UserDetailsController extends GuiController {
 		nameLabel.setText(inspectedUser.getFullName());
 		membertypeLabel.setText(inspectedUser.getMemberType().toString());
 		usernameLabel.setText(inspectedUser.getUsername());
-		
+		statusLabel.setText(inspectedUser.getMemberStatus().toString());
+		switch (inspectedUser.getMemberStatus()) {
+		case ACTIVE:
+			statusLabel.setStyle("-fx-text-fill: green;");
+			break;
+		case INACTIVE:
+			statusLabel.setStyle("-fx-text-fill: orange;");
+			break;
+		case BLOCKED:
+			statusLabel.setStyle("-fx-text-fill: red;");
+		}
+
 		// Set profile picture
-		
+
 		if (inspectedUser.getProfilePicPath() == null || inspectedUser.getProfilePicPath().isEmpty()) {
-			profilePicView.setImage(new Image("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"));
+			profilePicView.setImage(new Image(
+					"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"));
 		} else {
 			profilePicView.setImage(new Image(inspectedUser.getProfilePicPath()));
 		}
@@ -89,6 +97,5 @@ public class UserDetailsController extends GuiController {
 	public Member getInspectedUser() {
 		return inspectedUser;
 	}
-	
-	
+
 }

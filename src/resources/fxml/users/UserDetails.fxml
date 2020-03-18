@@ -44,6 +44,11 @@
                         </Label>
                      </children>
                   </HBox>
+                     <Label fx:id="statusLabel" layoutX="10.0" layoutY="10.0" text="status" textFill="#979797">
+						<HBox.margin>
+							<Insets right="5.0" />
+						</HBox.margin>
+					 </Label>
                </children>
             </VBox>
          </children>
