@@ -29,7 +29,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="rightPane" />
+            <AnchorPane fx:id="rightPane" maxWidth="600" minWidth="250.0" />
          </items>
       </SplitPane>
    </children>

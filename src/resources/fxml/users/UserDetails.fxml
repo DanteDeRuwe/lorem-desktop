@@ -9,18 +9,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" styleClass="right-panel-bg" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="500.0" minHeight="-Infinity" minWidth="200.0" prefHeight="600.0" prefWidth="335.0" styleClass="right-panel-bg" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="335.0" styleClass="container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="600.0" prefWidth="335.0" styleClass="card" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox alignment="CENTER" prefHeight="570.0" prefWidth="305.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fx:id="profilePicView" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profilePicView" fitHeight="189.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Label fx:id="nameLabel" text="Naam Achternaam">
+                  <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" maxWidth="1.7976931348623157E308" prefWidth="246.0" text="Naam Achternaam" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="System Bold" size="28.0" />
                      </font>
@@ -32,7 +32,7 @@
                               <Insets right="5.0" />
                            </HBox.margin>
                         </Label>
-                        <Label layoutX="10.0" layoutY="10.0" text="—" textFill="#979797">
+                        <Label layoutX="10.0" layoutY="10.0" text="—" textFill="#979797" textOverrun="CLIP">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
