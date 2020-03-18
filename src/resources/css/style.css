@@ -33,7 +33,8 @@
 
 .jfx-tab-pane .headers-region {
     -fx-background-color: -primary-blue;
-}
+} 
+
 .jfx-tab-pane .tab-header-background {
     -fx-background-color: -primary-blue;
 }
@@ -45,6 +46,11 @@
 	-fx-text-fill: white;
 }
 
+ 
+.jfx-tab-pane .tab-header-area .control-buttons-tab{
+	-fx-background-color: -primary-blue;
+}
+
 .jfx-tab-pane .navtab:disabled .tab-label{
 	 -fx-text-fill: -darker-blue;
 }
@@ -52,6 +58,8 @@
 .jfx-tab-pane .tab-header-area .jfx-rippler{
     -jfx-rippler-fill : -secondary-yellow;
 }
+
+
 
 /* List views */
 
@@ -168,8 +176,9 @@
 }
 
 
-/* Containers are like cards in bootstrap */
-.container{
+/* like cards in bootstrap */
+
+.card {
 	-fx-background-color: white;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 30, 0, 0, 0);
 }

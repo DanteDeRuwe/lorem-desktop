@@ -34,6 +34,9 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.setMaximized(true);
 		stage.setTitle("Lorem");
+
+		stage.setMinHeight(700);
+		stage.setMinWidth(900);
 		stage.show();
 
 		stage.addEventHandler(KeyEvent.KEY_PRESSED, e -> {

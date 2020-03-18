@@ -13,7 +13,7 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutX="108.0" layoutY="24.0" prefHeight="700.0" prefWidth="316.0" AnchorPane.bottomAnchor="-49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane prefHeight="151.0" prefWidth="276.0" styleClass="container">
+            <AnchorPane prefHeight="151.0" prefWidth="276.0" styleClass="card">
                <VBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -34,7 +34,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="407.0" prefWidth="316.0" styleClass="container">
+            <AnchorPane prefHeight="407.0" prefWidth="316.0" styleClass="card">
                <children>
                   <VBox layoutY="56.0" prefHeight="407.0" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
