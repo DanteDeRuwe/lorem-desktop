@@ -70,6 +70,12 @@ public class Session {
 			String location, int capacity
 	) {
 
+		if (start == null) {
+			throw new IllegalArgumentException("Start can't be null");
+		} else if (end == null) {
+			throw new IllegalArgumentException("End can't be null");
+		}
+		
 		if (!meetsMinimumPeriodRequirement(start, end)) {
 			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
 		} else {
