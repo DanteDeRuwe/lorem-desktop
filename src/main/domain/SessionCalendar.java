@@ -1,6 +1,7 @@
 package main.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,16 +15,21 @@ import javax.persistence.OneToMany;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import main.exceptions.InvalidSessionException;
+import main.services.Util;
 
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "SessionCalendar.getCurrentSessionCalendar", query = "select c from SessionCalendar c where CURRENT_DATE between c.startDate and c.endDate") })
 public class SessionCalendar {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long calendar_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long calendar_id;
 	private LocalDate startDate;
 	private LocalDate endDate;
-	@OneToMany(mappedBy = "calendar") private Set<Session> sessions;
+	@OneToMany(mappedBy = "calendar")
+	private Set<Session> sessions;
 
 	public SessionCalendar() {
 	}
@@ -35,14 +41,27 @@ public class SessionCalendar {
 		}
 
 		if (endDate.getYear() != startDate.getYear() + 1) {
-			throw new IllegalArgumentException(
-					"Academic years must start and end in consecutive years"
-			);
+			throw new IllegalArgumentException("Academic years must start and end in consecutive years");
 		}
 
 		setStartDate(startDate);
 		setEndDate(endDate);
 		sessions = new HashSet<>();
+	}
+
+	public boolean sessionIsWithinRange(LocalDateTime sessionStart, LocalDateTime sessionEnd)
+			throws InvalidSessionException {
+		if (getStartDate().isAfter(sessionStart.toLocalDate()) || sessionStart.toLocalDate().isAfter(getEndDate()))
+			throw new InvalidSessionException(
+					String.format("Startdatum moet binnen de data van de kalender liggen (nl. %s - %s)",
+							getStartDate().format(Util.DATEFORMATTER), getEndDate().format(Util.DATEFORMATTER)));
+
+		if (getEndDate().isBefore(sessionEnd.toLocalDate()))
+			throw new InvalidSessionException(
+					String.format("Einddatum kan niet later zijn dan die van de kalender (nl. %s)",
+							getEndDate().format(Util.DATEFORMATTER)));
+
+		return true;
 	}
 
 	public LocalDate getStartDate() {

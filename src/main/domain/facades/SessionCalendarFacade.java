@@ -79,65 +79,19 @@ public class SessionCalendarFacade implements Facade {
 	 * -----------------------------------------------------------------------------
 	 */
 
-	/**
-	 * 
-	 * @param organizer
-	 * @param title
-	 * @param description
-	 * @param speakerName
-	 * @param startDate
-	 * @param startTime
-	 * @param duration    has to be a string of format "hh:mm"!!!
-	 * @param location
-	 * @param capacity
-	 * @return
-	 * @throws InvalidSessionException
-	 */
-	public Session createSessionFromFields(
-			Member organizer, String title, String description, String speakerName,
-			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity
-	)
+	public Session createSessionFromFields(Member organizer, String title, String description, String speakerName,
+			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity)
 			throws InvalidSessionException {
-
 		try {
-
-			// get start
 			LocalDateTime start = LocalDateTime.of(startDate, startTime);
+			LocalDateTime end = Util.calculateEnd(start, duration);
 
-			// calculate duration
-			String[] d = duration.split(":");
-			if (d.length != 2)
-				throw new IllegalArgumentException("duration has to be of format h:mm");
-			int durationHours = Integer.parseInt(d[0].trim());
-			int durationMinutes = Integer.parseInt(d[1].trim());
-
-			// get end
-			LocalDateTime end = start.plusHours(durationHours).plusMinutes(durationMinutes);
-
-			// check if start and end are ok for the current calendar
-			if (calendar.getStartDate().isAfter(start.toLocalDate())
-					|| start.toLocalDate().isAfter(calendar.getEndDate()))
-				throw new InvalidSessionException(
-						String.format(
-								"Startdatum moet binnen de data van de kalender liggen (nl. %s - %s)",
-								calendar.getStartDate().format(Util.DATEFORMATTER),
-								calendar.getEndDate().format(Util.DATEFORMATTER)
-						)
-				);
-
-			if (calendar.getEndDate().isBefore(end.toLocalDate()))
-				throw new InvalidSessionException(
-						String.format(
-								"Einddatum kan niet later zijn dan die van de kalender (nl. %s)",
-								calendar.getEndDate().format(Util.DATEFORMATTER)
-						)
-				);
+			// this will throw IllegalSessionException if session outside calendar
+			calendar.sessionIsWithinRange(start, end);
 
 			// construct a session
-			return new Session(
-					organizer, title, description, speakerName, start, end, location,
-					Integer.parseInt(capacity)
-			);
+			return new Session(organizer, title, description, speakerName, start, end, location,
+					Integer.parseInt(capacity));
 
 		} catch (IllegalArgumentException iae) {
 			switch (iae.getMessage()) {
@@ -147,6 +101,8 @@ public class SessionCalendarFacade implements Facade {
 				throw new InvalidSessionException("Start moet minstens 1 dag in de toekomst liggen", iae);
 			case "start and end do not meet minimum period requirement":
 				throw new InvalidSessionException("Duurtijd is minstens 30 minuten", iae);
+			case "duration has to be of format h:mm":
+				throw new InvalidSessionException("Duurtijd is van het formaat u:mm", iae);
 			default:
 				throw new InvalidSessionException(iae.getMessage(), iae);
 			}
