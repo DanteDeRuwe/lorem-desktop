@@ -80,7 +80,7 @@ public class SessionCalendar {
 	}
 
 	public void setEndDate(LocalDate endDate) {
-		if (startDate == null) {
+		if (endDate == null) {
 			throw new IllegalArgumentException("the end date of the calendar is null");
 		}
 		this.endDate = endDate;
@@ -90,7 +90,7 @@ public class SessionCalendar {
 		return sessions;
 	}
 
-	public void setSessions(HashSet<Session> sessions) {
+	public void setSessions(Set<Session> sessions) {
 		this.sessions = sessions;
 	}
 
