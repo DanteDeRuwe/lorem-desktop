@@ -28,10 +28,10 @@ import persistence.MemberDaoJpa;
 public class MemberFacadeTest {
 
 		@Mock
-		private static MemberDao memberRepoDummy;
+		private MemberDao memberRepoDummy;
 		
 		@InjectMocks
-		private static MemberFacade memberFacade;
+		private MemberFacade memberFacade;
 		
 		//Tests
 		private static Stream<Arguments> addMember() {
