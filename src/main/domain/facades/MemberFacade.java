@@ -11,9 +11,10 @@ import persistence.MemberDaoJpa;
 public class MemberFacade implements Facade {
 
 	private Member loggedInMember;
-	private MemberDao memberRepo = new MemberDaoJpa();
+	private MemberDao memberRepo;
 
 	public MemberFacade() {
+		setMemberRepo(new MemberDaoJpa());
 		loggedInMember = getMemberByUsername("harm.de.weirdt"); // TODO Hardcoded for now
 	}
 
@@ -24,6 +25,14 @@ public class MemberFacade implements Facade {
 	/*
 	 * Getters and setters
 	 */
+	
+	public void setMemberRepo(MemberDao memberRepo) {
+		this.memberRepo = memberRepo;
+	}
+	
+	public MemberDao getMemberRepo() {
+		return this.memberRepo;
+	}
 
 	public Member getLoggedInMember() {
 		return loggedInMember;
