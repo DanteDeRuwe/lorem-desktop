@@ -1,12 +1,19 @@
 package gui.controllers;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -24,6 +31,7 @@ public class InfoTabController extends GuiController {
 	@FXML private Text sessionDescription;
 	@FXML private Button editSessionButton, deleteSessionButton;
 	@FXML private HBox byLabels;
+    @FXML private Hyperlink externalUrlHyperlink;
 
 	@FXML
 	public void initialize() {
@@ -63,6 +71,9 @@ public class InfoTabController extends GuiController {
 		sessionTime.setText(inspectedSession.getStart().format(Util.TIMEFORMATTER));
 		sessionLocation.setText(inspectedSession.getLocation());
 		sessionDescription.setText(inspectedSession.getDescription());
+		updateHyperlink();
+		
+		
 		
 		// Hide "Door <Speaker>" labels when there is no speaker in session
 		if (!inspectedSession.getSpeakerName().isBlank()) {
@@ -70,6 +81,36 @@ public class InfoTabController extends GuiController {
 			sessionSpeaker.setText(inspectedSession.getSpeakerName());
 		} else
 			byLabels.setVisible(false);
+	}
+	
+	private void updateHyperlink() {
+		if (inspectedSession.getExternalLink() != null && !inspectedSession.getExternalLink().isBlank()) {
+			// set hyperlink text
+			externalUrlHyperlink.setText(inspectedSession.getExternalLink());
+			
+			// sets the URL of the hyperlink + when clicked will open in browser
+			externalUrlHyperlink.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent a) {
+					try {
+						Desktop.getDesktop().browse(new URI(inspectedSession.getExternalLink()));
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
+				};
+			});
+		} else {
+			externalUrlHyperlink.setText("");
+			externalUrlHyperlink.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent a) {
+					// do nothing
+				};
+			});
+		}
+		
 	}
 
 	public Session getInspectedSession() {

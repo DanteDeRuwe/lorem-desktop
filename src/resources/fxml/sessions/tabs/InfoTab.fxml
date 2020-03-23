@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
-
 
 <AnchorPane prefHeight="528.0" prefWidth="762.0" styleClass="session-tab-root" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -25,7 +25,7 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <HBox fx:id="byLabels" >
+                        <HBox fx:id="byLabels">
                            <children>
                               <Label text="door" textFill="#a4a4a4">
                                  <HBox.margin>
@@ -86,6 +86,7 @@
                               </TextFlow>
                            </content>
                         </ScrollPane>
+                        <Hyperlink fx:id="externalUrlHyperlink" />
                      </children>
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

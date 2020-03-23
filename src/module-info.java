@@ -19,5 +19,7 @@ open module javag09 {
 	requires mockito.junit.jupiter;
 	requires org.mockito;
 	requires org.junit.jupiter.params;
+	requires java.desktop;
+
 
 }

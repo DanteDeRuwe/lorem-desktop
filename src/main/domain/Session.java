@@ -280,7 +280,17 @@ public class Session {
 	}
 
 	public void setExternalLink(String externalLink) {
-		this.externalLink = externalLink;
+		if (externalLink == null || externalLink.isBlank()) {
+			this.externalLink = "";
+			return;
+		}
+		
+		if (externalLink.toLowerCase().startsWith("http")) {
+			this.externalLink = externalLink;
+		} else {
+			this.externalLink = "http://" + externalLink;
+		}
+		
 	}
 
 	
