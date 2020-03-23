@@ -2,9 +2,7 @@ package main.domain;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -31,53 +30,53 @@ import main.services.Util;
 		@NamedQuery(name = "Session.findByTitle", query = "select s from Session s where s.title = :sessionTitle") })
 public class Session {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long id;
-	@ManyToOne @JoinColumn(name = "member_id", nullable = false) private Member organizer;
-	@ManyToOne @JoinColumn(name = "calendar_id", nullable = false) private SessionCalendar calendar;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@ManyToOne
+	@JoinColumn(name = "member_id", nullable = false)
+	private Member organizer;
+	@ManyToOne
+	@JoinColumn(name = "calendar_id", nullable = false)
+	private SessionCalendar calendar;
 	private String location, title, speakerName;
 
-	@Lob @Column(length = 8000) private String description;
+	@Lob
+	@Column(length = 8000)
+	private String description;
 	private LocalDateTime startTime, endTime;
 	private int capacity;
 
 	@ManyToMany
-	@JoinTable(
-			  name = "SESSION_REGISTREES", 
-			  joinColumns = @JoinColumn(name = "id"), 
-			  inverseJoinColumns = @JoinColumn(name = "member_id"))
+	@JoinTable(name = "SESSION_REGISTREES", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "member_id"))
 	private Set<Member> registrees;
-	
+
 	@ManyToMany
-	@JoinTable(
-			  name = "SESSION_ATTENDEES", 
-			  joinColumns = @JoinColumn(name = "id"), 
-			  inverseJoinColumns = @JoinColumn(name = "member_id"))
+	@JoinTable(name = "SESSION_ATTENDEES", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "member_id"))
 	private Set<Member> attendees;
-	
-	
-	private List<MediaItem> media = new ArrayList<>();
-	private List<FeedbackEntry> feedbackEntries = new ArrayList<>();
-	private List<Announcement> announcements = new ArrayList<>();
-	
+
+	private Set<MediaItem> media = new HashSet<>();
+	private Set<FeedbackEntry> feedbackEntries = new HashSet<>();
+
+	@OneToMany(mappedBy = "session")
+	private Set<Announcement> announcements = new HashSet<>();
+
 	private SessionStatus sessionStatus;
-	
+
 	private String externalLink;
 
 	public Session() {
 	};
 
-	public Session(
-			Member organizer, String title, String description, String speakerName, LocalDateTime start,
-			LocalDateTime end,
-			String location, int capacity, String externalLink
-	) {
+	public Session(Member organizer, String title, String description, String speakerName, LocalDateTime start,
+			LocalDateTime end, String location, int capacity, String externalLink) {
 
 		if (start == null) {
 			throw new IllegalArgumentException("Start can't be null");
 		} else if (end == null) {
 			throw new IllegalArgumentException("End can't be null");
 		}
-		
+
 		if (!meetsMinimumPeriodRequirement(start, end)) {
 			throw new IllegalArgumentException("start and end do not meet minimum period requirement");
 		} else {
@@ -95,14 +94,11 @@ public class Session {
 		setAttendees(new HashSet<Member>());
 		setExternalLink(externalLink);
 	}
-	
+
 	// session aanmaken zonder link mee te geven
-	public Session(
-			Member organizer, String title, String description, String speakerName, LocalDateTime start,
-			LocalDateTime end,
-			String location, int capacity
-	) {
-		this(organizer, title, description, speakerName, start,	end, location, capacity, "");
+	public Session(Member organizer, String title, String description, String speakerName, LocalDateTime start,
+			LocalDateTime end, String location, int capacity) {
+		this(organizer, title, description, speakerName, start, end, location, capacity, "");
 	}
 
 	private boolean meetsMinimumPeriodRequirement(LocalDateTime start, LocalDateTime end) {
@@ -116,6 +112,7 @@ public class Session {
 	}
 
 	public void addAnnouncement(Announcement announcement) {
+		announcement.setSession(this);
 		announcements.add(announcement);
 	}
 
@@ -200,8 +197,8 @@ public class Session {
 	public void setCalendar(SessionCalendar cal) {
 		this.calendar = cal;
 	}
-	
-	public List<Announcement> getAnnouncements() {
+
+	public Set<Announcement> getAnnouncements() {
 		return announcements;
 	}
 
@@ -226,8 +223,7 @@ public class Session {
 			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER));
 		else
 			return new SimpleStringProperty(
-					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER)
-			);
+					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
 	}
 
 	public ObjectProperty<LocalDateTime> startProperty() {
@@ -288,18 +284,13 @@ public class Session {
 			this.externalLink = "";
 			return;
 		}
-		
+
 		if (externalLink.toLowerCase().startsWith("http")) {
 			this.externalLink = externalLink;
 		} else {
 			this.externalLink = "http://" + externalLink;
 		}
-		
+
 	}
 
-	
-	
-	
-	
-	
 }

@@ -8,6 +8,7 @@
 		<class>main.domain.Session</class>
 		<class>main.domain.Member</class>
 		<class>main.domain.SessionCalendar</class>
+		<class>main.domain.Announcement</class>
 
 
 		<properties>
