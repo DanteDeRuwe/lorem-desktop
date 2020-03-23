@@ -59,7 +59,10 @@ public class UserSceneController extends GuiController {
 
 		// Event Handlers
 		userTable.getSelectionModel().selectedItemProperty()
-				.addListener((x, y, user) -> ((UserDetailsController) userDetailsController).setInspectedUser(user));
+				.addListener((x, y, user) -> {
+					((UserDetailsController) userDetailsController).setInspectedUser(user);
+					GuiUtil.bindAnchorPane(userDetails, rightPane);
+				});
 		userTable.getSelectionModel().selectFirst();
 
 		// Double click to edit user
