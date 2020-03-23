@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="335.0" styleClass="right-panel-bg" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="883.0" prefWidth="335.0" styleClass="right-panel-bg" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="709.0" prefWidth="335.0" styleClass="card" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -62,6 +62,11 @@
                      </VBox.margin>
                   </JFXTextField>
                   <JFXTextField fx:id="capacityField" labelFloat="true" prefHeight="26.0" prefWidth="108.0" promptText="Capaciteit" VBox.vgrow="NEVER">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXTextField fx:id="externalLinkField" labelFloat="true" layoutX="25.0" layoutY="630.0" prefHeight="26.0" prefWidth="108.0" promptText="Externe Link (optioneel)">
                      <VBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </VBox.margin>

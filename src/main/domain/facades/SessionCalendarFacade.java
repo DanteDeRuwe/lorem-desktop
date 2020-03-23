@@ -98,7 +98,7 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public Session createSessionFromFields(Member organizer, String title, String description, String speakerName,
-			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity)
+			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity, String externalUrl)
 			throws InvalidSessionException {
 		try {
 			LocalDateTime start = LocalDateTime.of(startDate, startTime);
@@ -109,7 +109,7 @@ public class SessionCalendarFacade implements Facade {
 
 			// construct a session
 			return new Session(organizer, title, description, speakerName, start, end, location,
-					Integer.parseInt(capacity));
+					Integer.parseInt(capacity), externalUrl);
 
 		} catch (IllegalArgumentException iae) {
 			switch (iae.getMessage()) {
@@ -149,6 +149,7 @@ public class SessionCalendarFacade implements Facade {
 		session.setStart(newSession.getStart());
 		session.setEnd(newSession.getEnd());
 		session.setCapacity(newSession.getCapacity());
+		session.setExternalLink(newSession.getExternalLink());
 
 		// add it again with updated info
 		calendar.addSession(session);

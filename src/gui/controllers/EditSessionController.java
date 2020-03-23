@@ -32,6 +32,7 @@ public class EditSessionController extends GuiController {
 	@FXML private JFXTimePicker startTimeField;
 	@FXML private Label validationLabel, headerText;
 	@FXML private JFXButton confirmButton, cancelButton;
+	@FXML private JFXTextField externalLinkField;
 
 	// Fields
 	Session sessionToEdit;
@@ -73,6 +74,7 @@ public class EditSessionController extends GuiController {
 		speakerField.setText(sessionToEdit.getSpeakerName());
 		locationField.setText(sessionToEdit.getLocation());
 		capacityField.setText(Integer.toString(sessionToEdit.getCapacity()));
+		externalLinkField.setText(sessionToEdit.getExternalLink());
 
 		LocalDateTime start = sessionToEdit.getStart();
 		startDateField.setValue(start.toLocalDate());
@@ -92,7 +94,7 @@ public class EditSessionController extends GuiController {
 
 	private void resetView() {
 		validationLabel.setText("");
-		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField)
+		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField, externalLinkField)
 				.forEach(tf -> tf.setText(""));
 
 		descriptionArea.setText("");
@@ -121,9 +123,15 @@ public class EditSessionController extends GuiController {
 				capacityField, validationLabel,
 				"Capaciteit moet een getal zijn"
 		);
+		boolean externalLinkOk;
+		if (externalLinkField.getText() == null || externalLinkField.getText().isBlank()) {
+			externalLinkOk = true;
+		} else {
+			externalLinkOk = DataValidation.textExternalLink(externalLinkField, validationLabel, "URL van de externe link is ongeldig");
+		}
 
 		return titleFilledIn && durationFilledIn && durationIsDuration && startDateFilledIn && startTimeFilledIn
-				&& capacityNumeric;
+				&& capacityNumeric && externalLinkOk;
 	}
 
 	private void onSessionEdit() {
@@ -141,6 +149,7 @@ public class EditSessionController extends GuiController {
 		String duration = durationField.getText();
 		String location = locationField.getText();
 		String capacity = capacityField.getText();
+		String externalLink = externalLinkField.getText();
 
 		// Try to create a new session, all business logic is handled there already
 		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
@@ -151,7 +160,7 @@ public class EditSessionController extends GuiController {
 		try {
 			// Construct session template with all updated fields
 			Session template = scf.createSessionFromFields(
-					organizer, title, description, speaker, startDate, startTime, duration, location, capacity
+					organizer, title, description, speaker, startDate, startTime, duration, location, capacity, externalLink
 			);
 
 			// Edit the session

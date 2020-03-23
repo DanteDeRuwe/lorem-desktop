@@ -74,5 +74,15 @@ public class DataValidation {
 		}
 		return true;
 	}
+	
+	public static boolean textExternalLink(TextField inputTextField, Label validationLabel, String validationText) {
+
+		if (!inputTextField.getText().matches("^(https?:\\/\\/)?([\\w\\-])+\\.{1}([a-zA-Z]{2,63})([\\/\\w-]*)*\\/?\\??([^#\\n\\r]*)?#?([^\\n\\r]*)$")) {
+			validationLabel.setText(validationLabel.getText() + "\n" + validationText);
+			return false;
+		}
+		return true;
+	}
+
 
 }

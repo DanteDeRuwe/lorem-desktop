@@ -60,6 +60,8 @@ public class Session {
 	private List<Announcement> announcements = new ArrayList<>();
 	
 	private SessionStatus sessionStatus;
+	
+	private String externalLink;
 
 	public Session() {
 	};
@@ -67,7 +69,7 @@ public class Session {
 	public Session(
 			Member organizer, String title, String description, String speakerName, LocalDateTime start,
 			LocalDateTime end,
-			String location, int capacity
+			String location, int capacity, String externalLink
 	) {
 
 		if (start == null) {
@@ -91,6 +93,16 @@ public class Session {
 		setCapacity(capacity);
 		setRegistrees(new HashSet<Member>());
 		setAttendees(new HashSet<Member>());
+		setExternalLink(externalLink);
+	}
+	
+	// session aanmaken zonder link mee te geven
+	public Session(
+			Member organizer, String title, String description, String speakerName, LocalDateTime start,
+			LocalDateTime end,
+			String location, int capacity
+	) {
+		this(organizer, title, description, speakerName, start,	end, location, capacity, "");
 	}
 
 	private boolean meetsMinimumPeriodRequirement(LocalDateTime start, LocalDateTime end) {
@@ -261,6 +273,14 @@ public class Session {
 
 	public void setAttendees(Set<Member> attendees) {
 		this.attendees = attendees;
+	}
+
+	public String getExternalLink() {
+		return externalLink;
+	}
+
+	public void setExternalLink(String externalLink) {
+		this.externalLink = externalLink;
 	}
 
 	
