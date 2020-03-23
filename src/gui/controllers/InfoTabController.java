@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
+import main.services.GuiUtil;
 import main.services.Util;
 
 public class InfoTabController extends GuiController {
@@ -71,7 +72,7 @@ public class InfoTabController extends GuiController {
 		sessionTime.setText(inspectedSession.getStart().format(Util.TIMEFORMATTER));
 		sessionLocation.setText(inspectedSession.getLocation());
 		sessionDescription.setText(inspectedSession.getDescription());
-		updateHyperlink();
+		GuiUtil.updateHyperlink(inspectedSession, externalUrlHyperlink);
 		
 		
 		
@@ -83,35 +84,7 @@ public class InfoTabController extends GuiController {
 			byLabels.setVisible(false);
 	}
 	
-	private void updateHyperlink() {
-		if (inspectedSession.getExternalLink() != null && !inspectedSession.getExternalLink().isBlank()) {
-			// set hyperlink text
-			externalUrlHyperlink.setText(inspectedSession.getExternalLink());
-			
-			// sets the URL of the hyperlink + when clicked will open in browser
-			externalUrlHyperlink.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent a) {
-					try {
-						Desktop.getDesktop().browse(new URI(inspectedSession.getExternalLink()));
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (URISyntaxException e) {
-						e.printStackTrace();
-					}
-				};
-			});
-		} else {
-			externalUrlHyperlink.setText("");
-			externalUrlHyperlink.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent a) {
-					// do nothing
-				};
-			});
-		}
-		
-	}
+	
 
 	public Session getInspectedSession() {
 		return inspectedSession;

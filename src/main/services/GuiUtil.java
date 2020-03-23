@@ -1,5 +1,9 @@
 package main.services;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.FormatStyle;
@@ -8,6 +12,9 @@ import java.util.Locale;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
@@ -19,6 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 import javafx.util.converter.LocalDateStringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
+import main.domain.Session;
 
 public class GuiUtil {
 
@@ -134,6 +142,36 @@ public class GuiUtil {
 		placeholderLabel.setTextAlignment(TextAlignment.CENTER);
 		placeholderLabel.setOpacity(0.7d);
 		list.setPlaceholder(placeholderLabel);
+	}
+	
+	public static void updateHyperlink(Session s, Hyperlink h) {
+		if (s.getExternalLink() != null && !s.getExternalLink().isBlank()) {
+			// set hyperlink text
+			h.setText(s.getExternalLink());
+			
+			// sets the URL of the hyperlink + when clicked will open in browser
+			h.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent a) {
+					try {
+						Desktop.getDesktop().browse(new URI(s.getExternalLink()));
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
+				};
+			});
+		} else {
+			h.setText("");
+			h.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent a) {
+					// do nothing
+				};
+			});
+		}
+		
 	}
 
 }
