@@ -6,31 +6,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+<AnchorPane fx:id="announcementTabRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" styleClass="bg" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="376.0" maxWidth="1.7976931348623157E308" prefHeight="60.0" prefWidth="330.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="announcementOverview" prefHeight="600.0" prefWidth="335.0" styleClass="card" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton fx:id="addAnnouncementButton" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="837.0" style="-fx-background-color: #4059a9;" text="Nieuwe Aankondiging" textAlignment="CENTER" textFill="WHITE">
-               <HBox.margin>
-                  <Insets left="15.0" right="15.0" />
-               </HBox.margin>
-            </JFXButton>
+            <JFXButton fx:id="addAnnouncementButton" alignment="CENTER" layoutX="15.0" layoutY="15.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="30.0" prefWidth="277.0" style="-fx-background-color: #4059a9;" text="Nieuwe Aankondiging" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <ListView fx:id="announcementListView" layoutY="56.0" prefHeight="306.0" prefWidth="330.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+            <HBox alignment="CENTER" layoutY="359.20001220703125" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <JFXButton fx:id="modifyAnnouncementButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="deleteAnnouncementButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
          </children>
-      </HBox>
-      <ListView fx:id="announcementListView" layoutY="56.0" prefHeight="306.0" prefWidth="330.0" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <HBox alignment="CENTER" layoutY="359.20001220703125" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <JFXButton fx:id="modifyAnnouncementButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #4059a9;" text="Wijzig" textAlignment="CENTER" textFill="WHITE">
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="deleteAnnouncementButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d9534f;" text="Verwijder" textAlignment="CENTER" textFill="WHITE">
-               <HBox.margin>
-                  <Insets left="10.0" right="10.0" />
-               </HBox.margin>
-            </JFXButton>
-         </children>
-      </HBox>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </AnchorPane>
    </children>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
 </AnchorPane>
