@@ -48,9 +48,17 @@ public class AnnouncementTabController extends GuiController {
 		announcementListView.setCellFactory(new AnnouncementCellFactory<Announcement>());
 		update();
 
-		// Event listeners
-		announcementListView.getSelectionModel().selectedItemProperty()
-				.addListener((x, y, announcement) -> inspectedAnnouncement = announcement);
+		// disable buttons, nothing selected
+		deleteAnnouncementButton.setDisable(true);
+		modifyAnnouncementButton.setDisable(true);
+
+		// Event listener for selected item (also enables/disables buttons
+		announcementListView.getSelectionModel().selectedItemProperty().addListener((x, y, announcement) -> {
+			inspectedAnnouncement = announcement;
+			deleteAnnouncementButton.setDisable(announcement == null);
+			modifyAnnouncementButton.setDisable(announcement == null);
+		});
+
 		addAnnouncementButton.setOnAction((e) -> handleCreate());
 		deleteAnnouncementButton.setOnAction((e) -> handleDelete());
 		modifyAnnouncementButton.setOnAction((e) -> handleEdit());
