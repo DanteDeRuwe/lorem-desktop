@@ -75,5 +75,94 @@ public class MemberFacadeTest {
 			
 			Mockito.verify(memberRepoDummy).findAll();
 		}
+		
+		private static Stream<Arguments> addMemberFixture() {
+			return Stream.of(
+					Arguments.of(new ArrayList<Member>(List.of(
+							new Member("username1", "fn1", "ln1", MemberType.USER),
+							new Member("username2", "fn2", "ln2", MemberType.USER),
+							new Member("username3", "fn3", "ln3", MemberType.USER),
+							new Member("username4", "fn4", "ln4", MemberType.USER)
+					)), new Member("username5", "fn5", "ln5", MemberType.USER))
+			);
+		}
+		
+		@ParameterizedTest
+		@MethodSource("addMemberFixture")
+		public void addMember_AddsMemberCorrectly(List<Member> listAllMembers, Member member) {
+			Mockito.when(memberRepoDummy.findAll()).
+					thenReturn(listAllMembers);
+			Mockito.doNothing().
+					when(memberRepoDummy).insert(member);
+			
+			memberFacade.addMember(member);
+			listAllMembers.add(member);
+			List<Member> result = memberFacade.getAllMembers();
+			assertEquals(listAllMembers, result);
+			
+			Mockito.verify(memberRepoDummy).findAll();
+			Mockito.verify(memberRepoDummy).insert(member);
+		}
+		
+		private static Stream<Arguments> editMemberFixture() {
+			return Stream.of(
+					Arguments.of(new ArrayList<Member>(List.of(
+							new Member("username1", "fn1", "ln1", MemberType.USER),
+							new Member("username2", "fn2", "ln2", MemberType.USER),
+							new Member("username3", "fn3", "ln3", MemberType.USER),
+							new Member("username4", "fn4", "ln4", MemberType.USER)
+					)), new Member("username1", "fn1", "ln1", MemberType.USER),
+						new Member("username5", "fn5", "ln5", MemberType.USER))
+			);
+		}
+		
+		@ParameterizedTest
+		@MethodSource("editMemberFixture")
+		public void editMember_EditsMemberCorrectly(List<Member> listAllMembers, Member member, Member newMember) {
+			Mockito.when(memberRepoDummy.findAll()).
+					thenReturn(listAllMembers);
+			Mockito.doNothing().
+					when(memberRepoDummy).insert(member);
+			Mockito.doNothing().
+					when(memberRepoDummy).delete(member);
+			
+			memberFacade.editMember(member, newMember);
+			listAllMembers.remove(member);
+			listAllMembers.add(newMember);
+			List<Member> result = memberFacade.getAllMembers();
+			assertEquals(listAllMembers, result);
+			
+			Mockito.verify(memberRepoDummy).findAll();
+			Mockito.verify(memberRepoDummy).insert(member);
+			Mockito.verify(memberRepoDummy).delete(member);
+		}
+		
+		private static Stream<Arguments> deleteMemberFixture() {
+			return Stream.of(
+					Arguments.of(new ArrayList<Member>(List.of(
+							new Member("username1", "fn1", "ln1", MemberType.USER),
+							new Member("username2", "fn2", "ln2", MemberType.USER),
+							new Member("username3", "fn3", "ln3", MemberType.USER),
+							new Member("username4", "fn4", "ln4", MemberType.USER)
+					)), new Member("username1", "fn1", "ln1", MemberType.USER))
+			);
+		}
+		
+		@ParameterizedTest
+		@MethodSource("deleteMemberFixture")
+		public void deleteMember_DeletesMemberCorrectly(List<Member> listAllMembers, Member member) {
+			Mockito.when(memberRepoDummy.findAll()).
+					thenReturn(listAllMembers);
+			Mockito.doNothing().
+					when(memberRepoDummy).delete(member);
+			
+			memberFacade.deleteUser(member);
+			listAllMembers.remove(member);
+			List<Member> result = memberFacade.getAllMembers();
+			assertEquals(listAllMembers, result);
+			
+			Mockito.verify(memberRepoDummy).findAll();
+			Mockito.verify(memberRepoDummy).delete(member);
+		}
 
 }

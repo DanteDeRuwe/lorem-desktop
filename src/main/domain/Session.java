@@ -200,6 +200,10 @@ public class Session {
 	public void setCalendar(SessionCalendar cal) {
 		this.calendar = cal;
 	}
+	
+	public List<Announcement> getAnnouncements() {
+		return announcements;
+	}
 
 	@Override
 	public String toString() {

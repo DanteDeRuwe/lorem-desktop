@@ -3,8 +3,12 @@ package test.domain.facades;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +23,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import main.domain.Member;
+import main.domain.MemberType;
+import main.domain.Session;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
 import persistence.SessionCalendarDaoJpa;
@@ -32,6 +39,9 @@ public class SessionCalendarFacadeTest {
 	
 	@Mock
 	private SessionDaoJpa sessionRepoDummy;
+	
+	@Mock
+	private SessionCalendar sessionCalendarDummy;
 	
 	@InjectMocks
 	private SessionCalendarFacade sessionCalendarFacade;
@@ -116,5 +126,110 @@ public class SessionCalendarFacadeTest {
 		
 		Mockito.verify(sessionCalendarRepoDummy).findAll();
 	}
+	
+	//SessionRepo and SessionCalendar tests
+	private static Stream<Arguments> getSessionByTitleFixture() {
+		return Stream.of(
+				Arguments.of("title", new Session())		
+		);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("getSessionByTitleFixture")
+	public void getSessionByTitle_GetsCorrectSession(String title, Session expected) {
+		Mockito.when(sessionRepoDummy.getSessionByTitle(title)).
+				thenReturn(expected);
+		
+		assertEquals(expected, sessionCalendarFacade.getSessionByTitle(title));
+		
+		Mockito.verify(sessionRepoDummy).getSessionByTitle(title);
+	}
+	
+	private static Stream<Arguments> addSessionFixture() {
+		return Stream.of(
+				Arguments.of(new Session(), new HashSet<Session>(Arrays.asList(new Session())))
+		);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addSessionFixture")
+	public void addSession_AddsSessionCorrectly(Session session, Set<Session> listSessions) {
+		Mockito.doNothing().
+				when(sessionCalendarDummy).addSession(session);
+		Mockito.doNothing().
+				when(sessionRepoDummy).insert(session);
+		Mockito.when(sessionCalendarDummy.getSessions()).
+				thenReturn(listSessions);
+		
+		sessionCalendarFacade.addSession(session);
+		listSessions.add(session);
+		Set<Session> result = sessionCalendarFacade.getAllSessions();
+		assertEquals(listSessions, result);
+		
+		Mockito.verify(sessionCalendarDummy).addSession(session);
+		Mockito.verify(sessionRepoDummy).insert(session);
+		Mockito.verify(sessionCalendarDummy).getSessions();
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addSessionFixture")
+	public void deleteSession_DeletesSessionCorrectly(Session session, Set<Session> listSessions) {
+		Mockito.doNothing().
+				when(sessionCalendarDummy).deleteSession(session);
+		Mockito.doNothing().
+				when(sessionRepoDummy).delete(session);
+		Mockito.when(sessionCalendarDummy.getSessions()).
+				thenReturn(listSessions);
+		
+		sessionCalendarFacade.deleteSession(session);
+		listSessions.remove(session);
+		Set<Session> result = sessionCalendarFacade.getAllSessions();
+		assertEquals(listSessions, result);
+		
+		Mockito.verify(sessionCalendarDummy).deleteSession(session);
+		Mockito.verify(sessionRepoDummy).delete(session);
+		Mockito.verify(sessionCalendarDummy).getSessions();
+	}
+	
+	private static Stream<Arguments> editSessionFixture() {
+		return Stream.of(
+				Arguments.of(new Session(), 
+						new Session(new Member("JohnDoe", "John", "Doe", MemberType.HEADADMIN), 
+									"title", 
+									"description", 
+									"name", 
+									LocalDateTime.of(2020, 5, 5, 18, 0),
+									LocalDateTime.of(2020, 5, 5, 19, 0),
+									"GSCHB3.016",
+									30), 
+						new HashSet<Session>(Arrays.asList(new Session())))
+		);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("editSessionFixture")
+	public void editSession_EditsSessionCorrectly(Session session, Session newSession, Set<Session> listSessions) {
+		Mockito.doNothing().
+				when(sessionCalendarDummy).addSession(session);
+		Mockito.doNothing().
+				when(sessionCalendarDummy).deleteSession(session);
+		Mockito.when(sessionRepoDummy.update(session)).
+				thenReturn(newSession);
+		Mockito.when(sessionCalendarDummy.getSessions()).
+				thenReturn(listSessions);
+		
+		sessionCalendarFacade.editSession(session, newSession);
+		listSessions.remove(session);
+		listSessions.add(newSession);
+		Set<Session> result = sessionCalendarFacade.getAllSessions();
+		assertEquals(listSessions, result);
+		
+		Mockito.verify(sessionCalendarDummy).addSession(session);
+		Mockito.verify(sessionCalendarDummy).deleteSession(session);
+		Mockito.verify(sessionRepoDummy).update(session);
+		Mockito.verify(sessionCalendarDummy).getSessions();
+	}
+	
+	
 	
 }
