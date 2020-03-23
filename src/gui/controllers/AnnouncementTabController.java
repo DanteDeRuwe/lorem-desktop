@@ -89,7 +89,7 @@ public class AnnouncementTabController extends GuiController {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Aankondiging verwijderen");
 		alert.setHeaderText("Waarschuwing");
-		alert.setContentText(String.format("Ben je zeker dat je de aankodiging \"%s\" wilt verwijderen?",
+		alert.setContentText(String.format("Ben je zeker dat je de aankondiging \"%s\" wilt verwijderen?",
 				inspectedAnnouncement.getTitle()));
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
