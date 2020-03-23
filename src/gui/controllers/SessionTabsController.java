@@ -28,5 +28,6 @@ public class SessionTabsController extends GuiController {
 
 	public void updateInspectedSession(Session session) {
 		infoTabController.setInspectedSession(session);
+		announcementTabController.setInspectedSession(session);
 	}
 }
