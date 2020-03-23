@@ -31,6 +31,7 @@ public class NewSessionController extends GuiController {
 	@FXML private Label validationLabel;
 	@FXML private JFXButton confirmButton, cancelButton;
     @FXML private JFXTextField externalLinkField;
+    @FXML private JFXTextField typeField;
 
 	/*
 	 * Init
@@ -61,7 +62,7 @@ public class NewSessionController extends GuiController {
 
 	private void resetView() {
 		validationLabel.setText("");
-		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField, externalLinkField)
+		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField, externalLinkField, typeField)
 				.forEach(tf -> tf.setText(""));
 
 		descriptionArea.setText("");
@@ -117,6 +118,7 @@ public class NewSessionController extends GuiController {
 		String location = locationField.getText();
 		String capacity = capacityField.getText();
 		String externalUrl = externalLinkField.getText();
+		String type = typeField.getText();
 
 		// Create a new session via facades
 		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
@@ -127,7 +129,7 @@ public class NewSessionController extends GuiController {
 		try {
 			// Construct session
 			Session s = scf.createSessionFromFields(
-					organizer, title, description, speaker, startDate, startTime, duration, location, capacity, externalUrl
+					organizer, title, description, speaker, startDate, startTime, duration, location, capacity, externalUrl, type
 			);
 
 			// Add session

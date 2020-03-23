@@ -64,12 +64,14 @@ public class Session {
 	private SessionStatus sessionStatus;
 
 	private String externalLink;
+	
+	private String type;
 
 	public Session() {
 	};
 
 	public Session(Member organizer, String title, String description, String speakerName, LocalDateTime start,
-			LocalDateTime end, String location, int capacity, String externalLink) {
+			LocalDateTime end, String location, int capacity, String externalLink, String type) {
 
 		if (start == null) {
 			throw new IllegalArgumentException("Start can't be null");
@@ -93,12 +95,13 @@ public class Session {
 		setRegistrees(new HashSet<Member>());
 		setAttendees(new HashSet<Member>());
 		setExternalLink(externalLink);
+		setType(type);
 	}
 
-	// session aanmaken zonder link mee te geven
+	// make session without link or type
 	public Session(Member organizer, String title, String description, String speakerName, LocalDateTime start,
 			LocalDateTime end, String location, int capacity) {
-		this(organizer, title, description, speakerName, start, end, location, capacity, "");
+		this(organizer, title, description, speakerName, start, end, location, capacity, "", "");
 	}
 
 	private boolean meetsMinimumPeriodRequirement(LocalDateTime start, LocalDateTime end) {
@@ -294,7 +297,16 @@ public class Session {
 		} else {
 			this.externalLink = "http://" + externalLink;
 		}
-
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 
 }

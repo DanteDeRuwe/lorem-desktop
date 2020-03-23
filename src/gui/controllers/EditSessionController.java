@@ -33,6 +33,7 @@ public class EditSessionController extends GuiController {
 	@FXML private Label validationLabel, headerText;
 	@FXML private JFXButton confirmButton, cancelButton;
 	@FXML private JFXTextField externalLinkField;
+    @FXML private JFXTextField typeField;
 
 	// Fields
 	Session sessionToEdit;
@@ -75,6 +76,7 @@ public class EditSessionController extends GuiController {
 		locationField.setText(sessionToEdit.getLocation());
 		capacityField.setText(Integer.toString(sessionToEdit.getCapacity()));
 		externalLinkField.setText(sessionToEdit.getExternalLink());
+		typeField.setText(sessionToEdit.getType());
 
 		LocalDateTime start = sessionToEdit.getStart();
 		startDateField.setValue(start.toLocalDate());
@@ -94,7 +96,7 @@ public class EditSessionController extends GuiController {
 
 	private void resetView() {
 		validationLabel.setText("");
-		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField, externalLinkField)
+		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField, externalLinkField, typeField)
 				.forEach(tf -> tf.setText(""));
 
 		descriptionArea.setText("");
@@ -150,6 +152,7 @@ public class EditSessionController extends GuiController {
 		String location = locationField.getText();
 		String capacity = capacityField.getText();
 		String externalLink = externalLinkField.getText();
+		String type = typeField.getText();
 
 		// Try to create a new session, all business logic is handled there already
 		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
@@ -160,7 +163,7 @@ public class EditSessionController extends GuiController {
 		try {
 			// Construct session template with all updated fields
 			Session template = scf.createSessionFromFields(
-					organizer, title, description, speaker, startDate, startTime, duration, location, capacity, externalLink
+					organizer, title, description, speaker, startDate, startTime, duration, location, capacity, externalLink, type
 			);
 
 			// Edit the session
