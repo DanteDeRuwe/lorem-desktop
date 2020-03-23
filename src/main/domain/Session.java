@@ -115,6 +115,10 @@ public class Session {
 		announcement.setSession(this);
 		announcements.add(announcement);
 	}
+	
+	public void removeAnnouncement(Announcement announcement) {
+		announcements.remove(announcement);
+	}
 
 	public void addFeedbackEntry(FeedbackEntry feedbackEntry) {
 		feedbackEntries.add(feedbackEntry);

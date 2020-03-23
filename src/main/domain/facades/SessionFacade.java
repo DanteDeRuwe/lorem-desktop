@@ -24,4 +24,12 @@ public class SessionFacade implements Facade {
 		return new Announcement(author, text, title);
 	}
 
+	public void removeAnnouncement(Announcement announcement, Session session) {
+		session.removeAnnouncement(announcement);
+
+		GenericDaoJpa.startTransaction();
+		announcementRepo.delete(announcement);
+		GenericDaoJpa.commitTransaction();
+	}
+
 }

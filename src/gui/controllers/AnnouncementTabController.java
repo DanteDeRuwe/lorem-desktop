@@ -1,20 +1,26 @@
 package gui.controllers;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import main.domain.Announcement;
 import main.domain.Session;
+import main.domain.facades.SessionFacade;
 import main.services.AnnouncementCellFactory;
 import main.services.GuiUtil;
 
 public class AnnouncementTabController extends GuiController {
 
 	private Session inspectedSession;
+	private Announcement inspectedAnnouncement;
 
 	@FXML
 	private Button addAnnouncementButton, modifyAnnouncementButton, deleteAnnouncementButton;
@@ -43,6 +49,8 @@ public class AnnouncementTabController extends GuiController {
 		update();
 
 		// Event listeners
+		announcementListView.getSelectionModel().selectedItemProperty()
+				.addListener((x, y, announcement) -> inspectedAnnouncement = announcement);
 		addAnnouncementButton.setOnAction((e) -> handleCreate());
 		deleteAnnouncementButton.setOnAction((e) -> handleDelete());
 		modifyAnnouncementButton.setOnAction((e) -> handleEdit());
@@ -78,7 +86,16 @@ public class AnnouncementTabController extends GuiController {
 	}
 
 	private void handleDelete() {
-		// TODO Auto-generated method stub
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Aankondiging verwijderen");
+		alert.setHeaderText("Waarschuwing");
+		alert.setContentText(String.format("Ben je zeker dat je de aankodiging \"%s\" wilt verwijderen?",
+				inspectedAnnouncement.getTitle()));
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			((SessionFacade) getFacade()).removeAnnouncement(inspectedAnnouncement, inspectedSession);
+			update();
+		}
 	}
 
 	private void handleEdit() {
