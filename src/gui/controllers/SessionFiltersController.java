@@ -22,7 +22,7 @@ public class SessionFiltersController extends GuiController {
 	@FXML
 	private JFXButton newSessionButton;
 	@FXML
-	private JFXTextField titleFilterField, speakerFilterField, locationFilterField, organizerFilterField;
+	private JFXTextField titleFilterField, speakerFilterField, locationFilterField, organizerFilterField, typeFilterField;
 
 	@FXML
 	private JFXDatePicker fromFilterField;
@@ -51,6 +51,8 @@ public class SessionFiltersController extends GuiController {
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		organizerFilterField.textProperty().addListener(
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
+		typeFilterField.textProperty().addListener(
+				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		fromFilterField.valueProperty().addListener(
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		toFilterField.valueProperty().addListener(
@@ -62,12 +64,14 @@ public class SessionFiltersController extends GuiController {
 		String speakerFilter = speakerFilterField.getText();
 		String locationFilter = locationFilterField.getText();
 		String organizerFilter = organizerFilterField.getText();
+		String typeFilter = typeFilterField.getText();
 		LocalDate fromFilter = fromFilterField.getValue();
 		LocalDate toFilter = toFilterField.getValue();
 		Set<Session> sessionSet = new HashSet<>(((SessionCalendarFacade) getFacade()).getAllSessions());
 		return sessionSet.stream().filter(s -> s.getTitle().toLowerCase().contains((titleFilter.toLowerCase().trim())))
 				.filter(s -> s.getSpeakerName().toLowerCase().contains((speakerFilter.toLowerCase().trim())))
 				.filter(s -> s.getLocation().toLowerCase().contains((locationFilter.toLowerCase().trim())))
+				.filter(s -> s.getType().toLowerCase().contains((typeFilter.toLowerCase().trim())))
 				.filter(s -> s.getFullOrganizerName().toLowerCase().contains((organizerFilter.toLowerCase().trim())))
 				.filter(s -> (fromFilter == null && toFilter == null) ? true
 						: (toFilter == null) ? s.getStart().toLocalDate().compareTo(fromFilter) >= 0
