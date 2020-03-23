@@ -31,7 +31,7 @@ public class SessionSceneController extends GuiController {
 	@FXML private AnchorPane leftPane, middlePane, rightPane;
 	@FXML protected TableView<Session> sessionTable;
 	@FXML private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn,
-			capacityColumn;
+			capacityColumn, typeColumn;
 	@FXML private TableColumn<Session, LocalDateTime> startColumn;
 	@FXML private TableColumn<Session, Duration> durationColumn;
 
@@ -92,6 +92,7 @@ public class SessionSceneController extends GuiController {
 		GuiUtil.fillColumn(speakerColumn, "speaker", 40, 200);
 		GuiUtil.fillColumn(locationColumn, "location", 40, 200);
 		GuiUtil.fillColumn(capacityColumn, "capacity", 40, 60);
+		GuiUtil.fillColumn(typeColumn, "type", 40, 300);
 
 		sessionTable.setItems(FXCollections.observableArrayList(sessions));
 		sessionTable.refresh();

@@ -257,6 +257,10 @@ public class Session {
 	public StringProperty capacityProperty() {
 		return new SimpleStringProperty(registrees.size() + "/" + capacity);
 	}
+	
+	public StringProperty typeProperty() {
+		return new SimpleStringProperty(type);
+	}
 
 	public SessionStatus getSessionStatus() {
 		return sessionStatus;

@@ -150,6 +150,7 @@ public class SessionCalendarFacade implements Facade {
 		session.setEnd(newSession.getEnd());
 		session.setCapacity(newSession.getCapacity());
 		session.setExternalLink(newSession.getExternalLink());
+		session.setType(newSession.getType());
 
 		// add it again with updated info
 		calendar.addSession(session);

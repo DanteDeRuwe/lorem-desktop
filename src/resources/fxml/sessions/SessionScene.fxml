@@ -25,6 +25,7 @@
                       <TableColumn fx:id="speakerColumn" text="Spreker" />
                       <TableColumn fx:id="locationColumn" text="Locatie" />
                       <TableColumn fx:id="capacityColumn" text="#" />
+                        <TableColumn fx:id="typeColumn" text="Type" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY" />

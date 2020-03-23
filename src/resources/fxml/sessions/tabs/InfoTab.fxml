@@ -20,11 +20,20 @@
                <children>
                   <VBox prefHeight="245.6" prefWidth="732.0" styleClass="container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="sessionTitle" text="Lorem Ipsum Event" wrapText="true">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="sessionTitle" text="Lorem Ipsum Event" wrapText="true">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="sessionType" alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="242.0" textFill="#a4a4a4">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
                         <HBox fx:id="byLabels">
                            <children>
                               <Label text="door" textFill="#a4a4a4">
