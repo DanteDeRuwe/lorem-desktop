@@ -39,7 +39,7 @@ public class SessionCalendar {
 		if (startDate == null || endDate == null)
 			throw new IllegalArgumentException("startDate and endDate must not be null.");
 
-		if (startDate.getYear() < LocalDate.now().getYear())
+		if (startDate.getYear() < LocalDate.now().getYear() - 1)
 			throw new IllegalArgumentException("Cannot create calendar that far in the past");
 
 		if (endDate.getYear() != startDate.getYear() + 1)
