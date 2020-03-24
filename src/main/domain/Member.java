@@ -40,7 +40,7 @@ public class Member {
 	};
 
 	public Member(String username, String firstName, String lastName, MemberType memberType, MemberStatus memberStatus, String profilePicPath) {
-		this.username = username;
+		setUsername(username);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.setMemberType(memberType);

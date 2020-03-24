@@ -13,6 +13,7 @@ import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
 import main.domain.facades.MemberFacade;
+import main.exceptions.InvalidMemberException;
 import main.services.DataValidation;
 
 public class NewUserController extends GuiController {
@@ -100,23 +101,28 @@ public class NewUserController extends GuiController {
 		MemberType type = userTypeField.getValue();
 		MemberStatus status = userStatusField.getValue();
 		String profilePicPath = profilePicField.getText();
+		
+		if (profilePicPath == null || profilePicPath.isBlank()) {
+			profilePicPath = "";
+		}
 
 		MemberFacade mf = (MemberFacade) getFacade();
-
-		// Construct member
-		Member m;
-		if (profilePicPath == null || profilePicPath.isBlank()) {
-			m = new Member(userName, firstName, lastName, type, status);
-		} else {
-			m = new Member(userName, firstName, lastName, type, status, profilePicPath);
-		}
 		
-		// Add user
-		mf.addMember(m);
-
-		getMainController().getUserSceneController().updateWithMember(m); // update tableview with new member
-		goBack(); // clears fields and goes back to details view
-
+		try {
+			// Construct user
+			Member m = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath);
+			
+			// Add user
+			mf.addMember(m);
+			
+			// if adding is successful
+			getMainController().getUserSceneController().updateWithMember(m); // update tableview with new member
+			goBack(); // clears fields and goes back to details view
+			
+		} catch (InvalidMemberException e) {
+			if (e.getMessage() != null) {
+				validationLabel.setText(e.getMessage());
+			}
+		}
 	}
-
 }

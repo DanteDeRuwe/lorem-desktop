@@ -16,6 +16,7 @@ import main.domain.MemberStatus;
 import main.domain.MemberType;
 import main.domain.Session;
 import main.domain.facades.MemberFacade;
+import main.exceptions.InvalidMemberException;
 import main.services.DataValidation;
 import main.services.GuiUtil;
 
@@ -130,23 +131,29 @@ public class EditUserController extends GuiController {
 		MemberStatus status = userStatusField.getValue();
 		String profilePicPath = profilePicField.getText();
 
+		if (profilePicPath == null || profilePicPath.isBlank()) {
+			profilePicPath = "";
+		}
+
 		MemberFacade mf = (MemberFacade) getFacade();
 
 		// Construct member
-		Member template;
-		if (profilePicPath == null || profilePicPath.isBlank()) {
-			template = new Member(userName, firstName, lastName, type, status);
-		} else {
-			template = new Member(userName, firstName, lastName, type, status, profilePicPath);
+		
+		try {
+			// Construct user
+			Member template = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath);
+			
+			// Add user
+			mf.editMember(userToEdit, template);
+
+			// if adding is successful
+			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new member
+			goBack(); // clears fields and goes back to details view
+			
+		} catch (InvalidMemberException e) {
+			if (e.getMessage() != null) {
+				validationLabel.setText(e.getMessage());
+			}
 		}
-		
-		// Add user
-		mf.editMember(userToEdit, template);
-
-		getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new member
-		goBack(); // clears fields and goes back to details view
-
 	}
-		
-		
 }

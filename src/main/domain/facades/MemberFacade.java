@@ -2,8 +2,13 @@ package main.domain.facades;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import main.domain.Member;
+import main.domain.MemberStatus;
+import main.domain.MemberType;
 import main.domain.Session;
+import main.exceptions.InvalidMemberException;
 import persistence.GenericDaoJpa;
 import persistence.MemberDao;
 import persistence.MemberDaoJpa;
@@ -44,6 +49,23 @@ public class MemberFacade implements Facade {
 
 	public List<Member> getAllMembers() {
 		return memberRepo.findAll();
+	}
+	
+	public Member createMemberFromFields(String username, String firstName, String lastName, MemberType type, MemberStatus status, String profilePicPath) throws InvalidMemberException {
+		if (usernameExists(username)) {
+			throw new InvalidMemberException("gebruikersnaam bestaat al");
+		} else {
+			return new Member(username, firstName, lastName, type, status, profilePicPath);
+		}
+	}
+	
+	public boolean usernameExists(String username) {
+		try {
+			memberRepo.getMemberByUsername(username);
+			return true;
+		} catch(EntityNotFoundException e) {
+			return false;
+		}
 	}
 
 	public void addMember(Member member) {
