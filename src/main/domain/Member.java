@@ -35,6 +35,10 @@ public class Member {
 	
 	@ManyToMany(mappedBy = "attendees")
 	private Set<Session> attendances;
+	
+	private int numberOfAttendances;
+	private int numberOfRegistrations;
+	private int numberOfMissedSessions;
 
 	public Member() {
 	};
@@ -131,17 +135,41 @@ public class Member {
 	public void setAttendances(Set<Session> attendances) {
 		this.attendances = attendances;
 	}
+	
+	public int getNumberOfAttendances() {
+		return this.numberOfAttendances;
+	}
+	
+	private void setNumberOfAttendances(int value) {
+		this.numberOfAttendances = value;
+	}
 
-	public int countAttendances() {
-		return this.attendances.size();
+	public void countAttendances() {
+		setNumberOfAttendances(this.attendances.size());
 	}
 	
-	public int countRegistrations() {
-		return this.registrations.size();
+	public int getNumberOfRegistrations() {
+		return this.numberOfRegistrations;
 	}
 	
-	public int countMissedSessions() {
-		return this.registrations.size() - this.attendances.size();
+	private void setNumberOfRegistrations(int value) {
+		this.numberOfRegistrations = value;
+	}
+	
+	public void countRegistrations() {
+		setNumberOfRegistrations(this.registrations.size());
+	}
+	
+	public int getNumberOfMissedSessions() {
+		return this.numberOfMissedSessions;
+	}
+	
+	private void setNumberOfMissedSessions(int value) {
+		this.numberOfMissedSessions = value;
+	}
+	
+	public void countMissedSessions() {
+		setNumberOfMissedSessions(this.registrations.size() - this.attendances.size());
 	}
 	
 }
