@@ -66,6 +66,10 @@ public class Session {
 	private String externalLink;
 	
 	private String type;
+	
+	private int numberOfAttendees;
+	
+	private int numberOfRegistrees;
 
 	public Session() {
 	};
@@ -209,12 +213,28 @@ public class Session {
 		return announcements;
 	}
 	
-	public int countAttendees() {
-		return this.attendees.size();
+	public int getNumberOfAttendees() {
+		return this.numberOfAttendees;
 	}
 	
-	public int countRegistrees() {
-		return this.registrees.size();
+	private void setNumberOfAttendees(int value) {
+		this.numberOfAttendees = value;
+	}
+	
+	public void countAttendees() {
+		setNumberOfAttendees(this.attendees.size());
+	}
+	
+	public int getNumberOfRegistrees() {
+		return this.numberOfRegistrees;
+	}
+	
+	private void setNumberOfRegistrees(int value) {
+		this.numberOfRegistrees = value;
+	}
+	
+	public void countRegistrees() {
+		setNumberOfRegistrees(this.registrees.size());
 	}
 
 	@Override
