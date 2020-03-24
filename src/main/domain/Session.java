@@ -208,6 +208,14 @@ public class Session {
 	public Set<Announcement> getAnnouncements() {
 		return announcements;
 	}
+	
+	public int countAttendees() {
+		return this.attendees.size();
+	}
+	
+	public int countRegistrees() {
+		return this.registrees.size();
+	}
 
 	@Override
 	public String toString() {

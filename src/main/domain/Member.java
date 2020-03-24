@@ -132,8 +132,16 @@ public class Member {
 		this.attendances = attendances;
 	}
 
+	public int countAttendances() {
+		return this.attendances.size();
+	}
 	
+	public int countRegistrations() {
+		return this.registrations.size();
+	}
 	
+	public int countMissedSessions() {
+		return this.registrations.size() - this.attendances.size();
+	}
 	
-
 }

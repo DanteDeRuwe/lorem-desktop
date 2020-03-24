@@ -5,11 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -17,6 +23,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import main.domain.Member;
 import main.domain.MemberType;
 import main.domain.Session;
+import main.domain.SessionStatus;
 
 public class SessionTest {
 
@@ -223,6 +230,76 @@ public class SessionTest {
 	public void setDescription_CorrectDescription_SetsDescription(String description) {
 		session.setDescription(description);
 		assertEquals(description, session.getDescription());
+	}
+	
+	//SessionStatus tests
+	private static Stream<Arguments> addStatusFixture() {
+		return Stream.of(
+				Arguments.of(SessionStatus.OPEN)
+		);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addStatusFixture")
+	public void setSessionStatus_SetsSessionStatus(SessionStatus sessionStatus) {
+		session.setSessionStatus(sessionStatus);
+		assertEquals(sessionStatus, session.getSessionStatus());
+	}
+	
+	//ExternalLink tests
+	@ParameterizedTest
+	@ValueSource(strings = {"http://externalLink 1", "http://externalLink 2", "http://externalLink 3"})
+	public void setExternalLink_CorrectExternalLinkWithHttp_SetsExternalLink(String externalLink) {
+		session.setExternalLink(externalLink);
+		assertEquals(externalLink, session.getExternalLink());
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = {"externalLink 1", "externalLink 2", "externalLink 3"})
+	public void setExternalLink_CorrectExternalLinkWithOutHttp_SetsExternalLink(String externalLink) {
+		session.setExternalLink(externalLink);
+		assertEquals("http://" + externalLink, session.getExternalLink());
+	}
+	
+	@ParameterizedTest
+	@NullAndEmptySource
+	@ValueSource(strings = {" ", "   ", "\n", "\t"})
+	public void setExternalLink_CorrectExternalLinkNullAndEmpty_SetsExternalLink(String externalLink) {
+		session.setExternalLink(externalLink);
+		assertEquals("", session.getExternalLink());
+	}
+	
+	//Type test
+	@ParameterizedTest
+	@ValueSource(strings = {"type 1", "type 2", "type 3"})
+	public void setType_CorrectType_SetsType(String type) {
+		session.setType(type);
+		assertEquals(type, session.getType());
+	}
+	
+	//Statistics tests
+	private static Stream<Arguments> addFixture() {
+		return Stream.of(
+				Arguments.of(new HashSet<Member>(Arrays.asList(
+						new Member(),
+						new Member(),
+						new Member()
+				)))
+		);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addFixture")
+	public void countAttendees_ReturnsCorrectAmountOfAttendees(Set<Member> attendees) {
+		session.setAttendees(attendees);
+		assertEquals(attendees.size(), session.countAttendees());
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addFixture")
+	public void countRegistrees_ReturnsCorrectAmountOfRegistrees(Set<Member> registrees) {
+		session.setRegistrees(registrees);
+		assertEquals(registrees.size(), session.countRegistrees());
 	}
 
 }

@@ -2,15 +2,23 @@ package test.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
+import main.domain.Session;
 
 public class MemberTest {
 
@@ -113,6 +121,57 @@ public class MemberTest {
 	public void setProfilePicPath_SetsCorrectProfilePicPath(String value) {
 		exMember.setProfilePicPath(value);
 		assertEquals(value, exMember.getProfilePicPath());
+	}
+	
+	//Statistics tests
+	private static Stream<Arguments> addFixture() {
+		return Stream.of(
+				Arguments.of(new HashSet<Session>(Arrays.asList(
+							new Session(),
+							new Session(),
+							new Session()
+						)))
+		);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addFixture")
+	public void countAttendances_ReturnsCorrectAmountOfAttendances(Set<Session> attendances) {
+		exMember.setAttendances(attendances);
+		assertEquals(attendances.size(), exMember.countAttendances());
+	}
+	
+	
+	@ParameterizedTest
+	@MethodSource("addFixture")
+	public void countRegistrations_ReturnsCorrectAmountOfRegistrations(Set<Session> registrations) {
+		exMember.setRegistrations(registrations);
+		assertEquals(registrations.size(), exMember.countRegistrations());
+	}
+	
+	private static Stream<Arguments> addMissedFixture() {
+		return Stream.of(
+				Arguments.of(new HashSet<Session>(Arrays.asList(
+								new Session(),
+								new Session(),
+								new Session()
+						)), 
+							new HashSet<Session>(Arrays.asList(
+								new Session(),
+								new Session(),
+								new Session(),
+								new Session(),
+								new Session()
+						)))
+		);
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addMissedFixture")
+	public void countMissedSessions_ReturnsCorrectAmountOfMissedSessions(Set<Session> attendances, Set<Session> registrations) {
+		exMember.setAttendances(attendances);
+		exMember.setRegistrations(registrations);
+		assertEquals(registrations.size() - attendances.size(), exMember.countMissedSessions());
 	}
 
 }
