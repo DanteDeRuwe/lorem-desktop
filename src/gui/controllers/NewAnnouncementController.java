@@ -20,7 +20,7 @@ public class NewAnnouncementController extends GuiController {
 	@FXML
 	private JFXButton confirmButton, cancelButton;
 	@FXML
-	private Label validationLabel;
+	private Label validationLabel, headerText;
 
 	private AnnouncementTabController atc;
 
@@ -28,10 +28,14 @@ public class NewAnnouncementController extends GuiController {
 	public void initialize() {
 
 		atc = (AnnouncementTabController) getParentController();
-
+		
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
 		confirmButton.setOnAction(e -> handleCreate());
+	}
+	
+	public void updateHeader(String sessionTitle) {
+		headerText.setText(String.format("Nieuwe aankondiging voor \"%s\"", sessionTitle));
 	}
 
 	private void handleCreate() {

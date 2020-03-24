@@ -79,6 +79,9 @@ public class AnnouncementTabController extends GuiController {
 	public void setInspectedSession(Session session) {
 		inspectedSession = session;
 		update();
+		if (session == null)
+			return;
+		((NewAnnouncementController) newAnnouncementController).updateHeader(session.getTitle());
 	}
 
 	public Session getInspectedSession() {
