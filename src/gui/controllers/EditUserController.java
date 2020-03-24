@@ -141,7 +141,7 @@ public class EditUserController extends GuiController {
 		
 		try {
 			// Construct user
-			Member template = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath);
+			Member template = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath, userToEdit);
 			
 			// Add user
 			mf.editMember(userToEdit, template);

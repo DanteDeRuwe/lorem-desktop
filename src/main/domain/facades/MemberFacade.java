@@ -59,6 +59,16 @@ public class MemberFacade implements Facade {
 		}
 	}
 	
+	public Member createMemberFromFields(String username, String firstName, String lastName, MemberType type, MemberStatus status, String profilePicPath, Member userBeingModified) throws InvalidMemberException {
+		if (username.equals(userBeingModified.getUsername())) {
+			return new Member(username, firstName, lastName, type, status, profilePicPath);
+		} else {
+			return createMemberFromFields(username, firstName, lastName, type, status, profilePicPath);
+		}
+	}
+	
+	
+	
 	public boolean usernameExists(String username) {
 		try {
 			memberRepo.getMemberByUsername(username);
