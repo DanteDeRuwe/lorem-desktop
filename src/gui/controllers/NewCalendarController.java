@@ -46,13 +46,15 @@ public class NewCalendarController extends GuiController {
 			getMainController().getCalendarSceneController().update();
 			goBack();
 		} catch (IllegalArgumentException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Nieuwe kalender");
+			alert.setHeaderText("Fout");
 			if (e.getMessage().equals("Academic years must start and end in consecutive years")) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Nieuwe kalender");
-				alert.setHeaderText("Fout");
-				alert.setContentText("Een academisch jaar moet starten en eindigen in opeenvolgende jaren");
-				alert.showAndWait();
+				alert.setContentText("Een academisch jaar moet starten en eindigen in opeenvolgende jaren.");
+			} else if (e.getMessage().equals("Cannot create calendar that far in the past")) {
+				alert.setContentText("Je mag geen kalender zo ver in het verleden aanmaken.");
 			}
+			alert.showAndWait();
 		}
 	}
 

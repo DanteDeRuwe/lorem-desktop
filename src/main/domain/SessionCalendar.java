@@ -36,13 +36,14 @@ public class SessionCalendar {
 
 	public SessionCalendar(LocalDate startDate, LocalDate endDate) {
 
-		if (startDate == null || endDate == null) {
+		if (startDate == null || endDate == null)
 			throw new IllegalArgumentException("startDate and endDate must not be null.");
-		}
 
-		if (endDate.getYear() != startDate.getYear() + 1) {
+		if (startDate.getYear() < LocalDate.now().getYear())
+			throw new IllegalArgumentException("Cannot create calendar that far in the past");
+
+		if (endDate.getYear() != startDate.getYear() + 1)
 			throw new IllegalArgumentException("Academic years must start and end in consecutive years");
-		}
 
 		setStartDate(startDate);
 		setEndDate(endDate);
