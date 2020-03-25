@@ -57,7 +57,10 @@ public class MyAccountController extends GuiController {
 		lastNameLabel.setText(member.getLastName());
 		typeLabel.setText(member.getMemberType().toString());
 		statusLabel.setText(member.getMemberStatus().toString());
-		if (!(member.getProfilePicPath().isBlank() || member.getProfilePicPath() == null))
+		if (member.getProfilePicPath().isBlank() || member.getProfilePicPath() == null)
+			profilePicture.setImage(new Image(
+					"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"));
+		else
 			profilePicture.setImage(new Image(member.getProfilePicPath()));
 	}
 
