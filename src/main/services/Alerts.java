@@ -18,6 +18,7 @@ public class Alerts {
 		alert.setTitle(title);
 		alert.setHeaderText("Waarschuwing");
 		alert.setContentText(content);
+		alert.setHeight(300);
 		return alert;
 	}
 

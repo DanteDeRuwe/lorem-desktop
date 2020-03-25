@@ -36,7 +36,7 @@ public class UserDetailsController extends GuiController {
 
 	private void handleDeleteUser() {
 		Alert alert = Alerts.confirmationAlert("Gebruiker verwijderen", String
-				.format("Ben je zeker dat je de gebruiker \"%s\" wilt verwijderen?", inspectedUser.getFullName()));
+				.format("Ben je zeker dat je de gebruiker \"%s\" wilt verwijderen? Dit zal ook alle sessies georganiseerd door deze gebruiker verwijderen.", inspectedUser.getFullName()));
 		if (alert.showAndWait().get() == ButtonType.OK) {
 			try {
 				((MemberFacade) getFacade()).deleteUser(inspectedUser);
