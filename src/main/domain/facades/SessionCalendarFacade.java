@@ -10,6 +10,7 @@ import main.domain.Member;
 import main.domain.MemberType;
 import main.domain.Session;
 import main.domain.SessionCalendar;
+import main.exceptions.InvalidSessionCalendarException;
 import main.exceptions.InvalidSessionException;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Util;
@@ -46,8 +47,24 @@ public class SessionCalendarFacade implements Facade {
 		return this.sessionCalendarRepo;
 	}
 
-	public SessionCalendar createSessionCalendar(LocalDate start, LocalDate end) {
-		return new SessionCalendar(start, end);
+	public SessionCalendar createSessionCalendar(LocalDate start, LocalDate end)
+			throws InvalidSessionCalendarException {
+		try {
+			return new SessionCalendar(start, end);
+		} catch (IllegalArgumentException iae) {
+			switch (iae.getMessage()) {
+			case "startDate and endDate must not be null":
+				throw new InvalidSessionCalendarException("Start- en eindmoment zijn niet correct ingegeven", iae);
+			case "Cannot create calendar that far in the past":
+				throw new InvalidSessionCalendarException("Startdatum kan niet zo ver in het verleden liggen", iae);
+			case "Academic years must start and end in consecutive years":
+				throw new InvalidSessionCalendarException("Een academiejaar bestaat uit 2 opeenvolgende jaartallen",
+						iae);
+			default:
+				throw new InvalidSessionCalendarException(iae.getMessage(), iae);
+			}
+		}
+
 	}
 
 	public List<SessionCalendar> getAllSessionCalendars() {
@@ -69,19 +86,16 @@ public class SessionCalendarFacade implements Facade {
 		return calendar.academicYearProperty().getValue();
 	}
 
-	public void addSessionCalendar(SessionCalendar calendar) throws UserNotAuthorizedException {
+	public void addSessionCalendar(SessionCalendar calendar)
+			throws UserNotAuthorizedException, InvalidSessionCalendarException {
 		MemberType memberType = loggedInMemberManager.getLoggedInMember().getMemberType();
 		if (memberType != MemberType.ADMIN && memberType != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
 
 		// check for overlap
-		for (SessionCalendar existingCalendar : getAllSessionCalendars()) {
-			if ((calendar.getStartDate().isAfter(existingCalendar.getStartDate())
-					&& calendar.getStartDate().isBefore(existingCalendar.getEndDate()))
-					|| (calendar.getEndDate().isAfter(existingCalendar.getStartDate())
-							&& calendar.getEndDate().isBefore(existingCalendar.getEndDate())))
-				throw new IllegalArgumentException("Overlap with an existing caledar");
-		}
+		if (!calendar.doesNotOverlap(getAllSessionCalendars()))
+			throw new InvalidSessionCalendarException(
+					"De kalender mag niet overlappen met een reeds bestaande kalender");
 
 		GenericDaoJpa.startTransaction();
 		sessionCalendarRepo.insert(calendar);
@@ -89,14 +103,23 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public void editSessionCalendar(SessionCalendar calendar, LocalDate startDate, LocalDate endDate)
-			throws UserNotAuthorizedException {
+			throws UserNotAuthorizedException, InvalidSessionCalendarException {
 		MemberType memberType = loggedInMemberManager.getLoggedInMember().getMemberType();
 		if (memberType != MemberType.ADMIN && memberType != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
 
+		// try to create a calendar, this has all exception logic
+		SessionCalendar sc = createSessionCalendar(startDate, endDate);
+		calendar.setStartDate(sc.getStartDate());
+		calendar.setEndDate(sc.getEndDate());
+
+		// check for overlap
+		if (!calendar.doesNotOverlap(getAllSessionCalendars()))
+			throw new InvalidSessionCalendarException(
+					"De kalender mag niet overlappen met een reeds bestaande kalender");
+
 		GenericDaoJpa.startTransaction();
-		calendar.setStartDate(startDate);
-		calendar.setEndDate(endDate);
+		sessionCalendarRepo.update(calendar);
 		GenericDaoJpa.commitTransaction();
 	}
 
