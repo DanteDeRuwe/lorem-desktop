@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import main.domain.Member;
 import main.domain.MemberType;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
 import main.exceptions.UserNotAuthorizedException;
 import persistence.MemberDao;
@@ -30,24 +31,25 @@ public class MemberFacadeTest {
 
 	@Mock
 	private MemberDao memberRepoDummy;
+	
+	@Mock
+	private LoggedInMemberManager loggedInMemberManagerDummy;
 
 	@InjectMocks
 	private MemberFacade memberFacade;
 
 	// Tests
 	private static Stream<Arguments> addMember() {
-		return Stream.of(Arguments.of("harm.de.weirdt", "Harm", "De Weirdt", MemberType.HEADADMIN));
+		return Stream.of(Arguments.of("harm.de.weirdt", new Member("harm.de.weirdt", "Harm", "De Weirdt", MemberType.HEADADMIN)));
 	}
 
 	@ParameterizedTest
 	@MethodSource("addMember")
-	public void getMemberByUserName_GetsMemberByCorrectUserName(String username, String firstName, String lastName,
-			MemberType memberType) {
+	public void getMemberByUserName_GetsMemberByCorrectUserName(String username, Member member) {
 		Mockito.when(memberRepoDummy.getMemberByUsername(username))
-				.thenReturn(new Member(username, firstName, lastName, memberType));
-
-		Member member = memberFacade.getMemberByUsername(username);
-		assertEquals(username, member.getUsername());
+				.thenReturn(member);
+		
+		assertEquals(member, memberFacade.getMemberByUsername(username));
 
 		Mockito.verify(memberRepoDummy).getMemberByUsername(username);
 
@@ -82,15 +84,20 @@ public class MemberFacadeTest {
 						new Member("username2", "fn2", "ln2", MemberType.USER),
 						new Member("username3", "fn3", "ln3", MemberType.USER),
 						new Member("username4", "fn4", "ln4", MemberType.USER))),
-				new Member("username5", "fn5", "ln5", MemberType.USER)));
+				new Member("username5", "fn5", "ln5", MemberType.USER),
+				new Member()));
 	}
 
 	@ParameterizedTest
 	@MethodSource("addMemberFixture")
-	public void addMember_AddsMemberCorrectly(List<Member> listAllMembers, Member member) {
+	public void addMember_AuthorizedMember_AddsMemberCorrectly(List<Member> listAllMembers, Member member, Member loggedIn) {
 		Mockito.when(memberRepoDummy.findAll()).thenReturn(listAllMembers);
 		Mockito.doNothing().when(memberRepoDummy).insert(member);
-
+		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
+				thenReturn(loggedIn);
+		
+		loggedIn.setMemberType(MemberType.HEADADMIN);
+		
 		try {
 			memberFacade.addMember(member);
 		} catch (UserNotAuthorizedException e) {
@@ -103,6 +110,20 @@ public class MemberFacadeTest {
 
 		Mockito.verify(memberRepoDummy).findAll();
 		Mockito.verify(memberRepoDummy).insert(member);
+		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
+	}
+	
+	@ParameterizedTest
+	@MethodSource("addMemberFixture")
+	public void addMember_AuthorizedMember_ThrowsUserNotAuthorizedException(List<Member> listAllMembers, Member member, Member loggedIn) {
+		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
+				thenReturn(loggedIn);
+		
+		loggedIn.setMemberType(MemberType.USER);
+		
+		assertThrows(UserNotAuthorizedException.class, () -> memberFacade.addMember(member));
+		
+		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 	}
 
 	private static Stream<Arguments> editMemberFixture() {
@@ -112,18 +133,25 @@ public class MemberFacadeTest {
 						new Member("username3", "fn3", "ln3", MemberType.USER),
 						new Member("username4", "fn4", "ln4", MemberType.USER))),
 				new Member("username1", "fn1", "ln1", MemberType.USER),
-				new Member("username5", "fn5", "ln5", MemberType.USER)));
+				new Member("username5", "fn5", "ln5", MemberType.USER),
+				"pass",
+				new Member())
+		);
 	}
 
 	@ParameterizedTest
 	@MethodSource("editMemberFixture")
-	public void editMember_EditsMemberCorrectly(List<Member> listAllMembers, Member member, Member newMember) {
+	public void editMember_AuthorizedMember_EditsMemberCorrectly(List<Member> listAllMembers, Member member, Member newMember, String password, Member loggedIn) {
 		Mockito.when(memberRepoDummy.findAll()).thenReturn(listAllMembers);
 		Mockito.doNothing().when(memberRepoDummy).insert(member);
 		Mockito.doNothing().when(memberRepoDummy).delete(member);
+		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
+				thenReturn(loggedIn);
 
+		loggedIn.setMemberType(MemberType.HEADADMIN);
+		
 		try {
-			memberFacade.editMember(member, newMember);
+			memberFacade.editMember(member, newMember, password);
 		} catch (UserNotAuthorizedException e) {
 			e.printStackTrace();
 		}
@@ -136,6 +164,20 @@ public class MemberFacadeTest {
 		Mockito.verify(memberRepoDummy).findAll();
 		Mockito.verify(memberRepoDummy).insert(member);
 		Mockito.verify(memberRepoDummy).delete(member);
+		Mockito.verify(loggedInMemberManagerDummy, Mockito.times(4)).getLoggedInMember();
+	}
+	
+	@ParameterizedTest
+	@MethodSource("editMemberFixture")
+	public void editMember_NotAuthorizedMember_ThrowsUserNotAuthorizedException(List<Member> listAllMembers, Member member, Member newMember, String password, Member loggedIn) {
+		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
+				thenReturn(loggedIn);
+
+		loggedIn.setMemberType(MemberType.USER);
+		
+		assertThrows(UserNotAuthorizedException.class, () -> memberFacade.editMember(member, newMember, password));
+
+		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 	}
 
 	private static Stream<Arguments> deleteMemberFixture() {
@@ -144,15 +186,20 @@ public class MemberFacadeTest {
 						new Member("username2", "fn2", "ln2", MemberType.USER),
 						new Member("username3", "fn3", "ln3", MemberType.USER),
 						new Member("username4", "fn4", "ln4", MemberType.USER))),
-				new Member("username1", "fn1", "ln1", MemberType.USER)));
+				new Member("username1", "fn1", "ln1", MemberType.USER),
+				new Member()));
 	}
 
 	@ParameterizedTest
 	@MethodSource("deleteMemberFixture")
-	public void deleteMember_DeletesMemberCorrectly(List<Member> listAllMembers, Member member) {
+	public void deleteMember_AuthorizedMember_DeletesMemberCorrectly(List<Member> listAllMembers, Member member, Member loggedIn) {
 		Mockito.when(memberRepoDummy.findAll()).thenReturn(listAllMembers);
 		Mockito.doNothing().when(memberRepoDummy).delete(member);
+		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
+				thenReturn(loggedIn);
 
+		loggedIn.setMemberType(MemberType.HEADADMIN);
+		
 		try {
 			memberFacade.deleteUser(member);
 		} catch (UserNotAuthorizedException e) {
@@ -165,6 +212,20 @@ public class MemberFacadeTest {
 
 		Mockito.verify(memberRepoDummy).findAll();
 		Mockito.verify(memberRepoDummy).delete(member);
+		Mockito.verify(loggedInMemberManagerDummy, Mockito.times(2)).getLoggedInMember();
+	}
+	
+	@ParameterizedTest
+	@MethodSource("deleteMemberFixture")
+	public void deleteMember_NotAuthorizedMember_ThrowsUserNotAuthorizedException(List<Member> listAllMembers, Member member, Member loggedIn) {
+		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
+				thenReturn(loggedIn);
+
+		loggedIn.setMemberType(MemberType.USER);
+		
+		assertThrows(UserNotAuthorizedException.class, () -> memberFacade.deleteUser(member));
+
+		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 	}
 
 }

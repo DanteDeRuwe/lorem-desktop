@@ -112,7 +112,7 @@ public class SessionCalendarFacadeTest {
 			e.printStackTrace();
 		}
 
-		Mockito.verify(sessionCalendarRepoDummy).findAll();
+		Mockito.verify(sessionCalendarRepoDummy, Mockito.times(2)).findAll();
 		Mockito.verify(sessionCalendarRepoDummy).insert(calendar);
 		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 
@@ -122,16 +122,12 @@ public class SessionCalendarFacadeTest {
 	@MethodSource("getAllSessionCalendarsFixture")
 	public void addSessionCalendar_NotAuthorizedMember_ThrowsUserNotAuthorizedException(List<SessionCalendar> listAllSessionCalendars,
 			SessionCalendar calendar, Member loggedIn) {
-		Mockito.when(sessionCalendarRepoDummy.findAll()).thenReturn(listAllSessionCalendars);
-		Mockito.doNothing().when(sessionCalendarRepoDummy).insert(calendar);
 		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
 				thenReturn(loggedIn);
 		
 		loggedIn.setMemberType(MemberType.USER);
 		assertThrows(UserNotAuthorizedException.class, () -> sessionCalendarFacade.addSessionCalendar(calendar));
 
-		Mockito.verify(sessionCalendarRepoDummy).findAll();
-		Mockito.verify(sessionCalendarRepoDummy).insert(calendar);
 		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 
 	}
@@ -170,14 +166,12 @@ public class SessionCalendarFacadeTest {
 	@MethodSource("editSessionCalendarFixture")
 	public void editSessionCalendar_NotAuthorizedMember_ThrowsUserNotAuthorizedException(SessionCalendar pre, LocalDate start, LocalDate end,
 			List<SessionCalendar> postList, Member loggedIn) {
-		Mockito.when(sessionCalendarRepoDummy.findAll()).thenReturn(postList);
 		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
 				thenReturn(loggedIn);
 		
-		loggedIn.setMemberType(MemberType.HEADADMIN);
+		loggedIn.setMemberType(MemberType.USER);
 		assertThrows(UserNotAuthorizedException.class, () -> sessionCalendarFacade.editSessionCalendar(pre, start, end));
 
-		Mockito.verify(sessionCalendarRepoDummy).findAll();
 		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 	}
 
@@ -230,18 +224,12 @@ public class SessionCalendarFacadeTest {
 	@ParameterizedTest
 	@MethodSource("addSessionFixture")
 	public void addSession_NotAuthorizedMember_ThrowsUserNotAuthorizedException(Session session, Set<Session> listSessions, Member loggedIn) {
-		Mockito.doNothing().when(sessionCalendarDummy).addSession(session);
-		Mockito.doNothing().when(sessionRepoDummy).insert(session);
-		Mockito.when(sessionCalendarDummy.getSessions()).thenReturn(listSessions);
 		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
 				thenReturn(loggedIn);
 		
 		loggedIn.setMemberType(MemberType.USER);
 		assertThrows(UserNotAuthorizedException.class,() -> sessionCalendarFacade.addSession(session));
 
-		Mockito.verify(sessionCalendarDummy).addSession(session);
-		Mockito.verify(sessionRepoDummy).insert(session);
-		Mockito.verify(sessionCalendarDummy).getSessions();
 		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 	}
 
@@ -273,18 +261,12 @@ public class SessionCalendarFacadeTest {
 	@ParameterizedTest
 	@MethodSource("addSessionFixture")
 	public void deleteSession_NotAuthorizedMember_ThrowsUserNotAuthorizedException(Session session, Set<Session> listSessions, Member loggedIn) {
-		Mockito.doNothing().when(sessionCalendarDummy).deleteSession(session);
-		Mockito.doNothing().when(sessionRepoDummy).delete(session);
-		Mockito.when(sessionCalendarDummy.getSessions()).thenReturn(listSessions);
 		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
 				thenReturn(loggedIn);
 		
 		loggedIn.setMemberType(MemberType.USER);
 		assertThrows(UserNotAuthorizedException.class, () -> sessionCalendarFacade.deleteSession(session));
 		
-		Mockito.verify(sessionCalendarDummy).deleteSession(session);
-		Mockito.verify(sessionRepoDummy).delete(session);
-		Mockito.verify(sessionCalendarDummy).getSessions();
 		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 	}
 
@@ -326,20 +308,12 @@ public class SessionCalendarFacadeTest {
 	@ParameterizedTest
 	@MethodSource("editSessionFixture")
 	public void editSession_NotAuthorizedMember_ThrowsUserNotAuthorizedException(Session session, Session newSession, Set<Session> listSessions, Member loggedIn) {
-		Mockito.doNothing().when(sessionCalendarDummy).addSession(session);
-		Mockito.doNothing().when(sessionCalendarDummy).deleteSession(session);
-		Mockito.when(sessionRepoDummy.update(session)).thenReturn(newSession);
-		Mockito.when(sessionCalendarDummy.getSessions()).thenReturn(listSessions);
 		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
 				thenReturn(loggedIn);
 		
 		loggedIn.setMemberType(MemberType.USER);
 		assertThrows(UserNotAuthorizedException.class, () -> sessionCalendarFacade.editSession(session, newSession));
 			
-		Mockito.verify(sessionCalendarDummy).addSession(session);
-		Mockito.verify(sessionCalendarDummy).deleteSession(session);
-		Mockito.verify(sessionRepoDummy).update(session);
-		Mockito.verify(sessionCalendarDummy).getSessions();
 		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
 	}
 

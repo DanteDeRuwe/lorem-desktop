@@ -19,9 +19,9 @@ public class MemberFacade implements Facade {
 	private MemberDao memberRepo;
 	private LoggedInMemberManager loggedInMemberManager;
 
-	public MemberFacade(LoggedInMemberManager loggedInMemberManager) {
+	public MemberFacade() {
 		setMemberRepo(new MemberDaoJpa());
-		this.loggedInMemberManager = loggedInMemberManager;
+		this.loggedInMemberManager = LoggedInMemberManager.getInstance();
 	}
 
 	public Member getMemberByUsername(String username) {
