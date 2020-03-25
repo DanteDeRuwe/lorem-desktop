@@ -111,6 +111,7 @@ public class SessionCalendar {
 		return new SimpleStringProperty(String.format("%d - %d", startDate.getYear(), endDate.getYear()));
 	}
 	
+	//Statistics finished sessions
 	public Set<Session> getFinishedSessions() {
 		Set<Session> set = new HashSet<>();
 		LocalDateTime now = LocalDateTime.now();
@@ -122,6 +123,68 @@ public class SessionCalendar {
 		}
 
 		return set;
+	}
+	
+	public int getTotalRegistreesFinishedSessions() {
+		Set<Session> fSessions = getFinishedSessions();
+		int total = 0;
+		for(Session s: fSessions) {
+			total += s.countRegistrees();
+		}
+		return total;
+	}
+	
+	public int getTotalAttendeesFinishedSessions() {
+		Set<Session> fSessions = getFinishedSessions();
+		int total = 0;
+		for(Session s: fSessions) {
+			total += s.countAttendees();
+		}
+		return total;
+	}
+	
+	public int getAverageRegistreesPerSessionFinishedSessions() {
+		int totalOfRegistrees = getTotalRegistreesFinishedSessions();
+		return totalOfRegistrees/getFinishedSessions().size();
+	}
+	
+	public int getAverageAttendeesPerSessionFinishedSessions() {
+		int totalOfAttendees = getTotalAttendeesFinishedSessions();
+		return totalOfAttendees/getFinishedSessions().size();
+	}
+	
+	public int getAverageAttendeesPerRegistreesFinishedSessions() {
+		int totalOfAttendees = getTotalAttendeesFinishedSessions();
+		int totalOfRegistrees = getTotalRegistreesFinishedSessions();
+		return totalOfAttendees/totalOfRegistrees;
+	}
+	
+	//Statistics planned sessions
+	public Set<Session> getPlannedSessions() {
+		Set<Session> set = new HashSet<>();
+		LocalDateTime now = LocalDateTime.now();
+
+		for(Session s: this.sessions) {
+			if(now.isBefore(s.getEnd())) {
+				set.add(s);
+			}
+		}
+
+		return set;
+	}
+	
+	public int getTotalRegistreesPlannedSessions() {
+		Set<Session> pSessions = getPlannedSessions();
+		int total = 0;
+		for(Session s: pSessions) {
+			total += s.countRegistrees();
+		}
+		return total;
+	}
+	
+	public int getAverageRegistreesPerSessionPlannedSessions() {
+		int totalOfRegistrees = getTotalRegistreesPlannedSessions();
+		return totalOfRegistrees/getPlannedSessions().size();
 	}
 
 }
