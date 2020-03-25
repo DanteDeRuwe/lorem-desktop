@@ -53,13 +53,24 @@ public class LoginController {
 		loggedInMemberManager = LoggedInMemberManager.getInstance();
 		memberFacade = new MemberFacade(loggedInMemberManager);
 
-		// Event handlers
+		//   Event handlers
 		loginButton.setOnAction(e -> {
 			try {
 				tryLogin();
 			} catch (IOException e1) {}
 		});
-
+		passwordField.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+			if (e.getCode() == KeyCode.ENTER) {
+		           loginButton.fire();
+		           e.consume(); 
+		        }
+		});
+		usernameField.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+			if (e.getCode() == KeyCode.ENTER) {
+		           loginButton.fire();
+		           e.consume(); 
+		        }
+		});
 	}
 
 	private void tryLogin() throws IOException {
