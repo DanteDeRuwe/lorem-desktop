@@ -103,8 +103,6 @@ public class EditUserController extends GuiController {
 				"Achternaam is verplicht");
 		boolean usernameFilledIn = DataValidation.textFilledIn(usernameField, validationLabel,
 				"Gebruikersnaam is verplicht");
-		boolean passwordFilledIn = DataValidation.textFilledIn(passwordField, validationLabel,
-				"Wachtwoord is verplicht");
 		boolean profilePicOk;
 		if (profilePicField.getText() == null || profilePicField.getText().isBlank()) {
 			profilePicOk = true;
@@ -113,7 +111,7 @@ public class EditUserController extends GuiController {
 					"URL voor profiel foto klopt niet");
 		}
 
-		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && passwordFilledIn && profilePicOk;
+		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && profilePicOk;
 	}
 
 	private void onMemberEditConfirm() {
@@ -135,8 +133,6 @@ public class EditUserController extends GuiController {
 		}
 
 		MemberFacade mf = (MemberFacade) getFacade();
-
-		// Construct member
 
 		try {
 			// Construct user

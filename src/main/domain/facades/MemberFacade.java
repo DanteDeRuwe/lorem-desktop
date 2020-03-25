@@ -96,7 +96,7 @@ public class MemberFacade implements Facade {
 		member.setMemberType(newMember.getMemberType());
 		member.setMemberStatus(newMember.getMemberStatus());
 		member.setProfilePicPath(newMember.getProfilePicPath());
-		member.setPassword(password);
+		if (password != null && !password.isBlank()) member.setPassword(password); // if password field was left empty, leave it as is.
 
 		// add it again with updated info
 		addMember(member);
