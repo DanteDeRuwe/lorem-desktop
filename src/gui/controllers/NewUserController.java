@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
@@ -26,6 +27,8 @@ public class NewUserController extends GuiController {
 	private JFXTextField lastNameField;
 	@FXML
 	private JFXTextField usernameField;
+	@FXML
+	private JFXPasswordField passwordField;
 	@FXML
 	private JFXComboBox<MemberType> userTypeField;
 	@FXML
@@ -81,6 +84,8 @@ public class NewUserController extends GuiController {
 				"Achternaam is verplicht");
 		boolean usernameFilledIn = DataValidation.textFilledIn(usernameField, validationLabel,
 				"Gebruikersnaam is verplicht");
+		boolean passwordFilledIn = DataValidation.textFilledIn(passwordField, validationLabel,
+				"Wachtwoord is verplicht");
 		boolean profilePicOk;
 		if (profilePicField.getText() == null || profilePicField.getText().isBlank()) {
 			profilePicOk = true;
@@ -89,7 +94,7 @@ public class NewUserController extends GuiController {
 					"URL voor profiel foto klopt niet");
 		}
 
-		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && profilePicOk;
+		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && passwordFilledIn && profilePicOk;
 	}
 
 	private void onNewMemberConfirm() {
@@ -102,6 +107,7 @@ public class NewUserController extends GuiController {
 		String firstName = firstNameField.getText();
 		String lastName = lastNameField.getText();
 		String userName = usernameField.getText();
+		String password = passwordField.getText();
 		MemberType type = userTypeField.getValue();
 		MemberStatus status = userStatusField.getValue();
 		String profilePicPath = profilePicField.getText();
@@ -115,6 +121,7 @@ public class NewUserController extends GuiController {
 		try {
 			// Construct user
 			Member m = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath);
+			m.setPassword(password);
 
 			// Add user
 			try {

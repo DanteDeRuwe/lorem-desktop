@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
@@ -25,6 +26,8 @@ public class EditUserController extends GuiController {
 	private JFXTextField lastNameField;
 	@FXML
 	private JFXTextField usernameField;
+	@FXML
+	private JFXPasswordField passwordField;
 	@FXML
 	private JFXComboBox<MemberType> userTypeField;
 	@FXML
@@ -105,6 +108,8 @@ public class EditUserController extends GuiController {
 				"Achternaam is verplicht");
 		boolean usernameFilledIn = DataValidation.textFilledIn(usernameField, validationLabel,
 				"Gebruikersnaam is verplicht");
+		boolean passwordFilledIn = DataValidation.textFilledIn(passwordField, validationLabel,
+				"Wachtwoord is verplicht");
 		boolean profilePicOk;
 		if (profilePicField.getText() == null || profilePicField.getText().isBlank()) {
 			profilePicOk = true;
@@ -113,7 +118,7 @@ public class EditUserController extends GuiController {
 					"URL voor profiel foto klopt niet");
 		}
 
-		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && profilePicOk;
+		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && passwordFilledIn && profilePicOk;
 	}
 
 	private void onMemberEditConfirm() {
@@ -145,7 +150,7 @@ public class EditUserController extends GuiController {
 
 			// Edit user
 			try {
-				mf.editMember(userToEdit, template);
+				mf.editMember(userToEdit, template, passwordField.getText());
 			} catch (UserNotAuthorizedException e) {
 				Alerts.errorAlert("Gebruiker wijzigen",
 						"Je hebt niet de juiste machtigingen om een gebruiker te wijzigen.").showAndWait();

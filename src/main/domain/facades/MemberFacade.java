@@ -81,7 +81,7 @@ public class MemberFacade implements Facade {
 		GenericDaoJpa.commitTransaction();
 	}
 
-	public void editMember(Member member, Member newMember) throws UserNotAuthorizedException {
+	public void editMember(Member member, Member newMember, String password) throws UserNotAuthorizedException {
 		// check if user is authorized
 		if (loggedInMemberManager.getLoggedInMember().getMemberType() != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
@@ -96,6 +96,7 @@ public class MemberFacade implements Facade {
 		member.setMemberType(newMember.getMemberType());
 		member.setMemberStatus(newMember.getMemberStatus());
 		member.setProfilePicPath(newMember.getProfilePicPath());
+		member.setPassword(password);
 
 		// add it again with updated info
 		addMember(member);
