@@ -6,7 +6,6 @@ import com.jfoenix.controls.JFXDatePicker;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import main.domain.SessionCalendar;
@@ -48,9 +47,7 @@ public class NewCalendarController extends GuiController {
 			getMainController().getCalendarSceneController().update();
 			goBack();
 		} catch (IllegalArgumentException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Nieuwe kalender");
-			alert.setHeaderText("Fout");
+			Alert alert = Alerts.errorAlert("Nieuwe kalender", "");
 			if (e.getMessage().equals("Academic years must start and end in consecutive years")) {
 				alert.setContentText("Een academisch jaar moet starten en eindigen in opeenvolgende jaren.");
 			} else if (e.getMessage().equals("Cannot create calendar that far in the past")) {
