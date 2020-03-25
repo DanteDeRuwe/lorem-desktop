@@ -28,6 +28,7 @@ import main.domain.Session;
 import main.domain.SessionCalendar;
 import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.SessionCalendarFacade;
+import main.exceptions.InvalidSessionCalendarException;
 import main.exceptions.UserNotAuthorizedException;
 import persistence.SessionCalendarDaoJpa;
 import persistence.SessionDaoJpa;
@@ -59,8 +60,11 @@ public class SessionCalendarFacadeTest {
 	@MethodSource("addSessionCalendarFixture")
 	public void createSession_ReturnsCorrectCalendar(LocalDate start, LocalDate end) {
 		sessionCalendarFacade = new SessionCalendarFacade();
-		assertEquals(start, sessionCalendarFacade.createSessionCalendar(start, end).getStartDate());
-		assertEquals(end, sessionCalendarFacade.createSessionCalendar(start, end).getEndDate());
+		try {
+			assertEquals(start, sessionCalendarFacade.createSessionCalendar(start, end).getStartDate());
+		} catch (InvalidSessionCalendarException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@ParameterizedTest
@@ -110,6 +114,8 @@ public class SessionCalendarFacadeTest {
 			assertEquals(listAllSessionCalendars, result);
 		} catch (UserNotAuthorizedException e) {
 			e.printStackTrace();
+		} catch (InvalidSessionCalendarException e) {
+			e.printStackTrace();
 		}
 
 		Mockito.verify(sessionCalendarRepoDummy, Mockito.times(2)).findAll();
@@ -155,6 +161,8 @@ public class SessionCalendarFacadeTest {
 			List<SessionCalendar> result = sessionCalendarFacade.getAllSessionCalendars();
 			assertEquals(postList, result);
 		} catch (UserNotAuthorizedException e) {
+			e.printStackTrace();
+		} catch (InvalidSessionCalendarException e) {
 			e.printStackTrace();
 		}
 
