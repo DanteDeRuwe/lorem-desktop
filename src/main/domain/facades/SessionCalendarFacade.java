@@ -238,5 +238,37 @@ public class SessionCalendarFacade implements Facade {
 	public Set<Session> getAllFinishedSessions() {
 		return calendar.getFinishedSessions();
 	}
+	
+	public int getTotalRegistreesFS() {
+		return calendar.getTotalRegistreesFinishedSessions();
+	}
+	
+	public int getTotalAttendeesFS() {
+		return calendar.getTotalAttendeesFinishedSessions();
+	}
+	
+	public double getAverageRpSFS() {
+		return calendar.getAverageRegistreesPerSessionFinishedSessions();
+	}
+	
+	public double getAverageApSFS() {
+		return calendar.getAverageAttendeesPerSessionFinishedSessions();
+	}
+	
+	public double getAverageApRFS() {
+		return calendar.getAverageAttendeesPerRegistreesFinishedSessions();
+	}
+	
+	public Set<Session> getAllPlannedSessions() {
+		return calendar.getPlannedSessions();
+	}
+	
+	public int getTotalRegistreesPS() {
+		return calendar.getTotalRegistreesPlannedSessions();
+	}
+	
+	public double getAverageRpSPS() {
+		return calendar.getAverageRegistreesPerSessionPlannedSessions();
+	}
 
 }

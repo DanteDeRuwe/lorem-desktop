@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="statisticsSceneRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="900.0">
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+         <children>
+            <AnchorPane minWidth="0.0" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="CENTER" layoutX="24.0" layoutY="44.0" prefHeight="444.0" prefWidth="400.0" style="-fx-background-color: #bdbbbb;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="44.0">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="350.0" style="-fx-background-color: #575555;" text="Afgelopen sessies" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="50.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Totaal aantal afgelopen sessies:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="aantalAfgelopenSessies" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="aanTalAfgelopenSessies" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Totaal aantal inschrijvingen:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="aantalInschrijvingenAS" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="aanTalInschrijvingenAS" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Totaal aantal aanwezigen:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="aantalAanwezigenAS" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="aanTalAanwezigenAS" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Gemiddelde inschrijvingen/sessie:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="gemiddeldeIpSAS" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="gemiddeldeIpSAS" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Gemiddelde aanwezigen/sessie:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="gemiddeldeApS" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="gemiddeldeApS" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Gemiddelde aanwezigen/inschrijving:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="gemiddeldeApI" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="gemiddeldeApI" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="443.0" layoutY="44.0" prefHeight="444.0" prefWidth="400.0" style="-fx-background-color: #bdbbbb;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="44.0">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="350.0" style="-fx-background-color: #575555;" text="Geplande sessies" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="35.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="42.4" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Totaal aantal geplande sessies:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="aantalGeplandeSessies" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="aanTalGeplandeSessies" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="50.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="42.4" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Totaal aantal inschrijvingen:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="aantalInschrijvingenGS" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="aanTalInschrijvingenGS" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="42.4" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="42.0" prefWidth="220.0" text="Gemiddelde inschrijvingen/sessie:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="gemiddeldeIpSGS" alignment="CENTER" prefHeight="42.0" prefWidth="80.0" text="gemiddeldeIpSGS" textAlignment="CENTER">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <JFXButton fx:id="updateButton" alignment="CENTER" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #c1c1c1;" text="Update" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
