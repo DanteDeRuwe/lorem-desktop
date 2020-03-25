@@ -178,5 +178,9 @@ public class SessionCalendarFacade implements Facade {
 	public Set<Session> getAllSessions() {
 		return calendar.getSessions();
 	}
+	
+	public Set<Session> getAllFinishedSessions() {
+		return calendar.getFinishedSessions();
+	}
 
 }

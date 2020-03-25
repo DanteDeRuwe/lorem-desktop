@@ -110,5 +110,18 @@ public class SessionCalendar {
 	public StringProperty academicYearProperty() {
 		return new SimpleStringProperty(String.format("%d - %d", startDate.getYear(), endDate.getYear()));
 	}
+	
+	public Set<Session> getFinishedSessions() {
+		Set<Session> set = new HashSet<>();
+		LocalDateTime now = LocalDateTime.now();
+
+		for(Session s: this.sessions) {
+			if(s.getEnd().isBefore(now)) {
+				set.add(s);
+			}
+		}
+
+		return set;
+	}
 
 }
