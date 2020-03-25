@@ -1,16 +1,8 @@
 package gui.controllers;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Optional;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
@@ -20,6 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.GuiUtil;
 import main.services.Util;
 
@@ -27,13 +21,20 @@ public class InfoTabController extends GuiController {
 
 	private Session inspectedSession;
 
-	@FXML private AnchorPane infoTabRoot, descriptionContainer;
-	@FXML private Label sessionTitle, sessionDate, sessionTime, sessionLocation, sessionSpeaker;
-	@FXML private Text sessionDescription;
-	@FXML private Button editSessionButton, deleteSessionButton;
-	@FXML private HBox byLabels;
-    @FXML private Hyperlink externalUrlHyperlink;
-    @FXML private Label sessionType;
+	@FXML
+	private AnchorPane infoTabRoot, descriptionContainer;
+	@FXML
+	private Label sessionTitle, sessionDate, sessionTime, sessionLocation, sessionSpeaker;
+	@FXML
+	private Text sessionDescription;
+	@FXML
+	private Button editSessionButton, deleteSessionButton;
+	@FXML
+	private HBox byLabels;
+	@FXML
+	private Hyperlink externalUrlHyperlink;
+	@FXML
+	private Label sessionType;
 
 	@FXML
 	public void initialize() {
@@ -41,25 +42,23 @@ public class InfoTabController extends GuiController {
 
 		// Event handlers
 		deleteSessionButton.setOnMouseClicked((e) -> handleDeleteSession());
-		editSessionButton.setOnMouseClicked(
-				(e) -> { ssc.displayOnRightPane("EditSession"); }
-		);
+		editSessionButton.setOnMouseClicked((e) -> {
+			ssc.displayOnRightPane("EditSession");
+		});
 	}
 
 	private void handleDeleteSession() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Sessie verwijderen");
-		alert.setHeaderText("Waarschuwing");
-		alert.setContentText(
-				String.format(
-						"Ben je zeker dat je de sessie \"%s\" wilt verwijderen?",
-						inspectedSession.getTitle()
-				)
-		);
-
-		Optional<ButtonType> result = alert.showAndWait();
+		Optional<ButtonType> result = Alerts
+				.confirmationAlert("Sessie verwijderen", String
+						.format("Ben je zeker dat je de sessie \"%s\" wilt verwijderen?", inspectedSession.getTitle()))
+				.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			((SessionCalendarFacade) getFacade()).deleteSession(inspectedSession);
+			try {
+				((SessionCalendarFacade) getFacade()).deleteSession(inspectedSession);
+			} catch (UserNotAuthorizedException e) {
+				Alerts.errorAlert("Sessie wijzigen",
+						"Je hebt niet de juiste machtigingen om deze sessie te verwijderen.").show();
+			}
 			getMainController().getSessionSceneController().update();
 		}
 	}
@@ -75,9 +74,7 @@ public class InfoTabController extends GuiController {
 		sessionDescription.setText(inspectedSession.getDescription());
 		sessionType.setText(inspectedSession.getType());
 		GuiUtil.updateHyperlink(inspectedSession, externalUrlHyperlink);
-		
-		
-		
+
 		// Hide "Door <Speaker>" labels when there is no speaker in session
 		if (!inspectedSession.getSpeakerName().isBlank()) {
 			byLabels.setVisible(true);
@@ -85,8 +82,6 @@ public class InfoTabController extends GuiController {
 		} else
 			byLabels.setVisible(false);
 	}
-	
-	
 
 	public Session getInspectedSession() {
 		return inspectedSession;

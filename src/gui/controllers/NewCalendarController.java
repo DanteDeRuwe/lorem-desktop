@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.GuiUtil;
 
 public class NewCalendarController extends GuiController {
@@ -55,6 +57,9 @@ public class NewCalendarController extends GuiController {
 				alert.setContentText("Je mag geen kalender zo ver in het verleden aanmaken.");
 			}
 			alert.showAndWait();
+		} catch (UserNotAuthorizedException e) {
+			Alerts.errorAlert("Kalender aanmaken", "Je hebt niet de juiste machtigingen om een kalender aan te maken.")
+					.show();
 		}
 	}
 

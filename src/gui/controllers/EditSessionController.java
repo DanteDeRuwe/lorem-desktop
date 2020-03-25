@@ -19,6 +19,8 @@ import main.domain.Member;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.DataValidation;
 import main.services.GuiUtil;
 
@@ -166,15 +168,15 @@ public class EditSessionController extends GuiController {
 
 			// Edit the session
 			scf.editSession(sessionToEdit, template);
-
-			// if editing is succesful
 			getMainController().getSessionSceneController().updateWithSession(sessionToEdit);
 			goBack(); // clears fields and goes back to details view
-
 		} catch (InvalidSessionException e) {
 			if (e.getMessage() != null) {
 				validationLabel.setText(e.getMessage());
 			}
+		} catch (UserNotAuthorizedException e) {
+			Alerts.errorAlert("Sessie wijzigen", "Je hebt niet de juiste machtigingen om deze sessie te wijzigen.")
+					.show();
 		}
 	}
 

@@ -17,6 +17,8 @@ import main.domain.Member;
 import main.domain.Session;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.DataValidation;
 import main.services.GuiUtil;
 
@@ -141,6 +143,9 @@ public class NewSessionController extends GuiController {
 			if (e.getMessage() != null) {
 				validationLabel.setText(e.getMessage());
 			}
+		} catch (UserNotAuthorizedException e) {
+			Alerts.errorAlert("Sessie aanmaken", "Je hebt niet de juiste machtigingen om een sessie aan te maken.")
+					.show();
 		}
 	}
 
