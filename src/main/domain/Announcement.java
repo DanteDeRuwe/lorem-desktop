@@ -13,7 +13,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Announcement {
+public class Announcement implements Comparable<Announcement> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,6 +79,11 @@ public class Announcement {
 	public String toString() {
 		return String.format("%s%n%s%n%s%n%s", getTitle(), getAuthor().getLastName() + getAuthor().getFirstName(),
 				getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), text);
+	}
+
+	@Override
+	public int compareTo(Announcement o) {
+		return timestamp.compareTo(o.getTimestamp());
 	}
 
 }

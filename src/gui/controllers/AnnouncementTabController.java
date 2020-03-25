@@ -70,6 +70,7 @@ public class AnnouncementTabController extends GuiController {
 		Set<Announcement> announcements = inspectedSession.getAnnouncements();
 		List<Announcement> announcementsList = new ArrayList<>();
 		announcementsList.addAll(announcements);
+		Collections.sort(announcementsList);
 		Collections.reverse(announcementsList);
 		announcementListView.setItems(FXCollections.observableArrayList(announcementsList));
 	}
