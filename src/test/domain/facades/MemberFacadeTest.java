@@ -132,7 +132,7 @@ public class MemberFacadeTest {
 				new ArrayList<Member>(List.of(new Member("username1", "fn1", "ln1", MemberType.USER),
 						new Member("username2", "fn2", "ln2", MemberType.USER),
 						new Member("username3", "fn3", "ln3", MemberType.USER),
-						new Member("username4", "fn4", "ln4", MemberType.USER))),
+						new Member("username4", "fn4", "ln4", MemberType.HEADADMIN))),
 				new Member("username1", "fn1", "ln1", MemberType.USER),
 				new Member("username5", "fn5", "ln5", MemberType.USER),
 				"pass",
@@ -140,35 +140,32 @@ public class MemberFacadeTest {
 		);
 	}
 
-//	@ParameterizedTest
-//	@MethodSource("editMemberFixture")
-//	public void editMember_AuthorizedMember_EditsMemberCorrectly(List<Member> listAllMembers, Member member, Member newMember, String password, Member loggedIn) {
-//		Mockito.when(memberRepoDummy.findAll()).thenReturn(listAllMembers);
-//		Mockito.doNothing().when(memberRepoDummy).insert(member);
-//		Mockito.doNothing().when(memberRepoDummy).delete(member);
-//		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).
-//				thenReturn(loggedIn);
-//
-//		loggedIn.setMemberType(MemberType.HEADADMIN);
-//		
-//		try {
-//			memberFacade.editMember(member, newMember, password);
-//		} catch (UserNotAuthorizedException e) {
-//			e.printStackTrace();
-//		} catch (MustBeAtLeastOneHeadAdminException e) {
-//			e.printStackTrace();
-//		}
-//
-//		listAllMembers.remove(member);
-//		listAllMembers.add(newMember);
-//		List<Member> result = memberFacade.getAllMembers();
-//		assertEquals(listAllMembers, result);
-//
-//		Mockito.verify(memberRepoDummy).findAll();
-//		Mockito.verify(memberRepoDummy, Mockito.times(2)).insert(member);
-//		Mockito.verify(memberRepoDummy).delete(member);
-//		Mockito.verify(loggedInMemberManagerDummy, Mockito.times(4)).getLoggedInMember();
-//	}
+	@ParameterizedTest
+	@MethodSource("editMemberFixture")
+	public void editMember_AuthorizedMember_EditsMemberCorrectly(List<Member> listAllMembers, Member member, Member newMember, String password, Member loggedIn) {
+		Mockito.when(memberRepoDummy.findAll()).thenReturn(listAllMembers);
+		Mockito.when(memberRepoDummy.update(member)).thenReturn(newMember);
+		Mockito.when(loggedInMemberManagerDummy.getLoggedInMember()).thenReturn(loggedIn);
+
+		loggedIn.setMemberType(MemberType.HEADADMIN);
+		
+		try {
+			memberFacade.editMember(member, newMember, password);
+		} catch (UserNotAuthorizedException e) {
+			e.printStackTrace();
+		} catch (MustBeAtLeastOneHeadAdminException e) {
+			e.printStackTrace();
+		}
+
+		listAllMembers.remove(member);
+		listAllMembers.add(newMember);
+		List<Member> result = memberFacade.getAllMembers();
+		assertEquals(listAllMembers, result);
+
+		Mockito.verify(memberRepoDummy).findAll();
+		Mockito.verify(memberRepoDummy).update(member);
+		Mockito.verify(loggedInMemberManagerDummy).getLoggedInMember();
+	}
 	
 	@ParameterizedTest
 	@MethodSource("editMemberFixture")
