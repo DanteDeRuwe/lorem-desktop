@@ -1,5 +1,6 @@
 package main.services;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -24,12 +25,15 @@ public class AnnouncementCellFactory<T> implements Callback<ListView<Announcemen
 				}
 				// create components with announcement data
 				Label titleLabel = new Label(item.getTitle());
+				titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 15px;");
 				Label timestampLabel = new Label(item.getTimestamp().format(Util.DATETIMEFORMATTER));
 				Label authorLabel = new Label(item.getAuthor().getFullName());
 				Text text = new Text(item.getText());
 
 				// add components to containers
 				HBox hbox = new HBox();
+				hbox.setStyle("-fx-font-size: 13px;");
+				hbox.setPadding(new Insets(0, 0, 4, 0));
 				hbox.getChildren().addAll(authorLabel, new Label(" om "), timestampLabel);
 				VBox vbox = new VBox();
 				vbox.getChildren().addAll(titleLabel, hbox, text);
