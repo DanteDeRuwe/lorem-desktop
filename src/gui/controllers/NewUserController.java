@@ -68,7 +68,7 @@ public class NewUserController extends GuiController {
 
 	private void resetView() {
 		validationLabel.setText("");
-		Stream.<TextField>of(firstNameField, lastNameField, usernameField, profilePicField)
+		Stream.<TextField>of(firstNameField, lastNameField, usernameField, profilePicField, passwordField)
 				.forEach(tf -> tf.setText(""));
 		userTypeField.getSelectionModel().selectFirst();
 		userStatusField.getSelectionModel().selectFirst();
