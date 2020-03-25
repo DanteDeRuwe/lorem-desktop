@@ -13,9 +13,9 @@ public class SessionFacade implements Facade {
 
 	private LoggedInMemberManager loggedInMemberManager;
 
-	public SessionFacade(LoggedInMemberManager loggedInMemberManager) {
+	public SessionFacade() {
 		announcementRepo = new GenericDaoJpa<Announcement>(Announcement.class);
-		this.loggedInMemberManager = loggedInMemberManager;
+		this.loggedInMemberManager = LoggedInMemberManager.getInstance();
 	}
 
 	public void addAnnouncement(Announcement a, Session s) throws UserNotAuthorizedException {
