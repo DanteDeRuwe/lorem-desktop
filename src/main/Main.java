@@ -29,10 +29,10 @@ public class Main extends Application {
 
 		Scene scene = new Scene(rootNode);
 
-		
 		stage.setScene(scene);
 		stage.setTitle("Login");
-
+		stage.setResizable(false);
+		
 		stage.show();
 
 	}
