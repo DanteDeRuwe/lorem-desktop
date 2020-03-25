@@ -86,9 +86,6 @@ public class MemberFacade implements Facade {
 		if (loggedInMemberManager.getLoggedInMember().getMemberType() != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
 
-		// delete the old session from the runtime calendar
-		deleteUser(member);
-
 		// update the user
 		member.setFirstName(newMember.getFirstName());
 		member.setLastName(newMember.getLastName());
@@ -96,10 +93,7 @@ public class MemberFacade implements Facade {
 		member.setMemberType(newMember.getMemberType());
 		member.setMemberStatus(newMember.getMemberStatus());
 		member.setProfilePicPath(newMember.getProfilePicPath());
-		member.setPassword(password);
-
-		// add it again with updated info
-		addMember(member);
+		if (password != null && !password.isBlank()) member.setPassword(password); // if password field was left empty, leave it as is.
 
 		// persist
 		GenericDaoJpa.startTransaction();
