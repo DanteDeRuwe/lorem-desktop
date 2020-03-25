@@ -292,16 +292,14 @@ public class SessionTest {
 	@MethodSource("addFixture")
 	public void countAttendees_ReturnsCorrectAmountOfAttendees(Set<Member> attendees) {
 		session.setAttendees(attendees);
-		session.countAttendees();
-		assertEquals(attendees.size(), session.getNumberOfAttendees());
+		assertEquals(attendees.size(), session.countAttendees());
 	}
 	
 	@ParameterizedTest
 	@MethodSource("addFixture")
 	public void countRegistrees_ReturnsCorrectAmountOfRegistrees(Set<Member> registrees) {
 		session.setRegistrees(registrees);
-		session.countRegistrees();
-		assertEquals(registrees.size(), session.getNumberOfRegistrees());
+		assertEquals(registrees.size(), session.countRegistrees());
 	}
 
 }

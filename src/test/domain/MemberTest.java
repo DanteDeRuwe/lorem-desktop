@@ -138,8 +138,7 @@ public class MemberTest {
 	@MethodSource("addFixture")
 	public void countAttendances_ReturnsCorrectAmountOfAttendances(Set<Session> attendances) {
 		exMember.setAttendances(attendances);
-		exMember.countAttendances();
-		assertEquals(attendances.size(), exMember.getNumberOfAttendances());
+		assertEquals(attendances.size(), exMember.countAttendances());
 	}
 	
 	
@@ -147,8 +146,7 @@ public class MemberTest {
 	@MethodSource("addFixture")
 	public void countRegistrations_ReturnsCorrectAmountOfRegistrations(Set<Session> registrations) {
 		exMember.setRegistrations(registrations);
-		exMember.countRegistrations();
-		assertEquals(registrations.size(), exMember.getNumberOfRegistrations());
+		assertEquals(registrations.size(), exMember.countRegistrations());
 	}
 	
 	private static Stream<Arguments> addMissedFixture() {
@@ -173,8 +171,7 @@ public class MemberTest {
 	public void countMissedSessions_ReturnsCorrectAmountOfMissedSessions(Set<Session> attendances, Set<Session> registrations) {
 		exMember.setAttendances(attendances);
 		exMember.setRegistrations(registrations);
-		exMember.countMissedSessions();
-		assertEquals(registrations.size() - attendances.size(), exMember.getNumberOfMissedSessions());
+		assertEquals(registrations.size() - attendances.size(), exMember.countMissedSessions());
 	}
 
 }

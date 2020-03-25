@@ -230,4 +230,6 @@ public class SessionCalendarFacadeTest {
 		Mockito.verify(sessionCalendarDummy).getSessions();
 	}
 	
+	
+	
 }

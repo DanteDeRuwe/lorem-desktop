@@ -94,19 +94,6 @@ public class SessionCalendar {
 	public void setSessions(Set<Session> sessions) {
 		this.sessions = sessions;
 	}
-	
-	public Set<Session> getFinishedSessions() {
-		Set<Session> set = new HashSet<>();
-		LocalDateTime now = LocalDateTime.now();
-		
-		for(Session s: this.sessions) {
-			if(s.getEnd().isBefore(now)) {
-				set.add(s);
-			}
-		}
-		
-		return set;
-	}
 
 	public void addSession(Session session) {
 		// set the calendar on the session

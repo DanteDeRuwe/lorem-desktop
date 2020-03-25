@@ -3,7 +3,6 @@ package main.domain.facades;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -178,10 +177,6 @@ public class SessionCalendarFacade implements Facade {
 
 	public Set<Session> getAllSessions() {
 		return calendar.getSessions();
-	}
-	
-	public Set<Session> getAllFinishedSessions() {
-		return calendar.getFinishedSessions();
 	}
 
 }
