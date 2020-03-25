@@ -14,14 +14,14 @@ public class SessionTabsController extends GuiController {
 
 	private InfoTabController infoTabController;
 	private AnnouncementTabController announcementTabController;
-	private SceneStatisticsTabController statisticsTabController;
+	private SessionStatisticsTabController statisticsTabController;
 	private Facade sessionFacade, sessionCalendarFacade;
 
 	@FXML
 	public void initialize() {
 		infoTabController = new InfoTabController();
 		announcementTabController = new AnnouncementTabController();
-		statisticsTabController = new SceneStatisticsTabController();
+		statisticsTabController = new SessionStatisticsTabController();
 
 		// Info Tab
 		AnchorPane infoTabRoot = loadFXML("sessions/tabs/InfoTab.fxml", infoTabController, getFacade());
