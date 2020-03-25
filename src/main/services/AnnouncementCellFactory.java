@@ -36,11 +36,13 @@ public class AnnouncementCellFactory<T> implements Callback<ListView<Announcemen
 				authorAndTimestamp.setPadding(new Insets(0, 0, 4, 0));
 				authorAndTimestamp.getChildren().addAll(authorLabel, timestampLabel);
 				VBox vbox = new VBox();
-				vbox.getChildren().addAll(titleLabel, authorAndTimestamp, text);
+				vbox.getChildren().addAll(titleLabel, authorAndTimestamp);
+				if (!text.getText().isBlank())
+					vbox.getChildren().add(text);
 				setGraphic(vbox);
-				
+
 				// bind the content widths to listview width
-				text.wrappingWidthProperty().bind(listView.widthProperty().subtract(20));
+				text.wrappingWidthProperty().bind(listView.widthProperty().subtract(30d));
 			}
 
 		};

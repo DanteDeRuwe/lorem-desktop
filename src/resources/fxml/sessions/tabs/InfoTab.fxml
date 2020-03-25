@@ -26,11 +26,6 @@
                               <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="sessionType" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="type" textFill="#a4a4a4" textOverrun="CLIP">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="4.0" />

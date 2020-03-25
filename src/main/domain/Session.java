@@ -56,9 +56,6 @@ public class Session {
 	@JoinTable(name = "SESSION_ATTENDEES", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "member_id"))
 	private Set<Member> attendees;
 
-	private Set<MediaItem> media = new HashSet<>();
-	private Set<FeedbackEntry> feedbackEntries = new HashSet<>();
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "session", orphanRemoval = true)
 	private Set<Announcement> announcements = new HashSet<>();
 
@@ -111,10 +108,6 @@ public class Session {
 		return durationBetween.compareTo(minimumPeriod) >= 0;
 	}
 
-	public void addMediaItem(MediaItem mediaItem) {
-		media.add(mediaItem);
-	}
-
 	public void addAnnouncement(Announcement announcement) {
 		announcement.setSession(this);
 		announcements.add(announcement);
@@ -122,10 +115,6 @@ public class Session {
 
 	public void removeAnnouncement(Announcement announcement) {
 		announcements.remove(announcement);
-	}
-
-	public void addFeedbackEntry(FeedbackEntry feedbackEntry) {
-		feedbackEntries.add(feedbackEntry);
 	}
 
 	public String getTitle() {

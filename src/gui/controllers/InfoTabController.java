@@ -34,8 +34,6 @@ public class InfoTabController extends GuiController {
 	private HBox byLabels;
 	@FXML
 	private Hyperlink externalUrlHyperlink;
-	@FXML
-	private Label sessionType;
 
 	private SessionSceneController ssc;
 
@@ -79,7 +77,6 @@ public class InfoTabController extends GuiController {
 		sessionTime.setText(inspectedSession.getStart().format(Util.TIMEFORMATTER));
 		sessionLocation.setText(inspectedSession.getLocation());
 		sessionDescription.setText(inspectedSession.getDescription());
-		sessionType.setText(inspectedSession.getType());
 		GuiUtil.updateHyperlink(inspectedSession, externalUrlHyperlink);
 
 		// Hide "Door <Speaker>" labels when there is no speaker in session

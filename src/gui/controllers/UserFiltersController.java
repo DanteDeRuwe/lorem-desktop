@@ -1,7 +1,6 @@
 package gui.controllers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,7 @@ import javafx.fxml.FXML;
 import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
-import main.domain.SessionStatus;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
 
 public class UserFiltersController extends GuiController {
@@ -30,7 +29,8 @@ public class UserFiltersController extends GuiController {
 	@FXML
 	private JFXComboBox<String> statusFilterBox;
 
-	private final Map<String, MemberType> typeMap = new LinkedHashMap<>(); // linkedhashmaps because their iteration order does not change
+	private final Map<String, MemberType> typeMap = new LinkedHashMap<>(); // linkedhashmaps because their iteration
+																			// order does not change
 	private final Map<String, MemberStatus> statusMap = new LinkedHashMap<>();
 
 	@FXML
@@ -48,8 +48,11 @@ public class UserFiltersController extends GuiController {
 		statusFilterBox.getItems().addAll(statusMap.keySet());
 		statusFilterBox.getSelectionModel().selectFirst();
 
-		// Event Listeners
-		newUserButton.setOnAction(e -> handleNewUser());
+		// New User Button only works when you can add users
+		if (!LoggedInMemberManager.getInstance().loggedInMemberCanManipulateUsers())
+			newUserButton.setDisable(true);
+		else
+			newUserButton.setOnAction(e -> handleNewUser());
 
 		// Filtering
 		lastNameFilterField.textProperty().addListener((obs, oldText, newText) -> {
