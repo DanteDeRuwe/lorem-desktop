@@ -73,7 +73,7 @@ public class MainController extends GuiController {
 		// initialize controllers
 		calendarSceneController = new CalendarSceneController();
 		userSceneController = new UserSceneController();
-		accountSceneController = new MyAccountController();
+		accountSceneController = new AccountSceneController();
 		statisticsSceneController = new StatisticsSceneController();
 
 		// Load the calendar pane
