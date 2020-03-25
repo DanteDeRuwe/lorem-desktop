@@ -49,6 +49,9 @@ public class UserDetailsController extends GuiController {
 						"Je hebt niet de juiste machtigingen om een gebruiker te verwijderen.").showAndWait();
 			}
 			getMainController().getUserSceneController().update();
+			
+			// deleting a user also deletes their sessions, so sessions screen has to be updated
+			getMainController().getSessionSceneController().update();
 		}
 	}
 
