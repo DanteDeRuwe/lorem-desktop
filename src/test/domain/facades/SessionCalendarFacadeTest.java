@@ -58,7 +58,7 @@ public class SessionCalendarFacadeTest {
 	@ParameterizedTest
 	@MethodSource("addSessionCalendarFixture")
 	public void createSession_ReturnsCorrectCalendar(LocalDate start, LocalDate end) {
-		sessionCalendarFacade = new SessionCalendarFacade(loggedInMemberManagerDummy);
+		sessionCalendarFacade = new SessionCalendarFacade();
 		assertEquals(start, sessionCalendarFacade.createSessionCalendar(start, end).getStartDate());
 		assertEquals(end, sessionCalendarFacade.createSessionCalendar(start, end).getEndDate());
 	}
@@ -66,7 +66,7 @@ public class SessionCalendarFacadeTest {
 	@ParameterizedTest
 	@NullSource
 	public void setSessionCalendar_NullSessionCalendar_ThrowsIllegalArgumentException(SessionCalendar sessionCalendar) {
-		sessionCalendarFacade = new SessionCalendarFacade(loggedInMemberManagerDummy);
+		sessionCalendarFacade = new SessionCalendarFacade();
 		assertThrows(IllegalArgumentException.class, () -> sessionCalendarFacade.setCalendar(sessionCalendar));
 	}
 
