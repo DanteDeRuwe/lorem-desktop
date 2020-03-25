@@ -15,14 +15,18 @@ import com.jfoenix.controls.JFXTimePicker;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Control;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -179,6 +183,16 @@ public class GuiUtil {
 	public static void limitCharacterCount(TextInputControl field, int limit) {
 		field.setTextFormatter(
 				new TextFormatter<String>(change -> change.getControlNewText().length() <= limit ? change : null));
+	}
+	
+	public static void setTooltip(Tab tab, String tooltipText) {
+		Tooltip tooltip = new Tooltip(tooltipText);
+		tooltip.setShowDelay(new javafx.util.Duration(50));
+		tab.setTooltip(tooltip);
+	}
+	
+	public static void removeTooltip(Tab tab) {
+		tab.setTooltip(null);
 	}
 
 }

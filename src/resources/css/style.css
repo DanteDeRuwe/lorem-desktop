@@ -69,6 +69,10 @@
   	-fx-background-insets: 0, 0 0 0 3;
 }
 
+.list-view:focused .list-cell:selected .label{
+    -fx-text-fill: -select-txtcolor;
+}
+
 /* Table Views */
 
 .table-view {
