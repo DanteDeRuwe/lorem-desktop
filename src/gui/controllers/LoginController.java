@@ -46,7 +46,7 @@ public class LoginController {
 		
 
 		// initialize facades
-		loggedInMemberManager = new LoggedInMemberManager();
+		loggedInMemberManager = loggedInMemberManager.getInstance();
 		memberFacade = new MemberFacade(loggedInMemberManager);
 
 		// Event handlers

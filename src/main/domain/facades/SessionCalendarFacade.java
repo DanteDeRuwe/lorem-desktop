@@ -25,11 +25,11 @@ public class SessionCalendarFacade implements Facade {
 
 	private LoggedInMemberManager loggedInMemberManager;
 
-	public SessionCalendarFacade(LoggedInMemberManager loggedInMemberManager) {
+	public SessionCalendarFacade() {
 		setSessionCalendarRepo(new SessionCalendarDaoJpa());
 		setSessionRepo(new SessionDaoJpa());
 
-		this.loggedInMemberManager = loggedInMemberManager;
+		this.loggedInMemberManager = LoggedInMemberManager.getInstance();
 	}
 
 	/*

@@ -65,8 +65,8 @@ public class MainController extends GuiController {
 		this.injectMainController(this);
 
 		// initialize facades
-		loggedInMemberManager = new LoggedInMemberManager();
-		sessionCalendarFacade = new SessionCalendarFacade(loggedInMemberManager);
+		loggedInMemberManager = LoggedInMemberManager.getInstance();
+		sessionCalendarFacade = new SessionCalendarFacade();
 		memberFacade = new MemberFacade(loggedInMemberManager);
 
 		// initialize controllers
