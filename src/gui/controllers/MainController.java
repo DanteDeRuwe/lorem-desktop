@@ -40,7 +40,7 @@ public class MainController extends GuiController {
 	private Facade sessionCalendarFacade, memberFacade;
 
 	// Controllers
-	private GuiController sessionSceneController, calendarSceneController, userSceneController, accountSceneController;
+	private GuiController sessionSceneController, calendarSceneController, userSceneController, accountSceneController, statisticsSceneController;
 
 	private LoggedInMemberManager loggedInMemberManager;
 
@@ -74,6 +74,7 @@ public class MainController extends GuiController {
 		calendarSceneController = new CalendarSceneController();
 		userSceneController = new UserSceneController();
 		accountSceneController = new AccountSceneController();
+		statisticsSceneController = new StatisticsSceneController();
 
 		// Load the calendar pane
 		AnchorPane calendarSceneRoot = loadFXML("calendar/CalendarScene.fxml", calendarSceneController,
@@ -92,6 +93,7 @@ public class MainController extends GuiController {
 
 		// Set sessiontab disabled in the beginning
 		setSessionTabEnabled(false);
+		setStatsTabEnabled(false);
 
 	}
 
@@ -105,6 +107,17 @@ public class MainController extends GuiController {
 		}
 
 		navigationTabs.getTabs().get(1).setDisable(!enable);
+	}
+	
+	public void setStatsTabEnabled(boolean enable) {
+		if (enable) {
+			statisticsSceneController = new StatisticsSceneController();
+			AnchorPane statisticsSceneRoot = loadFXML("statistics/statisticsScene.fxml", statisticsSceneController,
+					sessionCalendarFacade);
+			GuiUtil.bindAnchorPane(statisticsSceneRoot, statsTab);
+		}
+
+		navigationTabs.getTabs().get(4).setDisable(!enable);
 	}
 
 	public void switchToSessionTab() {

@@ -157,19 +157,19 @@ public class SessionCalendar {
 		return total;
 	}
 
-	public int getAverageRegistreesPerSessionFinishedSessions() {
-		int totalOfRegistrees = getTotalRegistreesFinishedSessions();
+	public double getAverageRegistreesPerSessionFinishedSessions() {
+		double totalOfRegistrees = getTotalRegistreesFinishedSessions();
 		return totalOfRegistrees / getFinishedSessions().size();
 	}
 
-	public int getAverageAttendeesPerSessionFinishedSessions() {
-		int totalOfAttendees = getTotalAttendeesFinishedSessions();
+	public double getAverageAttendeesPerSessionFinishedSessions() {
+		double totalOfAttendees = getTotalAttendeesFinishedSessions();
 		return totalOfAttendees / getFinishedSessions().size();
 	}
 
-	public int getAverageAttendeesPerRegistreesFinishedSessions() {
-		int totalOfAttendees = getTotalAttendeesFinishedSessions();
-		int totalOfRegistrees = getTotalRegistreesFinishedSessions();
+	public double getAverageAttendeesPerRegistreesFinishedSessions() {
+		double totalOfAttendees = getTotalAttendeesFinishedSessions();
+		double totalOfRegistrees = getTotalRegistreesFinishedSessions();
 		return totalOfAttendees / totalOfRegistrees;
 	}
 
@@ -196,8 +196,8 @@ public class SessionCalendar {
 		return total;
 	}
 
-	public int getAverageRegistreesPerSessionPlannedSessions() {
-		int totalOfRegistrees = getTotalRegistreesPlannedSessions();
+	public double getAverageRegistreesPerSessionPlannedSessions() {
+		double totalOfRegistrees = getTotalRegistreesPlannedSessions();
 		return totalOfRegistrees / getPlannedSessions().size();
 	}
 

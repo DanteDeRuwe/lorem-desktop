@@ -15,6 +15,7 @@ import main.domain.MemberStatus;
 import main.domain.MemberType;
 import main.domain.facades.MemberFacade;
 import main.exceptions.InvalidMemberException;
+import main.exceptions.MustBeAtLeastOneHeadAdminException;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
 import main.services.DataValidation;
@@ -147,6 +148,9 @@ public class EditUserController extends GuiController {
 			} catch (UserNotAuthorizedException e) {
 				Alerts.errorAlert("Gebruiker wijzigen",
 						"Je hebt niet de juiste machtigingen om een gebruiker te wijzigen.").showAndWait();
+			} catch (MustBeAtLeastOneHeadAdminException e) {
+				Alerts.errorAlert("Gebruiker wijzigen",
+						"Er moet minstens een hoofdverantwoordelijke zijn.").showAndWait();
 			}
 
 			// if adding is successful

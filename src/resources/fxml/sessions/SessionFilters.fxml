@@ -82,9 +82,9 @@
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXComboBox fx:id="statusFilterBox" prefHeight="26.0" prefWidth="258.0" promptText="Status">
+                        <JFXComboBox fx:id="statusFilterBox" labelFloat="true" prefHeight="26.0" prefWidth="258.0" promptText="Status">
                            <VBox.margin>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
                            </VBox.margin>
                         </JFXComboBox>
                      </children>

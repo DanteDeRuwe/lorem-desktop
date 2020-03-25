@@ -82,6 +82,7 @@ public class CalendarSceneController extends GuiController {
 
 		// Set session tabs enabled, update it, and switch to it
 		getMainController().setSessionTabEnabled(true);
+		getMainController().setStatsTabEnabled(true);
 		getMainController().getSessionSceneController().update();
 		getMainController().switchToSessionTab();
 	}
