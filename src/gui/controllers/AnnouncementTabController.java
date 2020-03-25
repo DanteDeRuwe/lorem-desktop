@@ -46,7 +46,8 @@ public class AnnouncementTabController extends GuiController {
 		deleteAnnouncementButton.setDisable(true);
 		modifyAnnouncementButton.setDisable(true);
 
-		// Event listener for selected item (also enables/disables buttons
+		// Event listener for selected item (also enables/disables buttons if no
+		// announcement selected)
 		announcementListView.getSelectionModel().selectedItemProperty().addListener((x, y, announcement) -> {
 			inspectedAnnouncement = announcement;
 			deleteAnnouncementButton.setDisable(announcement == null);
@@ -62,6 +63,10 @@ public class AnnouncementTabController extends GuiController {
 	public void update() {
 		fillList();
 		announcementListView.refresh();
+	}
+
+	public void showOverview() {
+		GuiUtil.bindAnchorPane(announcementOverview, announcementTabRoot);
 	}
 
 	private void fillList() {
@@ -80,10 +85,6 @@ public class AnnouncementTabController extends GuiController {
 		AnchorPane newAnnouncement = loadFXML("sessions/tabs/EditOrCreateAnnouncement.fxml", newAnnouncementController,
 				getFacade());
 		GuiUtil.bindAnchorPane(newAnnouncement, announcementTabRoot);
-	}
-
-	public void showOverview() {
-		GuiUtil.bindAnchorPane(announcementOverview, announcementTabRoot);
 	}
 
 	private void handleDelete() {
@@ -109,17 +110,23 @@ public class AnnouncementTabController extends GuiController {
 		GuiUtil.bindAnchorPane(editAnnouncement, announcementTabRoot);
 	}
 
+	private void updateButtonPermissions(Session s) {
+		// If inspected session changes, recheck if logged in member can manipulate it
+		boolean visible = LoggedInMemberManager.getInstance().loggedInMemberCanManipulateSession(s);
+		addAnnouncementButton.setDisable(!visible);
+		modifyAnnouncementButton.setVisible(visible);
+		deleteAnnouncementButton.setVisible(visible);
+	}
+
+	/*
+	 * Getters and setters
+	 */
 	public void setInspectedSession(Session session) {
 		if (session == null)
 			return;
 		inspectedSession = session;
 
-		// If inspected session changes, recheck if logged in member can manipulate it
-		boolean visible = LoggedInMemberManager.getInstance().loggedInMemberCanManipulateSession(session);
-		addAnnouncementButton.setDisable(!visible);
-		modifyAnnouncementButton.setVisible(visible);
-		deleteAnnouncementButton.setVisible(visible);
-
+		updateButtonPermissions(session);
 		update();
 	}
 
