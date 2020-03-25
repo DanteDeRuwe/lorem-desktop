@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTabPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import main.domain.facades.Facade;
 import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
@@ -39,10 +40,10 @@ public class MainController extends GuiController {
 	private Facade sessionCalendarFacade, memberFacade;
 
 	// Controllers
-	private GuiController sessionSceneController, calendarSceneController, userSceneController;
+	private GuiController sessionSceneController, calendarSceneController, userSceneController, accountSceneController;
 
 	private LoggedInMemberManager loggedInMemberManager;
-	
+
 	// Nodes
 	@FXML
 	private AnchorPane root;
@@ -72,6 +73,7 @@ public class MainController extends GuiController {
 		// initialize controllers
 		calendarSceneController = new CalendarSceneController();
 		userSceneController = new UserSceneController();
+		accountSceneController = new MyAccountController();
 
 		// Load the calendar pane
 		AnchorPane calendarSceneRoot = loadFXML("calendar/CalendarScene.fxml", calendarSceneController,
@@ -80,9 +82,13 @@ public class MainController extends GuiController {
 		// load the user pane
 		AnchorPane userSceneRoot = loadFXML("users/UserScene.fxml", userSceneController, memberFacade);
 
+		// load my account pane
+		AnchorPane accountSceneRoot = loadFXML("users/MyAccount.fxml", accountSceneController, memberFacade);
+
 		// Bind the panes to the tabs
 		GuiUtil.bindAnchorPane(calendarSceneRoot, calendarTab);
 		GuiUtil.bindAnchorPane(userSceneRoot, userTab);
+		GuiUtil.bindAnchorPane(accountSceneRoot, accountTab);
 
 		// Set sessiontab disabled in the beginning
 		setSessionTabEnabled(false);
@@ -103,6 +109,10 @@ public class MainController extends GuiController {
 
 	public void switchToSessionTab() {
 		navigationTabs.getSelectionModel().select(sessionNavigationTab);
+	}
+
+	public void closeMainWindow() {
+		((Stage) root.getScene().getWindow()).close();
 	}
 
 	/*
@@ -136,7 +146,7 @@ public class MainController extends GuiController {
 	public CalendarSceneController getCalendarSceneController() {
 		return (CalendarSceneController) calendarSceneController;
 	}
-	
+
 	public LoggedInMemberManager getLoggedInMemberManager() {
 		return loggedInMemberManager;
 	}

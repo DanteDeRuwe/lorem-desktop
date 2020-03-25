@@ -98,12 +98,6 @@ public class LoginController {
 				stage.setFullScreen(!stage.isFullScreen());
 		});
 
-		stage.setOnCloseRequest(e -> {
-			GenericDaoJpa.closePersistency();
-			Platform.exit();
-			System.exit(0);
-		});
-
 	}
 
 	private boolean passwordOk() {
