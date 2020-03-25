@@ -36,6 +36,10 @@ public class SessionSceneController extends GuiController {
 	@FXML
 	private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn, capacityColumn,
 			typeColumn;
+
+	@FXML
+	private TableColumn<Session, Object> statusColumn;
+
 	@FXML
 	private TableColumn<Session, LocalDateTime> startColumn;
 	@FXML
@@ -89,13 +93,14 @@ public class SessionSceneController extends GuiController {
 
 	void fillTableColumns(Set<Session> sessions) {
 		GuiUtil.fillColumn(titleColumn, "title", 40, 500);
-		GuiUtil.fillColumnWithDateTime(startColumn, "start", 40, 150);
+		GuiUtil.fillColumnWithDateTime(startColumn, "startTime", 40, 150);
 		GuiUtil.fillColumnWithDuration(durationColumn, "duration", 60, 100);
 		GuiUtil.fillColumn(organizerColumn, "organizer", 40, 300);
-		GuiUtil.fillColumn(speakerColumn, "speaker", 40, 200);
+		GuiUtil.fillColumn(speakerColumn, "speakerName", 40, 200);
 		GuiUtil.fillColumn(locationColumn, "location", 40, 200);
 		GuiUtil.fillColumn(capacityColumn, "capacity", 40, 60);
 		GuiUtil.fillColumn(typeColumn, "type", 40, 300);
+		GuiUtil.fillColumnWithObjectToString(statusColumn, "sessionStatus", 40, 300);
 
 		sessionTable.setItems(FXCollections.observableArrayList(sessions));
 		sessionTable.getSortOrder().add(startColumn);

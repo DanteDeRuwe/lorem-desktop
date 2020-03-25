@@ -92,26 +92,22 @@ public class GuiUtil {
 			@Override
 			protected void updateItem(Duration duration, boolean empty) {
 				super.updateItem(duration, empty);
-				if (empty) {
+				if (duration == null || empty) {
 					setText(null);
 				} else {
 
 					long durationHours = duration.toDaysPart() * 24 + duration.toHoursPart();
 					int durationMinutes = duration.toMinutesPart();
-					setText(
-							durationHours > 0 ? String.format("%du %dm", durationHours, durationMinutes)
-									: String.format("%dm", durationMinutes)
-					);
+					setText(durationHours > 0 ? String.format("%du %dm", durationHours, durationMinutes)
+							: String.format("%dm", durationMinutes));
 
 				}
 			}
 		});
 	}
 
-	public static <T> void fillColumnWithObjectToString(
-			TableColumn<T, Object> col, String propname, int minWidth,
-			int maxWidth
-	) {
+	public static <T> void fillColumnWithObjectToString(TableColumn<T, Object> col, String propname, int minWidth,
+			int maxWidth) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
@@ -121,7 +117,7 @@ public class GuiUtil {
 			@Override
 			protected void updateItem(Object object, boolean empty) {
 				super.updateItem(object, empty);
-				if (empty) {
+				if (object == null || empty) {
 					setText(null);
 				} else {
 					setText(object.toString());
