@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import main.domain.Announcement;
 import main.domain.Session;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.SessionFacade;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
@@ -49,6 +50,7 @@ public class AnnouncementTabController extends GuiController {
 			modifyAnnouncementButton.setDisable(announcement == null);
 		});
 
+		// if buttons are shown, these are the event listeners
 		addAnnouncementButton.setOnAction((e) -> handleCreate());
 		deleteAnnouncementButton.setOnAction((e) -> handleDelete());
 		modifyAnnouncementButton.setOnAction((e) -> handleEdit());
@@ -101,7 +103,16 @@ public class AnnouncementTabController extends GuiController {
 	}
 
 	public void setInspectedSession(Session session) {
+		if (session == null)
+			return;
 		inspectedSession = session;
+
+		// If inspected session changes, recheck if logged in member can manipulate it
+		boolean visible = LoggedInMemberManager.getInstance().loggedInMemberCanManipulateSession(session);
+		addAnnouncementButton.setDisable(!visible);
+		modifyAnnouncementButton.setVisible(visible);
+		deleteAnnouncementButton.setVisible(visible);
+
 		update();
 	}
 

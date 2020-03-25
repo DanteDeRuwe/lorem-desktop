@@ -15,6 +15,7 @@ import main.domain.MemberStatus;
 import main.domain.MemberType;
 import main.domain.facades.MemberFacade;
 import main.exceptions.InvalidMemberException;
+import main.exceptions.MustBeAtLeastOneHeadAdminException;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
 import main.services.DataValidation;
@@ -54,18 +55,17 @@ public class EditUserController extends GuiController {
 		addUserButton.setText("Bevestig");
 		headerText.setText("Wijzig gebruiker \"" + userToEdit.getFullName() + "\"");
 
-		// Pre-fill the fields
-		fillFields();
-
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
 		addUserButton.setOnAction(e -> onMemberEditConfirm());
 
 		// Set combobox options
 		userTypeField.getItems().setAll(MemberType.values());
-		userTypeField.getSelectionModel().select(MemberType.USER);
 		userStatusField.getItems().setAll(MemberStatus.values());
-		userStatusField.getSelectionModel().select(MemberStatus.ACTIVE);
+		
+		// Pre-fill the fields
+		fillFields();
+
 	}
 
 	/*
@@ -79,6 +79,9 @@ public class EditUserController extends GuiController {
 		userTypeField.setValue(userToEdit.getMemberType());
 		userStatusField.setValue(userToEdit.getMemberStatus());
 		profilePicField.setText(userToEdit.getProfilePicPath());
+
+		userTypeField.getSelectionModel().select(userToEdit.getMemberType());
+		userStatusField.getSelectionModel().select(userToEdit.getMemberStatus());
 	}
 
 	private void goBack() {
@@ -145,13 +148,20 @@ public class EditUserController extends GuiController {
 			} catch (UserNotAuthorizedException e) {
 				Alerts.errorAlert("Gebruiker wijzigen",
 						"Je hebt niet de juiste machtigingen om een gebruiker te wijzigen.").showAndWait();
+			} catch (MustBeAtLeastOneHeadAdminException e) {
+				Alerts.errorAlert("Gebruiker wijzigen",
+						"Er moet minstens een hoofdverantwoordelijke zijn.").showAndWait();
 			}
 
 			// if adding is successful
 			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new member
-			
-			// if  a user is changed, their sessions should updated in the sessions scene
-			getMainController().getSessionSceneController().update();
+
+			// if a user is changed, their sessions should updated in the sessions scene
+			if (getMainController().getSessionSceneController() != null) {
+				getMainController().getSessionSceneController().update();
+			}
+
+			getMainController().getAccountSceneController().update();
 			goBack(); // clears fields and goes back to details view
 
 		} catch (InvalidMemberException e) {

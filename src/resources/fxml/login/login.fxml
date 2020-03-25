@@ -3,14 +3,51 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.LoginController">
+<AnchorPane prefHeight="335.0" prefWidth="442.0" styleClass="bg" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.LoginController">
    <children>
-      <JFXTextField fx:id="usernameField" layoutX="148.0" layoutY="143.0" prefHeight="26.0" prefWidth="298.0" promptText="gebruikersnaam" />
-      <JFXPasswordField fx:id="passwordField" layoutX="148.0" layoutY="200.0" prefHeight="26.0" prefWidth="298.0" promptText="wachtwoord" />
-      <JFXButton fx:id="loginButton" layoutX="148.0" layoutY="243.0" text="inloggen" />
-      <Label fx:id="validationLabel" layoutX="148.0" layoutY="286.0" textFill="RED" />
+      <AnchorPane layoutX="-14.0" layoutY="-14.0" styleClass="card" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox layoutX="29.0" layoutY="35.0" maxHeight="1.7976931348623157E308" prefHeight="294.0" prefWidth="392.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Welkom!" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXTextField fx:id="usernameField" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="298.0" promptText="Gebruikersnaam">
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="20.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="passwordField" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="298.0" promptText="Wachtwoord">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </JFXPasswordField>
+                  <Label fx:id="validationLabel" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="28.0" prefWidth="324.0" textFill="RED">
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXButton fx:id="loginButton" maxWidth="1.7976931348623157E308" prefHeight="36.0" prefWidth="342.0" style="-fx-background-color: #4059a9;" text="Log in" textFill="WHITE" />
+               </children>
+               <padding>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
    </children>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
 </AnchorPane>

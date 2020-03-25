@@ -1,14 +1,15 @@
 package main.domain.facades;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityNotFoundException;
 
 import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
-import main.domain.Session;
 import main.exceptions.InvalidMemberException;
+import main.exceptions.MustBeAtLeastOneHeadAdminException;
 import main.exceptions.UserNotAuthorizedException;
 import persistence.GenericDaoJpa;
 import persistence.MemberDao;
@@ -81,10 +82,17 @@ public class MemberFacade implements Facade {
 		GenericDaoJpa.commitTransaction();
 	}
 
-	public void editMember(Member member, Member newMember, String password) throws UserNotAuthorizedException {
+	public void editMember(Member member, Member newMember, String password) throws UserNotAuthorizedException, MustBeAtLeastOneHeadAdminException {
 		// check if user is authorized
 		if (loggedInMemberManager.getLoggedInMember().getMemberType() != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
+		
+		// if trying to edit last last remaining headadmin (), throw an exception
+		if (member.getMemberType() == MemberType.HEADADMIN &&
+				newMember.getMemberType() != MemberType.HEADADMIN && 
+				this.countMembersByType(MemberType.HEADADMIN) == 1) {
+			throw new MustBeAtLeastOneHeadAdminException();
+		}
 
 		// update the user
 		member.setFirstName(newMember.getFirstName());
@@ -93,7 +101,8 @@ public class MemberFacade implements Facade {
 		member.setMemberType(newMember.getMemberType());
 		member.setMemberStatus(newMember.getMemberStatus());
 		member.setProfilePicPath(newMember.getProfilePicPath());
-		if (password != null && !password.isBlank()) member.setPassword(password); // if password field was left empty, leave it as is.
+		if (password != null && !password.isBlank())
+			member.setPassword(password); // if password field was left empty, leave it as is.
 
 		// persist
 		GenericDaoJpa.startTransaction();
@@ -113,6 +122,10 @@ public class MemberFacade implements Facade {
 		GenericDaoJpa.startTransaction();
 		memberRepo.delete(member);
 		GenericDaoJpa.commitTransaction();
+	}
+	
+	public long countMembersByType(MemberType mt) {
+		return this.getAllMembers().stream().filter(m -> m.getMemberType() == mt).count();
 	}
 
 }

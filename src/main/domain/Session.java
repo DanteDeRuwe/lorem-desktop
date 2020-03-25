@@ -267,6 +267,14 @@ public class Session {
 		this.type = type;
 	}
 
+	public Member getOrganizer() {
+		return organizer;
+	}
+
+	public void setOrganizer(Member organizer) {
+		this.organizer = organizer;
+	}
+
 	@Override
 	public String toString() {
 		return "Sessie: " + title + "\n" + "Start: " + startTime + "\n" + "Einde: " + endTime + "\n" + "Organisator: "
