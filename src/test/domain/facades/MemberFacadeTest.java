@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,10 +19,8 @@ import main.domain.Member;
 import main.domain.MemberType;
 import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
-import main.exceptions.MustBeAtLeastOneHeadAdminException;
 import main.exceptions.UserNotAuthorizedException;
 import persistence.MemberDao;
-import persistence.MemberDaoJpa;
 
 @ExtendWith(MockitoExtension.class)
 public class MemberFacadeTest {
