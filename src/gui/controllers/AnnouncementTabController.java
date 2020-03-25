@@ -1,5 +1,8 @@
 package gui.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -65,7 +68,10 @@ public class AnnouncementTabController extends GuiController {
 		if (inspectedSession == null)
 			return;
 		Set<Announcement> announcements = inspectedSession.getAnnouncements();
-		announcementListView.setItems(FXCollections.observableArrayList(announcements));
+		List<Announcement> announcementsList = new ArrayList<>();
+		announcementsList.addAll(announcements);
+		Collections.reverse(announcementsList);
+		announcementListView.setItems(FXCollections.observableArrayList(announcementsList));
 	}
 
 	private void handleCreate() {
