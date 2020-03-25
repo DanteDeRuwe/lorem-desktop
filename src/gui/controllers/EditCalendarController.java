@@ -13,7 +13,7 @@ import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
 import main.services.GuiUtil;
 
-public class ModifyCalendarController extends GuiController {
+public class EditCalendarController extends GuiController {
 
 	@FXML
 	private Label topLabel;

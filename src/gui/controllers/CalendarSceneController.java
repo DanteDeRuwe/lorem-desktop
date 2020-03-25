@@ -98,7 +98,7 @@ public class CalendarSceneController extends GuiController {
 			alert.showAndWait();
 		} else {
 			calendarSceneRoot.getChildren().clear();
-			editCalendar = loadFXML("calendar/EditOrCreateCalendar.fxml", new ModifyCalendarController(), getFacade());
+			editCalendar = loadFXML("calendar/EditOrCreateCalendar.fxml", new EditCalendarController(), getFacade());
 			GuiUtil.bindAnchorPane(editCalendar, calendarSceneRoot);
 		}
 	}
