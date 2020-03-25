@@ -65,6 +65,7 @@ public class LoginController {
 	private void tryLogin() throws IOException {
 		if (passwordOk()) {
 			loadMain();
+			((Stage) this.loginButton.getScene().getWindow()).close();
 		} else {
 			validationLabel.setText("Gebruikersnaam of wachtwoord verkeerd");
 		}
