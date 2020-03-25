@@ -29,18 +29,18 @@ public class AnnouncementCellFactory<T> implements Callback<ListView<Announcemen
 				Label timestampLabel = new Label(item.getTimestamp().format(Util.DATETIMEFORMATTER));
 				Label authorLabel = new Label(item.getAuthor().getFullName());
 				Text text = new Text(item.getText());
-				
-				// bind the text width to listview width
-				text.wrappingWidthProperty().bind(listView.widthProperty().subtract(20));
 
 				// add components to containers
-				HBox hbox = new HBox();
-				hbox.setStyle("-fx-font-size: 13px;");
-				hbox.setPadding(new Insets(0, 0, 4, 0));
-				hbox.getChildren().addAll(authorLabel, new Label(" om "), timestampLabel);
+				VBox authorAndTimestamp = new VBox();
+				authorAndTimestamp.setStyle("-fx-font-size: 13px;");
+				authorAndTimestamp.setPadding(new Insets(0, 0, 4, 0));
+				authorAndTimestamp.getChildren().addAll(authorLabel, timestampLabel);
 				VBox vbox = new VBox();
-				vbox.getChildren().addAll(titleLabel, hbox, text);
+				vbox.getChildren().addAll(titleLabel, authorAndTimestamp, text);
 				setGraphic(vbox);
+				
+				// bind the content widths to listview width
+				text.wrappingWidthProperty().bind(listView.widthProperty().subtract(20));
 			}
 
 		};
