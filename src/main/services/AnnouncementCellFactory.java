@@ -13,7 +13,7 @@ import main.domain.Announcement;
 public class AnnouncementCellFactory<T> implements Callback<ListView<Announcement>, ListCell<Announcement>> {
 
 	@Override
-	public ListCell<Announcement> call(ListView<Announcement> param) {
+	public ListCell<Announcement> call(ListView<Announcement> listView) {
 		return new ListCell<Announcement>() {
 			@Override
 			protected void updateItem(Announcement item, boolean empty) {
@@ -29,6 +29,9 @@ public class AnnouncementCellFactory<T> implements Callback<ListView<Announcemen
 				Label timestampLabel = new Label(item.getTimestamp().format(Util.DATETIMEFORMATTER));
 				Label authorLabel = new Label(item.getAuthor().getFullName());
 				Text text = new Text(item.getText());
+				
+				// bind the text width to listview width
+				text.wrappingWidthProperty().bind(listView.widthProperty().subtract(20));
 
 				// add components to containers
 				HBox hbox = new HBox();

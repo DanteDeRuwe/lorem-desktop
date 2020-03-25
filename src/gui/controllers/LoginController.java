@@ -13,9 +13,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import main.Main;
 import main.domain.Member;
 import main.domain.MemberType;
 import main.domain.facades.LoggedInMemberManager;
@@ -99,6 +101,7 @@ public class LoginController {
 		stage.setScene(scene);
 		stage.setMaximized(true);
 		stage.setTitle("Lorem");
+		stage.getIcons().add(new Image(LoginController.class.getResourceAsStream("/resources/icon/itlab.png")));
 
 		stage.setMinHeight(800);
 		stage.setMinWidth(900);
