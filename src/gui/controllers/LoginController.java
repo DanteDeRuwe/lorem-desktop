@@ -2,11 +2,12 @@ package gui.controllers;
 
 import java.io.IOException;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,9 +17,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.domain.Member;
+import main.domain.MemberType;
 import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
-import persistence.GenericDaoJpa;
 
 public class LoginController {
 
@@ -45,7 +46,7 @@ public class LoginController {
 		loggedInMemberManager = LoggedInMemberManager.getInstance();
 		memberFacade = new MemberFacade();
 
-		//   Event handlers
+		// Event handlers
 		loginButton.setOnAction(e -> {
 			try {
 				tryLogin();
@@ -54,24 +55,34 @@ public class LoginController {
 		});
 		passwordField.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 			if (e.getCode() == KeyCode.ENTER) {
-		           loginButton.fire();
-		           e.consume(); 
-		        }
+				loginButton.fire();
+				e.consume();
+			}
 		});
 		usernameField.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
 			if (e.getCode() == KeyCode.ENTER) {
-		           loginButton.fire();
-		           e.consume(); 
-		        }
+				loginButton.fire();
+				e.consume();
+			}
 		});
 	}
 
 	private void tryLogin() throws IOException {
-		if (passwordOk()) {
-			loadMain();
-			((Stage) this.loginButton.getScene().getWindow()).close();
-		} else {
-			validationLabel.setText("Gebruikersnaam of wachtwoord verkeerd");
+		String username = usernameField.getText();
+		String password = passwordField.getText();
+		try {
+			Member member = memberFacade.getMemberByUsername(username);
+			if (member.getMemberType() == MemberType.USER)
+				validationLabel.setText("Gewone gebruikers hebben geen toegang");
+			else if (!member.passwordCorrect(password))
+				validationLabel.setText("Fout wachtwoord");
+			else {
+				loggedInMemberManager.setLoggedInMember(member);
+				loadMain();
+				((Stage) this.loginButton.getScene().getWindow()).close();
+			}
+		} catch (EntityNotFoundException e) {
+			validationLabel.setText("Er bestaat geen gebruiker met de opgegeven gebruikersnaam");
 		}
 	}
 
@@ -98,22 +109,6 @@ public class LoginController {
 				stage.setFullScreen(!stage.isFullScreen());
 		});
 
-	}
-
-	private boolean passwordOk() {
-		String username = usernameField.getText();
-		String password = passwordField.getText();
-
-		Member member;
-		try {
-			member = memberFacade.getMemberByUsername(username);
-		} catch (Exception e) {
-			return false;
-		}
-
-		loggedInMemberManager.setLoggedInMember(member);
-
-		return member.passwordCorrect(password);
 	}
 
 }
