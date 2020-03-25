@@ -7,8 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
+import main.exceptions.InvalidSessionCalendarException;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
+import main.services.DataValidation;
 import main.services.GuiUtil;
 
 public class EditCalendarController extends GuiController {
@@ -19,6 +21,8 @@ public class EditCalendarController extends GuiController {
 	private JFXDatePicker startDatePicker, endDatePicker;
 	@FXML
 	private Button saveButton, cancelButton;
+	@FXML
+	Label validationLabel;
 
 	@FXML
 	public void initialize() {
@@ -40,6 +44,10 @@ public class EditCalendarController extends GuiController {
 	}
 
 	private void handleSave() {
+		validationLabel.setText("");
+		if (!allFieldsOk())
+			return;
+
 		try {
 			((SessionCalendarFacade) getFacade()).editSessionCalendar(
 					getMainController().getCalendarSceneController().getInspectedCalendar(), startDatePicker.getValue(),
@@ -47,15 +55,21 @@ public class EditCalendarController extends GuiController {
 			fillInFields();
 			getMainController().getCalendarSceneController().update();
 			goBack();
-		} catch (IllegalArgumentException e) {
-			if (e.getMessage().equals("Academic years must start and end in consecutive years")) {
-				Alerts.errorAlert("Kalender wijzigen",
-						"Een academiejaar moet starten en eindigen in opeenvolgende jaren").showAndWait();
-			}
+		} catch (InvalidSessionCalendarException isce) {
+			validationLabel.setText(validationLabel.getText() + "\n" + isce.getMessage());
 		} catch (UserNotAuthorizedException e) {
 			Alerts.errorAlert("Kalender wijzigen", "Je hebt niet de juiste machtigingen om deze kalender te wijzigen.")
 					.show();
+		} catch (Exception e) {
+			Alerts.errorAlert("Kalender wijzigen", "Unexpected error: " + e.getMessage()).showAndWait();
 		}
+	}
+
+	private boolean allFieldsOk() {
+		boolean startFilledIn = DataValidation.dateFilledIn(startDatePicker, validationLabel,
+				"Startdatum is verplicht");
+		boolean endFilledIn = DataValidation.dateFilledIn(endDatePicker, validationLabel, "Einddatum is verplicht");
+		return startFilledIn && endFilledIn;
 	}
 
 	private void goBack() {
