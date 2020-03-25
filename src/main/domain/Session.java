@@ -298,7 +298,7 @@ public class Session {
 	}
 
 	public StringProperty capacityProperty() {
-		return new SimpleStringProperty(registrees.size() + "/" + capacity);
+		return new SimpleStringProperty(attendees.size() + "/" + capacity);
 	}
 
 }
