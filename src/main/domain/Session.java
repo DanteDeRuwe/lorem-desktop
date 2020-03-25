@@ -64,7 +64,7 @@ public class Session {
 	private SessionStatus sessionStatus;
 
 	private String externalLink;
-	
+
 	private String type;
 
 	public Session() {
@@ -118,7 +118,7 @@ public class Session {
 		announcement.setSession(this);
 		announcements.add(announcement);
 	}
-	
+
 	public void removeAnnouncement(Announcement announcement) {
 		announcements.remove(announcement);
 	}
@@ -208,66 +208,13 @@ public class Session {
 	public Set<Announcement> getAnnouncements() {
 		return announcements;
 	}
-	
+
 	public int countAttendees() {
 		return this.attendees.size();
 	}
-	
+
 	public int countRegistrees() {
 		return this.registrees.size();
-	}
-
-	@Override
-	public String toString() {
-		return "Sessie: " + title + "\n" + "Start: " + startTime + "\n" + "Einde: " + endTime + "\n" + "Organisator: "
-				+ organizer.getFullName() + "\n" + "Locatie: " + location + "\n" + "Spreker: " + speakerName + "\n";
-	}
-
-	/*
-	 * properties for javafx
-	 * 
-	 */
-
-	public StringProperty titleProperty() {
-		return new SimpleStringProperty(title);
-	}
-
-	public StringProperty dateProperty() {
-
-		if (Util.isSameDay(startTime, endTime))
-			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER));
-		else
-			return new SimpleStringProperty(
-					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
-	}
-
-	public ObjectProperty<LocalDateTime> startProperty() {
-		return new SimpleObjectProperty<LocalDateTime>(startTime);
-	}
-
-	public ObjectProperty<Duration> durationProperty() {
-		Duration duration = Duration.between(startTime, endTime);
-		return new SimpleObjectProperty<Duration>(duration);
-	}
-
-	public StringProperty organizerProperty() {
-		return new SimpleStringProperty(organizer.getFullName());
-	}
-
-	public StringProperty speakerProperty() {
-		return new SimpleStringProperty(speakerName);
-	}
-
-	public StringProperty locationProperty() {
-		return new SimpleStringProperty(location);
-	}
-
-	public StringProperty capacityProperty() {
-		return new SimpleStringProperty(registrees.size() + "/" + capacity);
-	}
-	
-	public StringProperty typeProperty() {
-		return new SimpleStringProperty(type);
 	}
 
 	public SessionStatus getSessionStatus() {
@@ -318,7 +265,42 @@ public class Session {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Sessie: " + title + "\n" + "Start: " + startTime + "\n" + "Einde: " + endTime + "\n" + "Organisator: "
+				+ organizer.getFullName() + "\n" + "Locatie: " + location + "\n" + "Spreker: " + speakerName + "\n";
+	}
+
+	/*
+	 * properties for javafx
+	 * 
+	 */
+
+	public StringProperty dateProperty() {
+
+		if (Util.isSameDay(startTime, endTime))
+			return new SimpleStringProperty(startTime.format(Util.DATEFORMATTER));
+		else
+			return new SimpleStringProperty(
+					startTime.format(Util.DATEFORMATTER) + " - " + endTime.format(Util.DATEFORMATTER));
+	}
+
+	public ObjectProperty<LocalDateTime> startTimeProperty() {
+		return new SimpleObjectProperty<LocalDateTime>(startTime);
+	}
+
+	public ObjectProperty<Duration> durationProperty() {
+		Duration duration = Duration.between(startTime, endTime);
+		return new SimpleObjectProperty<Duration>(duration);
+	}
+
+	public StringProperty organizerProperty() {
+		return new SimpleStringProperty(organizer.getFullName());
+	}
+
+	public StringProperty capacityProperty() {
+		return new SimpleStringProperty(registrees.size() + "/" + capacity);
+	}
 
 }
