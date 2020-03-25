@@ -31,18 +31,8 @@ public class AnnouncementTabController extends GuiController {
 	@FXML
 	private AnchorPane announcementOverview;
 
-	private GuiController newAnnouncementController;
-	private AnchorPane newAnnouncement;
-
 	@FXML
 	public void initialize() {
-
-		// initialize controllers
-		newAnnouncementController = new NewAnnouncementController();
-
-		// load fxml
-		newAnnouncement = loadFXML("sessions/tabs/EditOrCreateAnnouncement.fxml", newAnnouncementController,
-				getFacade());
 
 		// fill the list
 		announcementListView.setCellFactory(new AnnouncementCellFactory<Announcement>());
@@ -76,19 +66,10 @@ public class AnnouncementTabController extends GuiController {
 		announcementListView.setItems(FXCollections.observableArrayList(announcements));
 	}
 
-	public void setInspectedSession(Session session) {
-		inspectedSession = session;
-		update();
-		if (session == null)
-			return;
-		((NewAnnouncementController) newAnnouncementController).updateHeader(session.getTitle());
-	}
-
-	public Session getInspectedSession() {
-		return inspectedSession;
-	}
-
 	private void handleCreate() {
+		NewAnnouncementController newAnnouncementController = new NewAnnouncementController();
+		AnchorPane newAnnouncement = loadFXML("sessions/tabs/EditOrCreateAnnouncement.fxml", newAnnouncementController,
+				getFacade());
 		GuiUtil.bindAnchorPane(newAnnouncement, announcementTabRoot);
 	}
 
@@ -110,7 +91,28 @@ public class AnnouncementTabController extends GuiController {
 	}
 
 	private void handleEdit() {
-		// TODO Auto-generated method stub
+		EditAnnouncementController editAnnouncementController = new EditAnnouncementController();
+		AnchorPane editAnnouncement = loadFXML("sessions/tabs/EditOrCreateAnnouncement.fxml",
+				editAnnouncementController, getFacade());
+
+		GuiUtil.bindAnchorPane(editAnnouncement, announcementTabRoot);
+	}
+
+	public void setInspectedSession(Session session) {
+		inspectedSession = session;
+		update();
+	}
+
+	public Session getInspectedSession() {
+		return inspectedSession;
+	}
+
+	public Announcement getInspectedAnnouncement() {
+		return inspectedAnnouncement;
+	}
+
+	public void setInspectedAnnouncement(Announcement inspectedAnnouncement) {
+		this.inspectedAnnouncement = inspectedAnnouncement;
 	}
 
 }

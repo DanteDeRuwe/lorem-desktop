@@ -32,4 +32,13 @@ public class SessionFacade implements Facade {
 		GenericDaoJpa.commitTransaction();
 	}
 
+	public void editAnnouncement(Announcement announcement, Announcement template, Session s) {
+		announcement.setTitle(template.getTitle());
+		announcement.setText(template.getText());
+
+		GenericDaoJpa.startTransaction();
+		announcementRepo.update(announcement);
+		GenericDaoJpa.commitTransaction();
+	}
+
 }
