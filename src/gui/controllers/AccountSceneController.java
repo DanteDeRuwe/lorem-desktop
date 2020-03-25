@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import main.domain.Member;
 import main.domain.facades.LoggedInMemberManager;
 
-public class MyAccountController extends GuiController {
+public class AccountSceneController extends GuiController {
 
 	private LoggedInMemberManager loggedInMemberManager;
 

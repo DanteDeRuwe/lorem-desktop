@@ -64,7 +64,7 @@ public class EditUserController extends GuiController {
 		
 		// Pre-fill the fields
 		fillFields();
-		
+
 	}
 
 	/*
@@ -78,7 +78,7 @@ public class EditUserController extends GuiController {
 		userTypeField.setValue(userToEdit.getMemberType());
 		userStatusField.setValue(userToEdit.getMemberStatus());
 		profilePicField.setText(userToEdit.getProfilePicPath());
-		
+
 		userTypeField.getSelectionModel().select(userToEdit.getMemberType());
 		userStatusField.getSelectionModel().select(userToEdit.getMemberStatus());
 	}
@@ -151,12 +151,13 @@ public class EditUserController extends GuiController {
 
 			// if adding is successful
 			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new member
-			
-			// if  a user is changed, their sessions should updated in the sessions scene
+
+			// if a user is changed, their sessions should updated in the sessions scene
 			if (getMainController().getSessionSceneController() != null) {
 				getMainController().getSessionSceneController().update();
 			}
-			
+
+			getMainController().getAccountSceneController().update();
 			goBack(); // clears fields and goes back to details view
 
 		} catch (InvalidMemberException e) {
