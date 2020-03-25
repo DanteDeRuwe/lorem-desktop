@@ -73,7 +73,7 @@ public class MainController extends GuiController {
 		// initialize controllers
 		calendarSceneController = new CalendarSceneController();
 		userSceneController = new UserSceneController();
-		accountSceneController = new MyAccountController();
+		accountSceneController = new AccountSceneController();
 
 		// Load the calendar pane
 		AnchorPane calendarSceneRoot = loadFXML("calendar/CalendarScene.fxml", calendarSceneController,
@@ -145,6 +145,10 @@ public class MainController extends GuiController {
 
 	public CalendarSceneController getCalendarSceneController() {
 		return (CalendarSceneController) calendarSceneController;
+	}
+	
+	public AccountSceneController getAccountSceneController() {
+		return (AccountSceneController) accountSceneController;
 	}
 
 	public LoggedInMemberManager getLoggedInMemberManager() {
