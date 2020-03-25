@@ -159,7 +159,8 @@ public class EditUserController extends GuiController {
 			}
 
 			// if adding is successful
-			usc.updateWithMember(userToEdit); // update tableview with new member
+			((UserSceneController) getParentController()).updateWithMember(userToEdit); // update tableview with new
+																						// member
 
 			// if a user is changed, their sessions should updated in the sessions scene
 			if (ssc != null)

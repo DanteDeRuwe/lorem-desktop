@@ -101,7 +101,7 @@ public class UserSceneController extends GuiController {
 	}
 
 	public Member getInspectedUser() {
-		return udc.getInspectedUser();
+		return ((UserDetailsController) userDetailsController).getInspectedUser();
 	}
 
 	public void fillTableColumns(List<Member> members) {
