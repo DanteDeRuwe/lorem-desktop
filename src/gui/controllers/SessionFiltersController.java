@@ -1,17 +1,22 @@
 package gui.controllers;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import main.domain.MemberStatus;
 import main.domain.Session;
+import main.domain.SessionStatus;
 import main.domain.facades.SessionCalendarFacade;
 import main.services.GuiUtil;
 
@@ -28,6 +33,11 @@ public class SessionFiltersController extends GuiController {
 	private JFXDatePicker fromFilterField;
 	@FXML
 	private JFXDatePicker toFilterField;
+	
+	@FXML
+    private JFXComboBox<String> statusFilterBox;
+	
+	private final Map<String, SessionStatus> statusMap = new HashMap<>();
 
 	@FXML
 	public void initialize() {
@@ -38,6 +48,18 @@ public class SessionFiltersController extends GuiController {
 
 		// Change Label
 		UpdateAcademicYear();
+		
+		// fill map
+		statusMap.put(SessionStatus.CREATED.toString(), SessionStatus.CREATED);
+		statusMap.put(SessionStatus.OPEN.toString(), SessionStatus.OPEN);
+		statusMap.put(SessionStatus.CLOSED.toString(), SessionStatus.CLOSED);
+		statusMap.put(SessionStatus.FINISHED.toString(), SessionStatus.FINISHED);
+		
+		// populate combo box
+		statusFilterBox.getItems().add("Alle");
+		statusFilterBox.getItems().addAll(statusMap.keySet());
+		statusFilterBox.getSelectionModel().selectFirst();
+		
 
 		// Event Listeners
 		newSessionButton.setOnAction(e -> handleNewSession());
@@ -57,6 +79,8 @@ public class SessionFiltersController extends GuiController {
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 		toFilterField.valueProperty().addListener(
 				(obs, oldText, newText) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
+		statusFilterBox.valueProperty().addListener(
+				(obv, oldValue, newValue) -> ((SessionSceneController) getParentController()).fillTableColumns(filter()));
 	}
 
 	private Set<Session> filter() {
@@ -67,6 +91,7 @@ public class SessionFiltersController extends GuiController {
 		String typeFilter = typeFilterField.getText();
 		LocalDate fromFilter = fromFilterField.getValue();
 		LocalDate toFilter = toFilterField.getValue();
+		String statusFilter = statusFilterBox.getValue();
 		Set<Session> sessionSet = new HashSet<>(((SessionCalendarFacade) getFacade()).getAllSessions());
 		return sessionSet.stream().filter(s -> s.getTitle().toLowerCase().contains((titleFilter.toLowerCase().trim())))
 				.filter(s -> s.getSpeakerName().toLowerCase().contains((speakerFilter.toLowerCase().trim())))
@@ -79,7 +104,9 @@ public class SessionFiltersController extends GuiController {
 										: s.getStart().toLocalDate().compareTo(fromFilter) >= 0
 												&& s.getStart().toLocalDate().compareTo(toFilter) <= 0
 
-				).collect(Collectors.toSet());
+				).filter(s -> statusFilter.equals("Alle") ? true
+						: s.getSessionStatus() == null ? false : s.getSessionStatus().equals(statusMap.get(statusFilter)))
+				.collect(Collectors.toSet());
 	}
 
 	public void UpdateAcademicYear() {
