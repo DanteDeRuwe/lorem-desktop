@@ -20,9 +20,7 @@ public class UserDetailsController extends GuiController {
 	@FXML
 	private Label nameLabel, membertypeLabel, usernameLabel, statusLabel;
 	@FXML
-	private JFXButton editUserButton;
-	@FXML
-	private JFXButton deleteUserButton;
+	private JFXButton editUserButton, deleteUserButton;
 	@FXML
 	private ImageView profilePicView;
 

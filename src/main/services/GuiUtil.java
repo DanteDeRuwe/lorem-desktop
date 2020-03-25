@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
@@ -20,6 +21,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -59,10 +62,8 @@ public class GuiUtil {
 		col.setResizable(true);
 	}
 
-	public static <T> void fillColumnWithDateTime(
-			TableColumn<T, LocalDateTime> col, String propname, int minWidth,
-			int maxWidth
-	) {
+	public static <T> void fillColumnWithDateTime(TableColumn<T, LocalDateTime> col, String propname, int minWidth,
+			int maxWidth) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
@@ -80,10 +81,8 @@ public class GuiUtil {
 		});
 	}
 
-	public static <T> void fillColumnWithDuration(
-			TableColumn<T, Duration> col, String propname, int minWidth,
-			int maxWidth
-	) {
+	public static <T> void fillColumnWithDuration(TableColumn<T, Duration> col, String propname, int minWidth,
+			int maxWidth) {
 		col.setCellValueFactory(new PropertyValueFactory<>(propname));
 		col.setMinWidth(minWidth);
 		col.setMaxWidth(maxWidth);
@@ -139,12 +138,12 @@ public class GuiUtil {
 		placeholderLabel.setOpacity(0.7d);
 		list.setPlaceholder(placeholderLabel);
 	}
-	
+
 	public static void updateHyperlink(Session s, Hyperlink h) {
 		if (s.getExternalLink() != null && !s.getExternalLink().isBlank()) {
 			// set hyperlink text
 			h.setText(s.getExternalLink());
-			
+
 			// sets the URL of the hyperlink + when clicked will open in browser
 			h.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -161,13 +160,25 @@ public class GuiUtil {
 		} else {
 			h.setText("");
 			h.setOnAction(new EventHandler<ActionEvent>() {
+
 				@Override
 				public void handle(ActionEvent a) {
 					// do nothing
 				};
+
 			});
 		}
-		
+
+	}
+
+	public static void limitCharacterCount(TextInputControl[] fields, int limit) {
+		Stream.of(fields).forEach(t -> t.setTextFormatter(
+				new TextFormatter<String>(change -> change.getControlNewText().length() <= limit ? change : null)));
+	}
+
+	public static void limitCharacterCount(TextInputControl field, int limit) {
+		field.setTextFormatter(
+				new TextFormatter<String>(change -> change.getControlNewText().length() <= limit ? change : null));
 	}
 
 }

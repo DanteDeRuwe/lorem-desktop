@@ -18,15 +18,12 @@ import main.exceptions.InvalidMemberException;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
 import main.services.DataValidation;
+import main.services.GuiUtil;
 
 public class NewUserController extends GuiController {
 
 	@FXML
-	private JFXTextField firstNameField;
-	@FXML
-	private JFXTextField lastNameField;
-	@FXML
-	private JFXTextField usernameField;
+	private JFXTextField firstNameField, lastNameField, usernameField, profilePicField;
 	@FXML
 	private JFXPasswordField passwordField;
 	@FXML
@@ -34,11 +31,7 @@ public class NewUserController extends GuiController {
 	@FXML
 	private JFXComboBox<MemberStatus> userStatusField;
 	@FXML
-	private JFXTextField profilePicField;
-	@FXML
-	private JFXButton addUserButton;
-	@FXML
-	private JFXButton cancelButton;
+	private JFXButton addUserButton, cancelButton;
 	@FXML
 	private Label validationLabel;
 
@@ -47,6 +40,10 @@ public class NewUserController extends GuiController {
 	 */
 	@FXML
 	public void initialize() {
+
+		// limit char counts for all fields (for db)
+		GuiUtil.limitCharacterCount(
+				new JFXTextField[] { firstNameField, lastNameField, usernameField, profilePicField }, 255);
 
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());

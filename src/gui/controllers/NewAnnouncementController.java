@@ -12,6 +12,7 @@ import main.domain.facades.SessionFacade;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
 import main.services.DataValidation;
+import main.services.GuiUtil;
 
 public class NewAnnouncementController extends GuiController {
 
@@ -34,6 +35,10 @@ public class NewAnnouncementController extends GuiController {
 		setInspectedSession(atc.getInspectedSession());
 
 		updateHeader();
+
+		// limit char counts for all fields (for db)
+		GuiUtil.limitCharacterCount(textArea, 8000);
+		GuiUtil.limitCharacterCount(titleField, 255);
 
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());

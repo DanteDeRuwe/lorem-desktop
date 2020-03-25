@@ -12,6 +12,7 @@ import main.domain.facades.SessionFacade;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
 import main.services.DataValidation;
+import main.services.GuiUtil;
 
 public class EditAnnouncementController extends GuiController {
 
@@ -32,10 +33,13 @@ public class EditAnnouncementController extends GuiController {
 	@FXML
 	public void initialize() {
 		sf = (SessionFacade) getFacade();
-
 		atc = (AnnouncementTabController) getParentController();
 		inspectedSession = atc.getInspectedSession();
 		inspectedAnnouncement = atc.getInspectedAnnouncement();
+
+		// limit char counts for all fields (for db)
+		GuiUtil.limitCharacterCount(textArea, 8000);
+		GuiUtil.limitCharacterCount(titleField, 255);
 
 		headerText.setText(String.format("Wijzig aankondiging \"%s\"", inspectedAnnouncement.getTitle()));
 		fillFields();

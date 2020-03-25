@@ -18,10 +18,14 @@ import main.domain.facades.MemberFacade;
 
 public class UserFiltersController extends GuiController {
 
-	@FXML private JFXButton newUserButton;
-	@FXML private JFXTextField lastNameFilterField, firstNameFilterField, usernameFilterField;
-	@FXML private JFXComboBox<String> typeFilterBox;
-	@FXML private JFXComboBox<String> statusFilterBox;
+	@FXML
+	private JFXButton newUserButton;
+	@FXML
+	private JFXTextField lastNameFilterField, firstNameFilterField, usernameFilterField;
+	@FXML
+	private JFXComboBox<String> typeFilterBox;
+	@FXML
+	private JFXComboBox<String> statusFilterBox;
 
 	private final Map<String, MemberType> typeMap = new HashMap<>();
 	private final Map<String, MemberStatus> statusMap = new HashMap<>();
@@ -50,31 +54,21 @@ public class UserFiltersController extends GuiController {
 		newUserButton.setOnAction(e -> handleNewUser());
 
 		// Filtering
-		lastNameFilterField.textProperty().addListener(
-				(obs, oldText, newText) -> {
-					getMainController().getUserSceneController().fillTableColumns(filter());
-				}
-		);
-		firstNameFilterField.textProperty().addListener(
-				(obs, oldText, newText) -> {
-					getMainController().getUserSceneController().fillTableColumns(filter());
-				}
-		);
-		usernameFilterField.textProperty().addListener(
-				(obs, oldText, newText) -> {
-					getMainController().getUserSceneController().fillTableColumns(filter());
-				}
-		);
-		typeFilterBox.valueProperty().addListener(
-				(obv, oldValue, newValue) -> {
-					getMainController().getUserSceneController().fillTableColumns(filter());
-				}
-		);
-		statusFilterBox.valueProperty().addListener(
-				(obv, oldValue, newValue) -> {
-					getMainController().getUserSceneController().fillTableColumns(filter());
-				}
-		);
+		lastNameFilterField.textProperty().addListener((obs, oldText, newText) -> {
+			getMainController().getUserSceneController().fillTableColumns(filter());
+		});
+		firstNameFilterField.textProperty().addListener((obs, oldText, newText) -> {
+			getMainController().getUserSceneController().fillTableColumns(filter());
+		});
+		usernameFilterField.textProperty().addListener((obs, oldText, newText) -> {
+			getMainController().getUserSceneController().fillTableColumns(filter());
+		});
+		typeFilterBox.valueProperty().addListener((obv, oldValue, newValue) -> {
+			getMainController().getUserSceneController().fillTableColumns(filter());
+		});
+		statusFilterBox.valueProperty().addListener((obv, oldValue, newValue) -> {
+			getMainController().getUserSceneController().fillTableColumns(filter());
+		});
 	}
 
 	private List<Member> filter() {
@@ -89,7 +83,8 @@ public class UserFiltersController extends GuiController {
 				.filter(m -> m.getFirstName().toLowerCase().contains((firstNameFilter.toLowerCase().trim())))
 				.filter(m -> m.getUsername().toLowerCase().contains((usernameFilter.toLowerCase().trim())))
 				.filter(m -> typeFilter.equals("Alle") ? true : m.getMemberType().equals(typeMap.get(typeFilter)))
-				.filter(m -> statusFilter.equals("Alle") ? true : m.getMemberStatus().equals(statusMap.get(statusFilter)))
+				.filter(m -> statusFilter.equals("Alle") ? true
+						: m.getMemberStatus().equals(statusMap.get(statusFilter)))
 				.collect(Collectors.toList());
 	}
 

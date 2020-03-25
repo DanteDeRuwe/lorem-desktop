@@ -29,7 +29,8 @@ public class NewSessionController extends GuiController {
 	@FXML
 	private JFXTextArea descriptionArea;
 	@FXML
-	private JFXTextField titleField, speakerField, durationField, locationField, capacityField;
+	private JFXTextField titleField, speakerField, durationField, locationField, capacityField, externalLinkField,
+			typeField;
 	@FXML
 	private JFXDatePicker startDateField;
 	@FXML
@@ -38,10 +39,6 @@ public class NewSessionController extends GuiController {
 	private Label validationLabel;
 	@FXML
 	private JFXButton confirmButton, cancelButton;
-	@FXML
-	private JFXTextField externalLinkField;
-	@FXML
-	private JFXTextField typeField;
 
 	/*
 	 * Init
@@ -54,6 +51,11 @@ public class NewSessionController extends GuiController {
 
 		// Date picker formats
 		GuiUtil.fixDatePicker(startDateField);
+
+		// limit char counts for all fields (for db)
+		GuiUtil.limitCharacterCount(descriptionArea, 8000);
+		GuiUtil.limitCharacterCount(new JFXTextField[] { titleField, speakerField, durationField, locationField,
+				capacityField, externalLinkField, typeField }, 255);
 
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
