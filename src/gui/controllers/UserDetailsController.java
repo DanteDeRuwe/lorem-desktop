@@ -1,18 +1,17 @@
 package gui.controllers;
 
-import java.util.Optional;
-
 import com.jfoenix.controls.JFXButton;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import main.domain.Member;
 import main.domain.facades.MemberFacade;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 
 public class UserDetailsController extends GuiController {
 
@@ -38,23 +37,18 @@ public class UserDetailsController extends GuiController {
 	}
 
 	private void handleDeleteUser() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Gebruiker verwijderen");
-		alert.setHeaderText("Waarschuwing");
-		alert.setContentText(String.format("Ben je zeker dat je de gebruiker \"%s\" wilt verwijderen?",
-				inspectedUser.getFullName()));
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
+		Alert alert = Alerts.confirmationAlert("Gebruiker verwijderen", String
+				.format("Ben je zeker dat je de gebruiker \"%s\" wilt verwijderen?", inspectedUser.getFullName()));
+		if (alert.showAndWait().get() == ButtonType.OK) {
 			try {
 				((MemberFacade) getFacade()).deleteUser(inspectedUser);
 			} catch (IllegalArgumentException e) {
 				alert.close();
-				Alert exceptionAlert = new Alert(AlertType.ERROR);
-				exceptionAlert.setTitle("Gebruiker verwijderen");
-				exceptionAlert.setHeaderText("Fout");
-				exceptionAlert.setContentText("Je kan de ingelogde gebruiker niet verwijderen.");
-				exceptionAlert.show();
+				Alerts.errorAlert("Gebruiker verwijderen", "Je kan de ingelogde gebruiker niet verwijderen.")
+						.showAndWait();
+			} catch (UserNotAuthorizedException e) {
+				Alerts.errorAlert("Gebruiker verwijderen",
+						"Je hebt niet de juiste machtigingen om een gebruiker te verwijderen.").showAndWait();
 			}
 			getMainController().getUserSceneController().update();
 		}

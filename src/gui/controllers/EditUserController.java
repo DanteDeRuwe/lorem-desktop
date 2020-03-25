@@ -1,7 +1,5 @@
 package gui.controllers;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
@@ -14,11 +12,11 @@ import javafx.scene.control.TextField;
 import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
-import main.domain.Session;
 import main.domain.facades.MemberFacade;
 import main.exceptions.InvalidMemberException;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.DataValidation;
-import main.services.GuiUtil;
 
 public class EditUserController extends GuiController {
 	@FXML
@@ -31,17 +29,17 @@ public class EditUserController extends GuiController {
 	private JFXComboBox<MemberType> userTypeField;
 	@FXML
 	private JFXComboBox<MemberStatus> userStatusField;
-    @FXML
-    private JFXTextField profilePicField;
+	@FXML
+	private JFXTextField profilePicField;
 	@FXML
 	private JFXButton addUserButton;
 	@FXML
 	private JFXButton cancelButton;
 	@FXML
 	private Label validationLabel;
-    @FXML
-    private Label headerText;
-	
+	@FXML
+	private Label headerText;
+
 	// Fields
 	Member userToEdit;
 
@@ -64,14 +62,14 @@ public class EditUserController extends GuiController {
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
 		addUserButton.setOnAction(e -> onMemberEditConfirm());
-		
+
 		// Set combobox options
 		userTypeField.getItems().setAll(MemberType.values());
 		userTypeField.getSelectionModel().select(MemberType.USER);
 		userStatusField.getItems().setAll(MemberStatus.values());
 		userStatusField.getSelectionModel().select(MemberStatus.ACTIVE);
 	}
-	
+
 	/*
 	 * Private helpers
 	 */
@@ -84,13 +82,13 @@ public class EditUserController extends GuiController {
 		userStatusField.setValue(userToEdit.getMemberStatus());
 		profilePicField.setText(userToEdit.getProfilePicPath());
 	}
-	
+
 	private void goBack() {
 		// clears fields and goes back to details view
 		resetView();
 		((UserSceneController) getParentController()).displayOnRightPane("UserDetails");
 	}
-	
+
 	private void resetView() {
 		validationLabel.setText("");
 		Stream.<TextField>of(firstNameField, lastNameField, usernameField, profilePicField)
@@ -99,7 +97,7 @@ public class EditUserController extends GuiController {
 		userTypeField.getSelectionModel().selectFirst();
 		userStatusField.getSelectionModel().selectFirst();
 	}
-	
+
 	private boolean allFieldsOk() {
 		boolean firstNameFilledIn = DataValidation.textFilledIn(firstNameField, validationLabel,
 				"Voornaam is verplicht");
@@ -111,12 +109,13 @@ public class EditUserController extends GuiController {
 		if (profilePicField.getText() == null || profilePicField.getText().isBlank()) {
 			profilePicOk = true;
 		} else {
-			profilePicOk = DataValidation.textImagePath(profilePicField, validationLabel, "URL voor profiel foto klopt niet");
+			profilePicOk = DataValidation.textImagePath(profilePicField, validationLabel,
+					"URL voor profiel foto klopt niet");
 		}
 
 		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && profilePicOk;
 	}
-	
+
 	private void onMemberEditConfirm() {
 		// Do validation
 		validationLabel.setText("");
@@ -138,18 +137,25 @@ public class EditUserController extends GuiController {
 		MemberFacade mf = (MemberFacade) getFacade();
 
 		// Construct member
-		
+
 		try {
 			// Construct user
-			Member template = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath, userToEdit);
-			
-			// Add user
-			mf.editMember(userToEdit, template);
+			Member template = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath,
+					userToEdit);
+
+			// Edit user
+			try {
+				mf.editMember(userToEdit, template);
+			} catch (UserNotAuthorizedException e) {
+				Alerts.errorAlert("Gebruiker wijzigen",
+						"Je hebt niet de juiste machtigingen om een gebruiker te wijzigen.").showAndWait();
+			}
 
 			// if adding is successful
-			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new member
+			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new
+																						// member
 			goBack(); // clears fields and goes back to details view
-			
+
 		} catch (InvalidMemberException e) {
 			if (e.getMessage() != null) {
 				validationLabel.setText(e.getMessage());

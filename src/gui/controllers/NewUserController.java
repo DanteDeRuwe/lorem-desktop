@@ -14,6 +14,8 @@ import main.domain.MemberStatus;
 import main.domain.MemberType;
 import main.domain.facades.MemberFacade;
 import main.exceptions.InvalidMemberException;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.DataValidation;
 
 public class NewUserController extends GuiController {
@@ -28,8 +30,8 @@ public class NewUserController extends GuiController {
 	private JFXComboBox<MemberType> userTypeField;
 	@FXML
 	private JFXComboBox<MemberStatus> userStatusField;
-    @FXML
-    private JFXTextField profilePicField;
+	@FXML
+	private JFXTextField profilePicField;
 	@FXML
 	private JFXButton addUserButton;
 	@FXML
@@ -66,7 +68,8 @@ public class NewUserController extends GuiController {
 
 	private void resetView() {
 		validationLabel.setText("");
-		Stream.<TextField>of(firstNameField, lastNameField, usernameField, profilePicField).forEach(tf -> tf.setText(""));
+		Stream.<TextField>of(firstNameField, lastNameField, usernameField, profilePicField)
+				.forEach(tf -> tf.setText(""));
 		userTypeField.getSelectionModel().selectFirst();
 		userStatusField.getSelectionModel().selectFirst();
 	}
@@ -82,7 +85,8 @@ public class NewUserController extends GuiController {
 		if (profilePicField.getText() == null || profilePicField.getText().isBlank()) {
 			profilePicOk = true;
 		} else {
-			profilePicOk = DataValidation.textImagePath(profilePicField, validationLabel, "URL voor profiel foto klopt niet");
+			profilePicOk = DataValidation.textImagePath(profilePicField, validationLabel,
+					"URL voor profiel foto klopt niet");
 		}
 
 		return firstNameFilledIn && lastNameFilledIn && usernameFilledIn && profilePicOk;
@@ -101,24 +105,29 @@ public class NewUserController extends GuiController {
 		MemberType type = userTypeField.getValue();
 		MemberStatus status = userStatusField.getValue();
 		String profilePicPath = profilePicField.getText();
-		
+
 		if (profilePicPath == null || profilePicPath.isBlank()) {
 			profilePicPath = "";
 		}
 
 		MemberFacade mf = (MemberFacade) getFacade();
-		
+
 		try {
 			// Construct user
 			Member m = mf.createMemberFromFields(userName, firstName, lastName, type, status, profilePicPath);
-			
+
 			// Add user
-			mf.addMember(m);
-			
+			try {
+				mf.addMember(m);
+			} catch (UserNotAuthorizedException e) {
+				Alerts.errorAlert("Gebruiker toevoegen",
+						"Je hebt niet de juiste machtigingen om een gebruiker toe te voegen.").showAndWait();
+			}
+
 			// if adding is successful
 			getMainController().getUserSceneController().updateWithMember(m); // update tableview with new member
 			goBack(); // clears fields and goes back to details view
-			
+
 		} catch (InvalidMemberException e) {
 			if (e.getMessage() != null) {
 				validationLabel.setText(e.getMessage());
