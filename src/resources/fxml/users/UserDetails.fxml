@@ -49,6 +49,43 @@
 							<Insets right="5.0" />
 						</HBox.margin>
 					 </Label>
+                  <HBox prefHeight="25.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Inschrijvingen">
+                           <padding>
+                              <Insets left="20.0" right="15.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Aanwezigheden" />
+                        <Label text="Afwezigheden">
+                           <padding>
+                              <Insets left="15.0" right="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="totalRegistrations" text="Aantal">
+                           <HBox.margin>
+                              <Insets left="40.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="totalAttendances" text="Aantal">
+                           <HBox.margin>
+                              <Insets left="35.0" right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="totalMissedSessions" text="Aantal">
+                           <padding>
+                              <Insets left="40.0" right="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>

@@ -19,7 +19,7 @@ public class UserDetailsController extends GuiController {
 	private Member inspectedUser;
 
 	@FXML
-	private Label nameLabel, membertypeLabel, usernameLabel, statusLabel;
+	private Label nameLabel, membertypeLabel, usernameLabel, statusLabel, totalRegistrations, totalAttendances, totalMissedSessions;
 	@FXML
 	private JFXButton editUserButton, deleteUserButton;
 	@FXML
@@ -83,6 +83,10 @@ public class UserDetailsController extends GuiController {
 		membertypeLabel.setText(inspectedUser.getMemberType().toString());
 		usernameLabel.setText(inspectedUser.getUsername());
 		statusLabel.setText(inspectedUser.getMemberStatus().toString());
+		totalRegistrations.setText(String.valueOf(inspectedUser.countRegistrations()));
+		totalAttendances.setText(String.valueOf(inspectedUser.countAttendances()));
+		totalMissedSessions.setText(String.valueOf(inspectedUser.countMissedSessions()));
+		
 		switch (inspectedUser.getMemberStatus()) {
 		case ACTIVE:
 			statusLabel.setStyle("-fx-text-fill: green;");

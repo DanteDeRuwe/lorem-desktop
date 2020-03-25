@@ -10,16 +10,18 @@ import main.services.GuiUtil;
 public class SessionTabsController extends GuiController {
 
 	@FXML
-	private AnchorPane infoTab, announcementTab;
+	private AnchorPane infoTab, announcementTab, statisticsTab;
 
 	private InfoTabController infoTabController;
 	private AnnouncementTabController announcementTabController;
-	private Facade sessionFacade;
+	private SceneStatisticsTabController statisticsTabController;
+	private Facade sessionFacade, sessionCalendarFacade;
 
 	@FXML
 	public void initialize() {
 		infoTabController = new InfoTabController();
 		announcementTabController = new AnnouncementTabController();
+		statisticsTabController = new SceneStatisticsTabController();
 
 		// Info Tab
 		AnchorPane infoTabRoot = loadFXML("sessions/tabs/InfoTab.fxml", infoTabController, getFacade());
@@ -32,10 +34,16 @@ public class SessionTabsController extends GuiController {
 		AnchorPane announcementTabRoot = loadFXML("sessions/tabs/AnnouncementTab.fxml", announcementTabController,
 				sessionFacade);
 		GuiUtil.bindAnchorPane(announcementTabRoot, announcementTab);
+		
+		//Statistics tab
+		AnchorPane statisticsTabRoot = loadFXML("sessions/tabs/StatisticsTab.fxml", statisticsTabController, sessionFacade);
+		GuiUtil.bindAnchorPane(statisticsTabRoot, statisticsTab);
+		
 	}
 
 	public void updateInspectedSession(Session session) {
 		infoTabController.setInspectedSession(session);
 		announcementTabController.setInspectedSession(session);
+		statisticsTabController.setInspectedSession(session);
 	}
 }

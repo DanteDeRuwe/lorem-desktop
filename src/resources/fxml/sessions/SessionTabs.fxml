@@ -18,9 +18,9 @@
                   <AnchorPane fx:id="announcementTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="session-tab-root" />
                </content>
             </Tab>
-            <Tab text="Feedback">
+            <Tab text="Statistieken">
                <content>
-                  <AnchorPane fx:id="feedbackTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="session-tab-root" />
+                  <AnchorPane fx:id="statisticsTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="session-tab-root" />
                </content>
             </Tab>
          </tabs>
