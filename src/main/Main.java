@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import persistence.GenericDaoJpa;
 
@@ -32,6 +33,8 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.setTitle("Login");
 		stage.setResizable(false);
+		stage.getIcons().add(new Image(Main.class.getResourceAsStream("/resources/icon/itlab.png")));
+
 		
 		stage.show();
 
