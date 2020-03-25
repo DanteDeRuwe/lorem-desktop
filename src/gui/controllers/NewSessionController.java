@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.domain.Member;
 import main.domain.Session;
+import main.domain.SessionStatus;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
 import main.exceptions.UserNotAuthorizedException;
@@ -131,6 +132,9 @@ public class NewSessionController extends GuiController {
 			// Construct session
 			Session s = scf.createSessionFromFields(organizer, title, description, speaker, startDate, startTime,
 					duration, location, capacity, externalUrl, type);
+
+			// Set status as created
+			s.setSessionStatus(SessionStatus.CREATED);
 
 			// Add session
 			scf.addSession(s);

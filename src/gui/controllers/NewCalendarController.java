@@ -48,11 +48,12 @@ public class NewCalendarController extends GuiController {
 			goBack();
 		} catch (IllegalArgumentException e) {
 			Alert alert = Alerts.errorAlert("Nieuwe kalender", "");
-			if (e.getMessage().equals("Academic years must start and end in consecutive years")) {
+			if (e.getMessage().equals("Academic years must start and end in consecutive years"))
 				alert.setContentText("Een academisch jaar moet starten en eindigen in opeenvolgende jaren.");
-			} else if (e.getMessage().equals("Cannot create calendar that far in the past")) {
+			else if (e.getMessage().equals("Cannot create calendar that far in the past"))
 				alert.setContentText("Je mag geen kalender zo ver in het verleden aanmaken.");
-			}
+			else if (e.getMessage().equals("Overlap with an existing caledar"))
+				alert.setContentText("Er is overlap met een andere sessiekalendar.");
 			alert.showAndWait();
 		} catch (UserNotAuthorizedException e) {
 			Alerts.errorAlert("Kalender aanmaken", "Je hebt niet de juiste machtigingen om een kalender aan te maken.")

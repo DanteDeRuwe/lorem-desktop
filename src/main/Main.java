@@ -20,7 +20,7 @@ public class Main extends Application {
 
 	@Override
 	public void init() throws Exception {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/fxml/Main.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resources/fxml/login/login.fxml"));
 		rootNode = fxmlLoader.load();
 	}
 
@@ -29,29 +29,12 @@ public class Main extends Application {
 
 		Scene scene = new Scene(rootNode);
 
-		scene.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());
-
+		
 		stage.setScene(scene);
-		stage.setMaximized(true);
-		stage.setTitle("Lorem");
+		stage.setTitle("Login");
 
-		stage.setMinHeight(800);
-		stage.setMinWidth(900);
 		stage.show();
 
-		stage.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
-			if (KeyCode.F11.equals(e.getCode()))
-				stage.setFullScreen(!stage.isFullScreen());
-		});
-
-		stage.setOnCloseRequest(e -> handleExit());
-
-	}
-
-	private void handleExit() {
-		GenericDaoJpa.closePersistency();
-		Platform.exit();
-		System.exit(0);
 	}
 
 }

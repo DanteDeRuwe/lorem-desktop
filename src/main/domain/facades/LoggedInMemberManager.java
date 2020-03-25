@@ -5,17 +5,24 @@ import persistence.MemberDaoJpa;
 
 public class LoggedInMemberManager {
 
+	private static LoggedInMemberManager manager;
 	private Member loggedInMember;
-	
-	public LoggedInMemberManager() {
-		MemberDaoJpa repo  = new MemberDaoJpa();
-		loggedInMember = repo.getMemberByUsername("harm.de.weirdt"); // TODO Hardcoded for now
-	}
-	
+	  
+    // private constructor to force use of 
+    // getInstance() to create Singleton object 
+    private LoggedInMemberManager() {} 
+  
+    public static LoggedInMemberManager getInstance() 
+    { 
+        if (manager == null) 
+        	manager = new LoggedInMemberManager(); 
+        return manager; 
+    }
+
 	public Member getLoggedInMember() {
 		return loggedInMember;
 	}
-	
+
 	public void setLoggedInMember(Member loggedInMember) {
 		this.loggedInMember = loggedInMember;
 	}

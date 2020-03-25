@@ -25,11 +25,11 @@ public class SessionCalendarFacade implements Facade {
 
 	private LoggedInMemberManager loggedInMemberManager;
 
-	public SessionCalendarFacade(LoggedInMemberManager loggedInMemberManager) {
+	public SessionCalendarFacade() {
 		setSessionCalendarRepo(new SessionCalendarDaoJpa());
 		setSessionRepo(new SessionDaoJpa());
 
-		this.loggedInMemberManager = loggedInMemberManager;
+		this.loggedInMemberManager = LoggedInMemberManager.getInstance();
 	}
 
 	/*
@@ -74,8 +74,14 @@ public class SessionCalendarFacade implements Facade {
 		if (memberType != MemberType.ADMIN && memberType != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
 
-		// TODO we also need to check if there are no already existing sessionCalendars
-		// which would overlap with this one
+		// check for overlap
+		for (SessionCalendar existingCalendar : getAllSessionCalendars()) {
+			if ((calendar.getStartDate().isAfter(existingCalendar.getStartDate())
+					&& calendar.getStartDate().isBefore(existingCalendar.getEndDate()))
+					|| (calendar.getEndDate().isAfter(existingCalendar.getStartDate())
+							&& calendar.getEndDate().isBefore(existingCalendar.getEndDate())))
+				throw new IllegalArgumentException("Overlap with an existing caledar");
+		}
 
 		GenericDaoJpa.startTransaction();
 		sessionCalendarRepo.insert(calendar);

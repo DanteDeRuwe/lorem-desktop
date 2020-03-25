@@ -3,13 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.LoginController">
    <children>
       <JFXTextField fx:id="usernameField" layoutX="148.0" layoutY="143.0" prefHeight="26.0" prefWidth="298.0" promptText="gebruikersnaam" />
-      <JFXPasswordField fx:id="passwordName" layoutX="148.0" layoutY="200.0" prefHeight="26.0" prefWidth="298.0" promptText="wachtwoord" />
+      <JFXPasswordField fx:id="passwordField" layoutX="148.0" layoutY="200.0" prefHeight="26.0" prefWidth="298.0" promptText="wachtwoord" />
       <JFXButton fx:id="loginButton" layoutX="148.0" layoutY="243.0" text="inloggen" />
+      <Label fx:id="validationLabel" layoutX="148.0" layoutY="286.0" textFill="RED" />
    </children>
 </AnchorPane>
