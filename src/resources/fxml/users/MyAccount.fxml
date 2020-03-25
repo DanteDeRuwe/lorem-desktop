@@ -11,104 +11,126 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="bg" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <AnchorPane layoutX="62.0" layoutY="50.0" prefHeight="600.0" prefWidth="900.0" styleClass="card" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="50.0">
-         <children>
-            <GridPane layoutX="15.0" layoutY="23.0" prefHeight="400.0" prefWidth="700.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="23.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="402.0" minHeight="10.0" prefHeight="354.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="402.0" minHeight="10.0" prefHeight="354.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" prefHeight="340.0" GridPane.columnIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-                     <children>
-                              <Label text="Gebruikersnaam">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="usernameLabel" text="Label">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Voornaam">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="firstNameLabel" text="Label">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Naam">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="lastNameLabel" text="Label">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Type">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="typeLabel" text="Label">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Status">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="statusLabel" text="Label">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                     </children>
-                     <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                     </padding>
-                  </VBox>
-                  <ImageView fx:id="profilePicture" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <JFXButton fx:id="logOutButton" alignment="CENTER" maxWidth="200.0" prefHeight="48.0" prefWidth="223.0" style="-fx-background-color: #c1c1c1;" text="Log Uit" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                        </JFXButton>
-               </children>
-            </GridPane>
-         </children>
-         <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="30.0" />
-         </padding>
-      </AnchorPane>
-   </children>
-   <padding>
-      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-   </padding>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+	prefWidth="900.0" styleClass="bg" stylesheets="@../../css/style.css"
+	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<AnchorPane layoutX="62.0" layoutY="50.0"
+			prefHeight="600.0" prefWidth="900.0" styleClass="card"
+			AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="62.0"
+			AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="50.0">
+			<children>
+				<GridPane layoutX="15.0" layoutY="23.0" prefHeight="400.0"
+					prefWidth="700.0" AnchorPane.bottomAnchor="22.0"
+					AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0"
+					AnchorPane.topAnchor="23.0">
+					<columnConstraints>
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES"
+							minWidth="10.0" prefWidth="100.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints maxHeight="402.0" minHeight="10.0"
+							prefHeight="354.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="402.0" minHeight="10.0"
+							prefHeight="354.0" vgrow="SOMETIMES" />
+					</rowConstraints>
+					<children>
+						<VBox alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
+							prefHeight="340.0" GridPane.columnIndex="1" GridPane.rowSpan="2"
+							GridPane.valignment="TOP">
+							<children>
+								<Label text="Gebruikersnaam">
+									<font>
+										<Font name="System Bold" size="28.0" />
+									</font>
+								</Label>
+								<Label fx:id="usernameLabel" text="Label">
+									<font>
+										<Font size="24.0" />
+									</font>
+								</Label>
+								<Label text="Voornaam">
+									<font>
+										<Font name="System Bold" size="28.0" />
+									</font>
+									<padding>
+										<Insets top="10.0" />
+									</padding>
+								</Label>
+								<Label fx:id="firstNameLabel" text="Label">
+									<font>
+										<Font size="24.0" />
+									</font>
+								</Label>
+								<Label text="Naam">
+									<font>
+										<Font name="System Bold" size="28.0" />
+									</font>
+									<padding>
+										<Insets top="10.0" />
+									</padding>
+								</Label>
+								<Label fx:id="lastNameLabel" text="Label">
+									<font>
+										<Font size="24.0" />
+									</font>
+								</Label>
+								<Label text="Type">
+									<font>
+										<Font name="System Bold" size="28.0" />
+									</font>
+									<padding>
+										<Insets top="10.0" />
+									</padding>
+								</Label>
+								<Label fx:id="typeLabel" text="Label">
+									<font>
+										<Font size="24.0" />
+									</font>
+								</Label>
+								<Label text="Status">
+									<font>
+										<Font name="System Bold" size="28.0" />
+									</font>
+									<padding>
+										<Insets top="10.0" />
+									</padding>
+								</Label>
+								<Label fx:id="statusLabel" text="Label">
+									<font>
+										<Font size="24.0" />
+									</font>
+								</Label>
+							</children>
+							<padding>
+								<Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+							</padding>
+						</VBox>
+						<ImageView fx:id="profilePicture" fitHeight="300.0"
+							fitWidth="300.0" pickOnBounds="true" preserveRatio="true"
+							GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+						<JFXButton fx:id="logOutButton" alignment="CENTER"
+							maxWidth="200.0" prefHeight="48.0" prefWidth="223.0"
+							style="-fx-background-color: #c1c1c1;" text="Log Uit"
+							GridPane.halignment="CENTER" GridPane.rowIndex="1"
+							GridPane.valignment="CENTER">
+							<GridPane.margin>
+								<Insets />
+							</GridPane.margin>
+						</JFXButton>
+					</children>
+				</GridPane>
+			</children>
+			<padding>
+				<Insets bottom="15.0" left="15.0" right="15.0" top="30.0" />
+			</padding>
+		</AnchorPane>
+	</children>
+	<padding>
+		<Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+	</padding>
 </AnchorPane>
