@@ -43,7 +43,7 @@ public class LoginController {
 
 		// initialize facades
 		loggedInMemberManager = LoggedInMemberManager.getInstance();
-		memberFacade = new MemberFacade(loggedInMemberManager);
+		memberFacade = new MemberFacade();
 
 		//   Event handlers
 		loginButton.setOnAction(e -> {
