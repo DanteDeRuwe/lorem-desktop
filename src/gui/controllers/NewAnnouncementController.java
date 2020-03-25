@@ -8,8 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import main.domain.Announcement;
 import main.domain.Session;
-import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionFacade;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.DataValidation;
 
 public class NewAnnouncementController extends GuiController {
@@ -57,7 +58,12 @@ public class NewAnnouncementController extends GuiController {
 		Announcement a = sf.createAnnouncementFromFields(
 				getMainController().getLoggedInMemberManager().getLoggedInMember(), text, title);
 
-		sf.addAnnouncement(a, inspectedSession);
+		try {
+			sf.addAnnouncement(a, inspectedSession);
+		} catch (UserNotAuthorizedException e) {
+			Alerts.errorAlert("Aankondiging verwijderen",
+					"Je hebt niet de juiste machtigingen om deze aankondiging te verwijderen.");
+		}
 
 		goBack();
 	}

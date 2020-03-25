@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import main.domain.Announcement;
 import main.domain.Session;
 import main.domain.facades.SessionFacade;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.DataValidation;
 
 public class EditAnnouncementController extends GuiController {
@@ -63,7 +65,12 @@ public class EditAnnouncementController extends GuiController {
 				getMainController().getLoggedInMemberManager().getLoggedInMember(), text, title);
 
 		// Edit the session
-		sf.editAnnouncement(inspectedAnnouncement, template, inspectedSession);
+		try {
+			sf.editAnnouncement(inspectedAnnouncement, template, inspectedSession);
+		} catch (UserNotAuthorizedException e) {
+			Alerts.errorAlert("Aankondiging bewerken",
+					"Je hebt niet de juiste machtigingen om deze aankondiging te bewerken.");
+		}
 
 		goBack();
 	}
