@@ -21,9 +21,13 @@ public class SessionCalendarFacade implements Facade {
 	private SessionDaoJpa sessionRepo;
 	private SessionCalendar calendar;
 
-	public SessionCalendarFacade() {
+	private LoggedInMemberManager loggedInMemberManager;
+
+	public SessionCalendarFacade(LoggedInMemberManager loggedInMemberManager) {
 		setSessionCalendarRepo(new SessionCalendarDaoJpa());
 		setSessionRepo(new SessionDaoJpa());
+
+		this.loggedInMemberManager = loggedInMemberManager;
 	}
 
 	/*
@@ -31,11 +35,11 @@ public class SessionCalendarFacade implements Facade {
 	 * Calendar
 	 * -----------------------------------------------------------------------------
 	 */
-	
+
 	public void setSessionCalendarRepo(SessionCalendarDaoJpa sessionCalendarRepo) {
 		this.sessionCalendarRepo = sessionCalendarRepo;
 	}
-	
+
 	public SessionCalendarDaoJpa getSessionCalendarRepo() {
 		return this.sessionCalendarRepo;
 	}
@@ -88,18 +92,18 @@ public class SessionCalendarFacade implements Facade {
 	 * SESSION
 	 * -----------------------------------------------------------------------------
 	 */
-	
+
 	public void setSessionRepo(SessionDaoJpa sessionRepo) {
 		this.sessionRepo = sessionRepo;
 	}
-	
+
 	public SessionDaoJpa getSessionRepo() {
 		return this.sessionRepo;
 	}
 
 	public Session createSessionFromFields(Member organizer, String title, String description, String speakerName,
-			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity, String externalUrl, String type)
-			throws InvalidSessionException {
+			LocalDate startDate, LocalTime startTime, String duration, String location, String capacity,
+			String externalUrl, String type) throws InvalidSessionException {
 		try {
 			LocalDateTime start = LocalDateTime.of(startDate, startTime);
 			LocalDateTime end = Util.calculateEnd(start, duration);
@@ -178,7 +182,7 @@ public class SessionCalendarFacade implements Facade {
 	public Set<Session> getAllSessions() {
 		return calendar.getSessions();
 	}
-	
+
 	public Set<Session> getAllFinishedSessions() {
 		return calendar.getFinishedSessions();
 	}
