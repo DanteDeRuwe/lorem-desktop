@@ -89,7 +89,7 @@ public class SessionCalendarFacade implements Facade {
 			throws UserNotAuthorizedException, InvalidSessionCalendarException {
 
 		if (!loggedInMemberManager.loggedInMemberCanManipulateData())
-			return;
+			throw new UserNotAuthorizedException();
 
 		// check for overlap
 		if (!calendar.doesNotOverlap(getAllSessionCalendars()))
@@ -105,7 +105,7 @@ public class SessionCalendarFacade implements Facade {
 			throws UserNotAuthorizedException, InvalidSessionCalendarException {
 
 		if (!loggedInMemberManager.loggedInMemberCanManipulateData())
-			return;
+			throw new UserNotAuthorizedException();
 
 		// try to create a calendar, this has all exception logic
 		SessionCalendar sc = createSessionCalendar(startDate, endDate);
@@ -169,7 +169,7 @@ public class SessionCalendarFacade implements Facade {
 	public void addSession(Session session) throws UserNotAuthorizedException {
 
 		if (!loggedInMemberManager.loggedInMemberCanManipulateSession(session))
-			return;
+			throw new UserNotAuthorizedException();
 
 		// add to calendar
 		calendar.addSession(session);
@@ -183,7 +183,7 @@ public class SessionCalendarFacade implements Facade {
 	public void editSession(Session session, Session newSession) throws UserNotAuthorizedException {
 
 		if (!loggedInMemberManager.loggedInMemberCanManipulateSession(session))
-			return;
+			throw new UserNotAuthorizedException();
 
 		// update the session
 		session.setLocation(newSession.getLocation());
@@ -205,7 +205,7 @@ public class SessionCalendarFacade implements Facade {
 	public void deleteSession(Session session) throws UserNotAuthorizedException {
 
 		if (!loggedInMemberManager.loggedInMemberCanManipulateSession(session))
-			return;
+			throw new UserNotAuthorizedException();
 
 		// delete from calendar
 		calendar.deleteSession(session);

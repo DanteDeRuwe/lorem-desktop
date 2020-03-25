@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import main.domain.Session;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.SessionCalendarFacade;
 import main.services.GuiUtil;
 
@@ -82,7 +83,10 @@ public class SessionSceneController extends GuiController {
 		// event handler for doubleclicking a session
 		sessionTable.setOnMouseClicked(mouseClickedEvent -> {
 			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 2) {
-				displayOnRightPane("EditSession");
+
+				// Dont edit sessions if not permitted
+				if (LoggedInMemberManager.getInstance().loggedInMemberCanManipulateSession(inspectedSession))
+					displayOnRightPane("EditSession");
 			}
 		});
 	}

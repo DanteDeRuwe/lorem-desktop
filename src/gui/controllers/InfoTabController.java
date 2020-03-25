@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import main.domain.Session;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
@@ -36,15 +37,20 @@ public class InfoTabController extends GuiController {
 	@FXML
 	private Label sessionType;
 
+	private SessionSceneController ssc;
+
 	@FXML
 	public void initialize() {
-		SessionSceneController ssc = getMainController().getSessionSceneController();
+		ssc = getMainController().getSessionSceneController();
+		inspectedSession = ssc.getInspectedSession();
 
 		// Event handlers
 		deleteSessionButton.setOnMouseClicked((e) -> handleDeleteSession());
-		editSessionButton.setOnMouseClicked((e) -> {
-			ssc.displayOnRightPane("EditSession");
-		});
+		editSessionButton.setOnMouseClicked((e) -> handleEditSession());
+	}
+
+	private void handleEditSession() {
+		ssc.displayOnRightPane("EditSession");
 	}
 
 	private void handleDeleteSession() {
@@ -52,6 +58,7 @@ public class InfoTabController extends GuiController {
 				.confirmationAlert("Sessie verwijderen", String
 						.format("Ben je zeker dat je de sessie \"%s\" wilt verwijderen?", inspectedSession.getTitle()))
 				.showAndWait();
+
 		if (result.get() == ButtonType.OK) {
 			try {
 				((SessionCalendarFacade) getFacade()).deleteSession(inspectedSession);
@@ -88,8 +95,17 @@ public class InfoTabController extends GuiController {
 	}
 
 	public void setInspectedSession(Session inspectedSession) {
+		if (inspectedSession == null)
+			return;
 		this.inspectedSession = inspectedSession;
 		updateLabels();
+
+		// Everytime the inspected session changes, check if the logged in member can
+		// use the buttons, otherwise hide them
+		boolean visible = LoggedInMemberManager.getInstance().loggedInMemberCanManipulateSession(inspectedSession);
+		deleteSessionButton.setVisible(visible);
+		editSessionButton.setVisible(visible);
+
 	}
 
 }

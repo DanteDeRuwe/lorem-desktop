@@ -4,7 +4,6 @@ import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
 import main.domain.Session;
-import main.exceptions.UserNotAuthorizedException;
 
 public class LoggedInMemberManager {
 
@@ -34,43 +33,50 @@ public class LoggedInMemberManager {
 	 * Checks if a user can manipulated data: this is when he is an active admin or
 	 * headadmin
 	 * 
-	 * @return true if the user has the correct status and type
-	 * @throws UserNotAuthorizedException if this is not the case
+	 * @return whether the user has the correct status and type
 	 */
-	boolean loggedInMemberCanManipulateData() throws UserNotAuthorizedException {
+	public boolean loggedInMemberCanManipulateData() {
 		// get logged in member with type and status
 		Member loggedInMember = getLoggedInMember();
 		MemberType memberType = loggedInMember.getMemberType();
 		MemberStatus memberStatus = loggedInMember.getMemberStatus();
 
 		// check
-		if ((memberType != MemberType.ADMIN && memberType != MemberType.HEADADMIN)
-				|| memberStatus != MemberStatus.ACTIVE)
-			throw new UserNotAuthorizedException();
-		else
-			return true;
+		return ((memberType == MemberType.ADMIN || memberType == MemberType.HEADADMIN)
+				&& memberStatus == MemberStatus.ACTIVE);
+
 	}
 
 	/**
 	 * check if a logged in member can manipulate a session. This means he can
-	 * manipulate data + if he is an admin, he owns the session.
+	 * manipulate data (active admins and headadmins) + if he is an admin, he owns
+	 * the session.
 	 * 
 	 * @param session
-	 * @return true if the logged in member can manipulate the given session
-	 * @throws UserNotAuthorizedException if it doesn't
+	 * @return whether the logged in member can manipulate the given session
 	 */
-	boolean loggedInMemberCanManipulateSession(Session session) throws UserNotAuthorizedException {
+	public boolean loggedInMemberCanManipulateSession(Session session) {
 
 		Member loggedInMember = getLoggedInMember();
 		MemberType memberType = loggedInMember.getMemberType();
 
 		if (!loggedInMemberCanManipulateData())
-			throw new UserNotAuthorizedException();
+			return false;
 
-		if (memberType == MemberType.ADMIN && !session.getFullOrganizerName().equals(loggedInMember.getFullName()))
-			throw new UserNotAuthorizedException();
+		if (memberType == MemberType.ADMIN && session.getOrganizer() != loggedInMember)
+			return false;
 
 		return true;
+	}
+
+	public boolean loggedInMemberCanManipulateUsers() {
+		// get logged in member with type and status
+		Member loggedInMember = getLoggedInMember();
+		MemberType memberType = loggedInMember.getMemberType();
+		MemberStatus memberStatus = loggedInMember.getMemberStatus();
+
+		// only active headadmins can manipulate users
+		return (memberType == MemberType.HEADADMIN && memberStatus == MemberStatus.ACTIVE);
 	}
 
 }

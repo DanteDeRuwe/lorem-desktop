@@ -7,7 +7,6 @@ import javax.persistence.EntityNotFoundException;
 import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
-import main.domain.Session;
 import main.exceptions.InvalidMemberException;
 import main.exceptions.UserNotAuthorizedException;
 import persistence.GenericDaoJpa;
@@ -93,7 +92,8 @@ public class MemberFacade implements Facade {
 		member.setMemberType(newMember.getMemberType());
 		member.setMemberStatus(newMember.getMemberStatus());
 		member.setProfilePicPath(newMember.getProfilePicPath());
-		if (password != null && !password.isBlank()) member.setPassword(password); // if password field was left empty, leave it as is.
+		if (password != null && !password.isBlank())
+			member.setPassword(password); // if password field was left empty, leave it as is.
 
 		// persist
 		GenericDaoJpa.startTransaction();
