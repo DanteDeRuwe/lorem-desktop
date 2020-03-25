@@ -16,12 +16,12 @@ import persistence.MemberDaoJpa;
 
 public class MemberFacade implements Facade {
 
-	private Member loggedInMember;
 	private MemberDao memberRepo;
+	private LoggedInMemberManager loggedInMemberManager;
 
-	public MemberFacade() {
+	public MemberFacade(LoggedInMemberManager loggedInMemberManager) {
 		setMemberRepo(new MemberDaoJpa());
-		loggedInMember = getMemberByUsername("harm.de.weirdt"); // TODO Hardcoded for now
+		this.loggedInMemberManager = loggedInMemberManager;
 	}
 
 	public Member getMemberByUsername(String username) {
@@ -38,14 +38,6 @@ public class MemberFacade implements Facade {
 
 	public MemberDao getMemberRepo() {
 		return this.memberRepo;
-	}
-
-	public Member getLoggedInMember() {
-		return loggedInMember;
-	}
-
-	public void setLoggedInMember(Member loggedInMember) {
-		this.loggedInMember = loggedInMember;
 	}
 
 	public List<Member> getAllMembers() {
@@ -81,7 +73,7 @@ public class MemberFacade implements Facade {
 
 	public void addMember(Member member) throws UserNotAuthorizedException {
 		// check if user is authorized
-		if (loggedInMember.getMemberType() != MemberType.HEADADMIN)
+		if (loggedInMemberManager.getLoggedInMember().getMemberType() != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
 
 		GenericDaoJpa.startTransaction();
@@ -91,7 +83,7 @@ public class MemberFacade implements Facade {
 
 	public void editMember(Member member, Member newMember) throws UserNotAuthorizedException {
 		// check if user is authorized
-		if (loggedInMember.getMemberType() != MemberType.HEADADMIN)
+		if (loggedInMemberManager.getLoggedInMember().getMemberType() != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
 
 		// delete the old session from the runtime calendar
@@ -116,11 +108,11 @@ public class MemberFacade implements Facade {
 
 	public void deleteUser(Member member) throws UserNotAuthorizedException {
 		// check if user is authorized
-		if (loggedInMember.getMemberType() != MemberType.HEADADMIN)
+		if (loggedInMemberManager.getLoggedInMember().getMemberType() != MemberType.HEADADMIN)
 			throw new UserNotAuthorizedException();
 
 		// make sure the user is not deleting themselves
-		if (member.equals(loggedInMember))
+		if (member.equals(loggedInMemberManager.getLoggedInMember()))
 			throw new IllegalArgumentException();
 
 		GenericDaoJpa.startTransaction();

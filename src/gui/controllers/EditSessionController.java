@@ -17,23 +17,32 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.domain.Member;
 import main.domain.Session;
-import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.DataValidation;
 import main.services.GuiUtil;
 
 public class EditSessionController extends GuiController {
 
 	// Nodes
-	@FXML private JFXTextArea descriptionArea;
-	@FXML private JFXTextField titleField, speakerField, durationField, locationField, capacityField;
-	@FXML private JFXDatePicker startDateField;
-	@FXML private JFXTimePicker startTimeField;
-	@FXML private Label validationLabel, headerText;
-	@FXML private JFXButton confirmButton, cancelButton;
-	@FXML private JFXTextField externalLinkField;
-    @FXML private JFXTextField typeField;
+	@FXML
+	private JFXTextArea descriptionArea;
+	@FXML
+	private JFXTextField titleField, speakerField, durationField, locationField, capacityField;
+	@FXML
+	private JFXDatePicker startDateField;
+	@FXML
+	private JFXTimePicker startTimeField;
+	@FXML
+	private Label validationLabel, headerText;
+	@FXML
+	private JFXButton confirmButton, cancelButton;
+	@FXML
+	private JFXTextField externalLinkField;
+	@FXML
+	private JFXTextField typeField;
 
 	// Fields
 	Session sessionToEdit;
@@ -96,8 +105,8 @@ public class EditSessionController extends GuiController {
 
 	private void resetView() {
 		validationLabel.setText("");
-		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField, externalLinkField, typeField)
-				.forEach(tf -> tf.setText(""));
+		Stream.<TextField>of(titleField, speakerField, durationField, locationField, capacityField, externalLinkField,
+				typeField).forEach(tf -> tf.setText(""));
 
 		descriptionArea.setText("");
 		startDateField.setValue(null);
@@ -107,29 +116,22 @@ public class EditSessionController extends GuiController {
 	private boolean allFieldsOk() {
 		boolean titleFilledIn = DataValidation.textFilledIn(titleField, validationLabel, "Titel is verplicht");
 		boolean durationFilledIn = DataValidation.textFilledIn(durationField, validationLabel, "Duurtijd is verplicht");
-		boolean durationIsDuration = DataValidation.isDuration(
-				durationField, validationLabel,
-				"Duurtijd moet van het formaat (u)u:mm zijn"
-		);
+		boolean durationIsDuration = DataValidation.isDuration(durationField, validationLabel,
+				"Duurtijd moet van het formaat (u)u:mm zijn");
 
-		boolean startDateFilledIn = DataValidation.dateFilledIn(
-				startDateField, validationLabel,
-				"Startdatum is verplicht"
-		);
-		boolean startTimeFilledIn = DataValidation.timeFilledIn(
-				startTimeField, validationLabel,
-				"Starttijd is verplicht"
-		);
+		boolean startDateFilledIn = DataValidation.dateFilledIn(startDateField, validationLabel,
+				"Startdatum is verplicht");
+		boolean startTimeFilledIn = DataValidation.timeFilledIn(startTimeField, validationLabel,
+				"Starttijd is verplicht");
 
-		boolean capacityNumeric = DataValidation.textNumeric(
-				capacityField, validationLabel,
-				"Capaciteit moet een getal zijn"
-		);
+		boolean capacityNumeric = DataValidation.textNumeric(capacityField, validationLabel,
+				"Capaciteit moet een getal zijn");
 		boolean externalLinkOk;
 		if (externalLinkField.getText() == null || externalLinkField.getText().isBlank()) {
 			externalLinkOk = true;
 		} else {
-			externalLinkOk = DataValidation.textExternalLink(externalLinkField, validationLabel, "URL van de externe link is ongeldig");
+			externalLinkOk = DataValidation.textExternalLink(externalLinkField, validationLabel,
+					"URL van de externe link is ongeldig");
 		}
 
 		return titleFilledIn && durationFilledIn && durationIsDuration && startDateFilledIn && startTimeFilledIn
@@ -156,27 +158,25 @@ public class EditSessionController extends GuiController {
 
 		// Try to create a new session, all business logic is handled there already
 		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
-		MemberFacade mf = (MemberFacade) getMainController().getMemberFacade();
 
-		Member organizer = mf.getLoggedInMember();
+		Member organizer = getMainController().getLoggedInMemberManager().getLoggedInMember();
 
 		try {
 			// Construct session template with all updated fields
-			Session template = scf.createSessionFromFields(
-					organizer, title, description, speaker, startDate, startTime, duration, location, capacity, externalLink, type
-			);
+			Session template = scf.createSessionFromFields(organizer, title, description, speaker, startDate, startTime,
+					duration, location, capacity, externalLink, type);
 
 			// Edit the session
 			scf.editSession(sessionToEdit, template);
-
-			// if editing is succesful
 			getMainController().getSessionSceneController().updateWithSession(sessionToEdit);
 			goBack(); // clears fields and goes back to details view
-
 		} catch (InvalidSessionException e) {
 			if (e.getMessage() != null) {
 				validationLabel.setText(e.getMessage());
 			}
+		} catch (UserNotAuthorizedException e) {
+			Alerts.errorAlert("Sessie wijzigen", "Je hebt niet de juiste machtigingen om deze sessie te wijzigen.")
+					.show();
 		}
 	}
 

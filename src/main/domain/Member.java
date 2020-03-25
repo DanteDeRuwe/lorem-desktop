@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Member.findByUsername", query = "select m from Member m where m.username = :username") })
@@ -19,6 +21,7 @@ public class Member {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private long member_id;
 	private String username;
+	private String password;
 	private String firstName;
 	private String lastName;
 
@@ -143,5 +146,16 @@ public class Member {
 	public int countMissedSessions() {
 		return this.registrations.size() - this.attendances.size();
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
+	}
 	
+	public boolean passwordCorrect(String password) {
+		return BCrypt.checkpw(password, this.getPassword());
+	}
 }

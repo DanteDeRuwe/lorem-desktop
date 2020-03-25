@@ -9,7 +9,8 @@ import main.services.GuiUtil;
 
 public class SessionTabsController extends GuiController {
 
-	@FXML private AnchorPane infoTab, announcementTab;
+	@FXML
+	private AnchorPane infoTab, announcementTab;
 
 	private InfoTabController infoTabController;
 	private AnnouncementTabController announcementTabController;
@@ -25,7 +26,7 @@ public class SessionTabsController extends GuiController {
 		GuiUtil.bindAnchorPane(infoTabRoot, infoTab);
 
 		// we will need a facade on sessionlevel (for announcements, media, feedback...)
-		sessionFacade = new SessionFacade();
+		sessionFacade = new SessionFacade(getMainController().getLoggedInMemberManager());
 
 		// Announcement Tab
 		AnchorPane announcementTabRoot = loadFXML("sessions/tabs/AnnouncementTab.fxml", announcementTabController,

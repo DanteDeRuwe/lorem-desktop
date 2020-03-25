@@ -3,15 +3,15 @@ package gui.controllers;
 import com.jfoenix.controls.JFXDatePicker;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.GuiUtil;
 
-public class ModifyCalendarController extends GuiController {
+public class EditCalendarController extends GuiController {
 
 	@FXML
 	private Label topLabel;
@@ -49,12 +49,12 @@ public class ModifyCalendarController extends GuiController {
 			goBack();
 		} catch (IllegalArgumentException e) {
 			if (e.getMessage().equals("Academic years must start and end in consecutive years")) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Kalender wijzigen");
-				alert.setHeaderText("Fout");
-				alert.setContentText("Een academisch jaar moet starten en eindigen in opeenvolgende jaren");
-				alert.showAndWait();
+				Alerts.errorAlert("Kalender wijzigen",
+						"Een academiejaar moet starten en eindigen in opeenvolgende jaren").showAndWait();
 			}
+		} catch (UserNotAuthorizedException e) {
+			Alerts.errorAlert("Kalender wijzigen", "Je hebt niet de juiste machtigingen om deze kalender te wijzigen.")
+					.show();
 		}
 	}
 

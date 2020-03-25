@@ -13,7 +13,7 @@ import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
 import main.services.DataValidation;
 
-public class NewAnnouncementController extends GuiController {
+public class EditAnnouncementController extends GuiController {
 
 	@FXML
 	private JFXTextField titleField;
@@ -25,26 +25,32 @@ public class NewAnnouncementController extends GuiController {
 	private Label validationLabel, headerText;
 
 	private AnnouncementTabController atc;
+	private Announcement inspectedAnnouncement;
 	private Session inspectedSession;
+	private SessionFacade sf;
 
 	@FXML
 	public void initialize() {
+		sf = (SessionFacade) getFacade();
 
 		atc = (AnnouncementTabController) getParentController();
-		setInspectedSession(atc.getInspectedSession());
+		inspectedSession = atc.getInspectedSession();
+		inspectedAnnouncement = atc.getInspectedAnnouncement();
 
-		updateHeader();
+		headerText.setText(String.format("Wijzig aankondiging \"%s\"", inspectedAnnouncement.getTitle()));
+		fillFields();
 
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
-		confirmButton.setOnAction(e -> handleCreate());
+		confirmButton.setOnAction(e -> handleEdit());
 	}
 
-	public void updateHeader() {
-		headerText.setText(String.format("Nieuwe aankondiging voor \"%s\"", inspectedSession.getTitle()));
+	private void fillFields() {
+		titleField.setText(inspectedAnnouncement.getTitle());
+		textArea.setText(inspectedAnnouncement.getText());
 	}
 
-	private void handleCreate() {
+	private void handleEdit() {
 
 		// title is mandatory, exit the function if it's not filled in
 		if (!DataValidation.textFilledIn(titleField, validationLabel, "Titel is verplicht"))
@@ -54,15 +60,16 @@ public class NewAnnouncementController extends GuiController {
 		String title = titleField.getText();
 		String text = textArea.getText();
 
-		SessionFacade sf = (SessionFacade) getFacade();
-		Announcement a = sf.createAnnouncementFromFields(
+		// Construct announcement template with all updated fields
+		Announcement template = sf.createAnnouncementFromFields(
 				getMainController().getLoggedInMemberManager().getLoggedInMember(), text, title);
 
+		// Edit the session
 		try {
-			sf.addAnnouncement(a, inspectedSession);
+			sf.editAnnouncement(inspectedAnnouncement, template, inspectedSession);
 		} catch (UserNotAuthorizedException e) {
-			Alerts.errorAlert("Aankondiging verwijderen",
-					"Je hebt niet de juiste machtigingen om deze aankondiging te verwijderen.");
+			Alerts.errorAlert("Aankondiging bewerken",
+					"Je hebt niet de juiste machtigingen om deze aankondiging te bewerken.");
 		}
 
 		goBack();
@@ -81,12 +88,12 @@ public class NewAnnouncementController extends GuiController {
 		textArea.setText("");
 	}
 
-	public Session getInspectedSession() {
-		return inspectedSession;
+	public Announcement getInspectedAnnouncement() {
+		return inspectedAnnouncement;
 	}
 
-	public void setInspectedSession(Session inspectedSession) {
-		this.inspectedSession = inspectedSession;
+	public void setInspectedAnnouncement(Announcement inspectedAnnouncement) {
+		this.inspectedAnnouncement = inspectedAnnouncement;
 	}
 
 }

@@ -1,12 +1,10 @@
 package gui.controllers;
 
-import java.util.Optional;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
@@ -14,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import main.domain.Announcement;
 import main.domain.Session;
 import main.domain.facades.SessionFacade;
+import main.exceptions.UserNotAuthorizedException;
+import main.services.Alerts;
 import main.services.AnnouncementCellFactory;
 import main.services.GuiUtil;
 
@@ -31,18 +31,8 @@ public class AnnouncementTabController extends GuiController {
 	@FXML
 	private AnchorPane announcementOverview;
 
-	private GuiController newAnnouncementController;
-	private AnchorPane newAnnouncement;
-
 	@FXML
 	public void initialize() {
-
-		// initialize controllers
-		newAnnouncementController = new NewAnnouncementController();
-
-		// load fxml
-		newAnnouncement = loadFXML("sessions/tabs/EditOrCreateAnnouncement.fxml", newAnnouncementController,
-				getFacade());
 
 		// fill the list
 		announcementListView.setCellFactory(new AnnouncementCellFactory<Announcement>());
@@ -76,19 +66,10 @@ public class AnnouncementTabController extends GuiController {
 		announcementListView.setItems(FXCollections.observableArrayList(announcements));
 	}
 
-	public void setInspectedSession(Session session) {
-		inspectedSession = session;
-		update();
-		if (session == null)
-			return;
-		((NewAnnouncementController) newAnnouncementController).updateHeader(session.getTitle());
-	}
-
-	public Session getInspectedSession() {
-		return inspectedSession;
-	}
-
 	private void handleCreate() {
+		NewAnnouncementController newAnnouncementController = new NewAnnouncementController();
+		AnchorPane newAnnouncement = loadFXML("sessions/tabs/EditOrCreateAnnouncement.fxml", newAnnouncementController,
+				getFacade());
 		GuiUtil.bindAnchorPane(newAnnouncement, announcementTabRoot);
 	}
 
@@ -97,20 +78,43 @@ public class AnnouncementTabController extends GuiController {
 	}
 
 	private void handleDelete() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Aankondiging verwijderen");
-		alert.setHeaderText("Waarschuwing");
-		alert.setContentText(String.format("Ben je zeker dat je de aankondiging \"%s\" wilt verwijderen?",
-				inspectedAnnouncement.getTitle()));
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			((SessionFacade) getFacade()).removeAnnouncement(inspectedAnnouncement, inspectedSession);
-			update();
+		Alert alert = Alerts.confirmationAlert("Aankondiging verwijderen", String.format(
+				"Ben je zeker dat je de aankondiging \"%s\" wilt verwijderen?", inspectedAnnouncement.getTitle()));
+		if (alert.showAndWait().get() == ButtonType.OK) {
+			alert.close();
+			try {
+				((SessionFacade) getFacade()).removeAnnouncement(inspectedAnnouncement, inspectedSession);
+				update();
+			} catch (UserNotAuthorizedException e) {
+				Alerts.errorAlert("Aankondiging verwijderen",
+						"Je hebt niet de juiste machtigingen om deze aankondiging te verwijderen.");
+			}
 		}
 	}
 
 	private void handleEdit() {
-		// TODO Auto-generated method stub
+		EditAnnouncementController editAnnouncementController = new EditAnnouncementController();
+		AnchorPane editAnnouncement = loadFXML("sessions/tabs/EditOrCreateAnnouncement.fxml",
+				editAnnouncementController, getFacade());
+
+		GuiUtil.bindAnchorPane(editAnnouncement, announcementTabRoot);
+	}
+
+	public void setInspectedSession(Session session) {
+		inspectedSession = session;
+		update();
+	}
+
+	public Session getInspectedSession() {
+		return inspectedSession;
+	}
+
+	public Announcement getInspectedAnnouncement() {
+		return inspectedAnnouncement;
+	}
+
+	public void setInspectedAnnouncement(Announcement inspectedAnnouncement) {
+		this.inspectedAnnouncement = inspectedAnnouncement;
 	}
 
 }
