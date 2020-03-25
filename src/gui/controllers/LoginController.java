@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -36,6 +37,9 @@ public class LoginController {
     @FXML
     private JFXButton loginButton;
     
+    @FXML
+    private Label validationLabel;
+    
     // facades
     LoggedInMemberManager loggedInMemberManager;
     MemberFacade memberFacade;
@@ -46,17 +50,14 @@ public class LoginController {
 		
 
 		// initialize facades
-		loggedInMemberManager = loggedInMemberManager.getInstance();
+		loggedInMemberManager = LoggedInMemberManager.getInstance();
 		memberFacade = new MemberFacade(loggedInMemberManager);
 
 		// Event handlers
 		loginButton.setOnAction(e -> {
 			try {
 				tryLogin();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			} catch (IOException e1) {}
 		});
 
 	}
@@ -64,6 +65,8 @@ public class LoginController {
 	private void tryLogin() throws IOException {
 		if (passwordOk()) {
 			loadMain();
+		} else {
+			validationLabel.setText("Gebruikersnaam of wachtwoord verkeerd");
 		}
 	}
 
