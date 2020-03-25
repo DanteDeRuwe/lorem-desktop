@@ -20,6 +20,8 @@ open module javag09 {
 	requires org.mockito;
 	requires org.junit.jupiter.params;
 	requires java.desktop;
+	
+	requires jBCrypt;
 
 
 }
