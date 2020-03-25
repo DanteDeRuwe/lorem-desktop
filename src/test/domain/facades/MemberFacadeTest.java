@@ -19,6 +19,7 @@ import main.domain.Member;
 import main.domain.MemberType;
 import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
+import main.exceptions.MustBeAtLeastOneHeadAdminException;
 import main.exceptions.UserNotAuthorizedException;
 import persistence.MemberDao;
 
