@@ -35,11 +35,13 @@ public class NewUserController extends GuiController {
 	@FXML
 	private Label validationLabel;
 
-	/*
-	 * Init
-	 */
+	private UserSceneController usc;
+	MemberFacade mf;
+
 	@FXML
 	public void initialize() {
+		usc = ((UserSceneController) getParentController());
+		mf = (MemberFacade) getFacade();
 
 		// limit char counts for all fields (for db)
 		GuiUtil.limitCharacterCount(
@@ -63,7 +65,7 @@ public class NewUserController extends GuiController {
 	private void goBack() {
 		// clears fields and goes back to details view
 		resetView();
-		((UserSceneController) getParentController()).displayOnRightPane("UserDetails");
+		usc.displayOnRightPane("UserDetails");
 	}
 
 	private void resetView() {
@@ -109,11 +111,8 @@ public class NewUserController extends GuiController {
 		MemberStatus status = userStatusField.getValue();
 		String profilePicPath = profilePicField.getText();
 
-		if (profilePicPath == null || profilePicPath.isBlank()) {
+		if (profilePicPath == null || profilePicPath.isBlank())
 			profilePicPath = "";
-		}
-
-		MemberFacade mf = (MemberFacade) getFacade();
 
 		try {
 			// Construct user
@@ -129,7 +128,7 @@ public class NewUserController extends GuiController {
 			}
 
 			// if adding is successful
-			getMainController().getUserSceneController().updateWithMember(m); // update tableview with new member
+			usc.updateWithMember(m); // update tableview with new member
 			goBack(); // clears fields and goes back to details view
 
 		} catch (InvalidMemberException e) {

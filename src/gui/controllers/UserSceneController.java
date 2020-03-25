@@ -30,12 +30,13 @@ public class UserSceneController extends GuiController {
 	@FXML
 	private TableColumn<Member, Object> typeColumn, statusColumn;
 
-	/*
-	 * Init
-	 */
+	private MemberFacade mf;
+	private UserDetailsController udc;
 
 	@FXML
 	public void initialize() {
+		mf = (MemberFacade) getFacade();
+		udc = ((UserDetailsController) userDetailsController);
 
 		// initialize controllers
 		userDetailsController = new UserDetailsController();
@@ -43,13 +44,13 @@ public class UserSceneController extends GuiController {
 		userFiltersController = new UserFiltersController();
 
 		// load FXML once, this also sets parentcontrollers and facades
-		userDetails = loadFXML("users/UserDetails.fxml", userDetailsController, this.getFacade());
-		newUser = loadFXML("users/EditOrCreateUser.fxml", newUserController, this.getFacade());
-		userFilters = loadFXML("users/UserFilters.fxml", userFiltersController, this.getFacade());
+		userDetails = loadFXML("users/UserDetails.fxml", userDetailsController, getFacade());
+		newUser = loadFXML("users/EditOrCreateUser.fxml", newUserController, getFacade());
+		userFilters = loadFXML("users/UserFilters.fxml", userFiltersController, getFacade());
 
 		// Center Panel
 		GuiUtil.setTablePlaceholderText(userTable, "Het is hier nogal leeg...");
-		fillTableColumns(((MemberFacade) getFacade()).getAllMembers());
+		fillTableColumns(mf.getAllMembers());
 
 		// Right panel
 		GuiUtil.bindAnchorPane(userDetails, rightPane);
@@ -73,25 +74,9 @@ public class UserSceneController extends GuiController {
 
 	}
 
-	/*
-	 * Helpers
-	 */
-
-	void fillTableColumns(List<Member> members) {
-		GuiUtil.fillColumn(lastNameColumn, "lastName", 40, 200);
-		GuiUtil.fillColumn(firstNameColumn, "firstName", 40, 200);
-		GuiUtil.fillColumn(usernameColumn, "username", 40, 200);
-		GuiUtil.fillColumnWithObjectToString(typeColumn, "memberType", 40, 200);
-		GuiUtil.fillColumnWithObjectToString(statusColumn, "memberStatus", 40, 200);
-
-		userTable.setItems(FXCollections.observableArrayList(members));
-		userTable.getSortOrder().add(usernameColumn);
-		userTable.refresh();
-	}
-
 	void update() {
 		// update the view
-		fillTableColumns(((MemberFacade) getFacade()).getAllMembers());
+		fillTableColumns(mf.getAllMembers());
 		userTable.getSelectionModel().selectFirst(); // select first user
 	}
 
@@ -116,7 +101,19 @@ public class UserSceneController extends GuiController {
 	}
 
 	public Member getInspectedUser() {
-		return ((UserDetailsController) userDetailsController).getInspectedUser();
+		return udc.getInspectedUser();
+	}
+
+	public void fillTableColumns(List<Member> members) {
+		GuiUtil.fillColumn(lastNameColumn, "lastName", 40, 200);
+		GuiUtil.fillColumn(firstNameColumn, "firstName", 40, 200);
+		GuiUtil.fillColumn(usernameColumn, "username", 40, 200);
+		GuiUtil.fillColumnWithObjectToString(typeColumn, "memberType", 40, 200);
+		GuiUtil.fillColumnWithObjectToString(statusColumn, "memberStatus", 40, 200);
+
+		userTable.setItems(FXCollections.observableArrayList(members));
+		userTable.getSortOrder().add(usernameColumn);
+		userTable.refresh();
 	}
 
 }

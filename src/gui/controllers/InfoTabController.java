@@ -36,10 +36,12 @@ public class InfoTabController extends GuiController {
 	private Hyperlink externalUrlHyperlink;
 
 	private SessionSceneController ssc;
+	private SessionCalendarFacade scf;
 
 	@FXML
 	public void initialize() {
 		ssc = getMainController().getSessionSceneController();
+		scf = (SessionCalendarFacade) getFacade();
 		inspectedSession = ssc.getInspectedSession();
 
 		// Event handlers
@@ -59,12 +61,12 @@ public class InfoTabController extends GuiController {
 
 		if (result.get() == ButtonType.OK) {
 			try {
-				((SessionCalendarFacade) getFacade()).deleteSession(inspectedSession);
+				scf.deleteSession(inspectedSession);
 			} catch (UserNotAuthorizedException e) {
 				Alerts.errorAlert("Sessie wijzigen",
 						"Je hebt niet de juiste machtigingen om deze sessie te verwijderen.").show();
 			}
-			getMainController().getSessionSceneController().update();
+			ssc.update();
 		}
 	}
 
@@ -85,10 +87,6 @@ public class InfoTabController extends GuiController {
 			sessionSpeaker.setText(inspectedSession.getSpeakerName());
 		} else
 			byLabels.setVisible(false);
-	}
-
-	public Session getInspectedSession() {
-		return inspectedSession;
 	}
 
 	public void setInspectedSession(Session inspectedSession) {

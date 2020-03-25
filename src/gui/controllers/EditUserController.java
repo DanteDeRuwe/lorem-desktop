@@ -35,14 +35,19 @@ public class EditUserController extends GuiController {
 	@FXML
 	private Label validationLabel, headerText;
 
-	// Fields
-	Member userToEdit;
+	private Member userToEdit;
+	private UserSceneController usc;
+	private SessionSceneController ssc;
+	private AccountSceneController asc;
 
 	/*
 	 * Init
 	 */
 	@FXML
 	public void initialize() {
+		usc = (UserSceneController) getParentController();
+		ssc = getMainController().getSessionSceneController();
+		asc = getMainController().getAccountSceneController();
 
 		// limit char counts for all fields (for db)
 		GuiUtil.limitCharacterCount(
@@ -62,7 +67,7 @@ public class EditUserController extends GuiController {
 		// Set combobox options
 		userTypeField.getItems().setAll(MemberType.values());
 		userStatusField.getItems().setAll(MemberStatus.values());
-		
+
 		// Pre-fill the fields
 		fillFields();
 
@@ -87,7 +92,7 @@ public class EditUserController extends GuiController {
 	private void goBack() {
 		// clears fields and goes back to details view
 		resetView();
-		((UserSceneController) getParentController()).displayOnRightPane("UserDetails");
+		usc.displayOnRightPane("UserDetails");
 	}
 
 	private void resetView() {
@@ -149,19 +154,19 @@ public class EditUserController extends GuiController {
 				Alerts.errorAlert("Gebruiker wijzigen",
 						"Je hebt niet de juiste machtigingen om een gebruiker te wijzigen.").showAndWait();
 			} catch (MustBeAtLeastOneHeadAdminException e) {
-				Alerts.errorAlert("Gebruiker wijzigen",
-						"Er moet minstens een hoofdverantwoordelijke zijn.").showAndWait();
+				Alerts.errorAlert("Gebruiker wijzigen", "Er moet minstens een hoofdverantwoordelijke zijn.")
+						.showAndWait();
 			}
 
 			// if adding is successful
-			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new member
+			usc.updateWithMember(userToEdit); // update tableview with new member
 
 			// if a user is changed, their sessions should updated in the sessions scene
-			if (getMainController().getSessionSceneController() != null) {
-				getMainController().getSessionSceneController().update();
-			}
+			if (ssc != null)
+				ssc.update();
+			if (asc != null)
+				asc.update();
 
-			getMainController().getAccountSceneController().update();
 			goBack(); // clears fields and goes back to details view
 
 		} catch (InvalidMemberException e) {

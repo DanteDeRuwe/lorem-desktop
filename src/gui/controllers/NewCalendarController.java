@@ -18,16 +18,21 @@ import main.services.GuiUtil;
 public class NewCalendarController extends GuiController {
 
 	@FXML
-	private Label topLabel;
+	private Label topLabel, validationLabel;
 	@FXML
 	private JFXDatePicker startDatePicker, endDatePicker;
 	@FXML
 	private Button saveButton, cancelButton;
-	@FXML
-	Label validationLabel;
+
+	SessionCalendarFacade scf;
+	CalendarSceneController csc;
 
 	@FXML
 	public void initialize() {
+		scf = ((SessionCalendarFacade) getFacade());
+		csc = getMainController().getCalendarSceneController();
+
+		// set the right header
 		topLabel.setText("Nieuwe Kalender");
 
 		// Date picker format
@@ -47,11 +52,10 @@ public class NewCalendarController extends GuiController {
 		LocalDate start = startDatePicker.getValue();
 		LocalDate end = endDatePicker.getValue();
 
-		SessionCalendarFacade scf = ((SessionCalendarFacade) getFacade());
 		try {
 			SessionCalendar sc = scf.createSessionCalendar(start, end);
 			scf.addSessionCalendar(sc);
-			getMainController().getCalendarSceneController().update();
+			csc.update();
 			goBack();
 		} catch (InvalidSessionCalendarException isce) {
 			validationLabel.setText(validationLabel.getText() + "\n" + isce.getMessage());
@@ -69,7 +73,7 @@ public class NewCalendarController extends GuiController {
 	}
 
 	private void goBack() {
-		getMainController().getCalendarSceneController().displayCalendarList();
+		csc.displayCalendarList();
 	}
 
 }

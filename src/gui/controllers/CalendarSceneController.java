@@ -24,11 +24,18 @@ public class CalendarSceneController extends GuiController {
 	private Button selectButton, editButton, addButton;
 
 	private NewCalendarController newCalendarController;
+	private MainController mc;
+
 	private ObservableList<SessionCalendar> calendarList;
 	private AnchorPane editCalendar, newCalendar;
 
+	private SessionCalendarFacade scf;
+
 	@FXML
 	public void initialize() {
+		mc = getMainController();
+		scf = ((SessionCalendarFacade) getFacade());
+
 		// Placeholder text when calendarListView is empty
 		GuiUtil.setListPlaceholderText(calendarListView,
 				"Het is hier nogal leeg...\nProbeer eens een kalender toe te voegen!");
@@ -61,8 +68,7 @@ public class CalendarSceneController extends GuiController {
 	private void fillList() {
 
 		// make a list
-		calendarList = FXCollections
-				.observableArrayList(((SessionCalendarFacade) getFacade()).getAllSessionCalendars());
+		calendarList = FXCollections.observableArrayList(scf.getAllSessionCalendars());
 
 		// sort by start date
 		calendarList.sort(Comparator.comparing(SessionCalendar::getStartDate));
@@ -78,13 +84,13 @@ public class CalendarSceneController extends GuiController {
 	private void onCalendarSelect() {
 
 		// Set the calendar
-		((SessionCalendarFacade) getFacade()).setCalendar(getInspectedCalendar());
+		scf.setCalendar(getInspectedCalendar());
 
 		// Set session tabs enabled, update it, and switch to it
-		getMainController().setSessionTabEnabled(true);
-		getMainController().setStatsTabEnabled(true);
-		getMainController().getSessionSceneController().update();
-		getMainController().switchToSessionTab();
+		mc.setSessionTabEnabled(true);
+		mc.setStatsTabEnabled(true);
+		mc.getSessionSceneController().update();
+		mc.switchToSessionTab();
 	}
 
 	private void onCalendarEdit() {

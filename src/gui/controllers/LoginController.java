@@ -17,7 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import main.Main;
 import main.domain.Member;
 import main.domain.MemberType;
 import main.domain.facades.LoggedInMemberManager;
@@ -93,7 +92,6 @@ public class LoginController {
 		Parent rootNode = fxmlLoader.load();
 
 		Scene scene = new Scene(rootNode);
-
 		Stage stage = new Stage();
 
 		scene.getStylesheets().add(getClass().getResource("/resources/css/style.css").toExternalForm());

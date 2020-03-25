@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import main.domain.Member;
 import main.domain.MemberStatus;
@@ -33,8 +34,12 @@ public class UserFiltersController extends GuiController {
 																			// order does not change
 	private final Map<String, MemberStatus> statusMap = new LinkedHashMap<>();
 
+	private UserSceneController usc;
+
 	@FXML
 	public void initialize() {
+		usc = getMainController().getUserSceneController();
+
 		// Fill maps
 		Stream.of(MemberStatus.values()).forEach(ms -> statusMap.put(ms.toString(), ms));
 		Stream.of(MemberType.values()).forEach(mt -> typeMap.put(mt.toString(), mt));
@@ -55,21 +60,15 @@ public class UserFiltersController extends GuiController {
 			newUserButton.setOnAction(e -> handleNewUser());
 
 		// Filtering
-		lastNameFilterField.textProperty().addListener((obs, oldText, newText) -> {
-			getMainController().getUserSceneController().fillTableColumns(filter());
-		});
-		firstNameFilterField.textProperty().addListener((obs, oldText, newText) -> {
-			getMainController().getUserSceneController().fillTableColumns(filter());
-		});
-		usernameFilterField.textProperty().addListener((obs, oldText, newText) -> {
-			getMainController().getUserSceneController().fillTableColumns(filter());
-		});
-		typeFilterBox.valueProperty().addListener((obv, oldValue, newValue) -> {
-			getMainController().getUserSceneController().fillTableColumns(filter());
-		});
-		statusFilterBox.valueProperty().addListener((obv, oldValue, newValue) -> {
-			getMainController().getUserSceneController().fillTableColumns(filter());
-		});
+		ChangeListener<String> listener = (x, y, z) -> {
+			usc.fillTableColumns(filter());
+		};
+
+		lastNameFilterField.textProperty().addListener(listener);
+		firstNameFilterField.textProperty().addListener(listener);
+		usernameFilterField.textProperty().addListener(listener);
+		typeFilterBox.valueProperty().addListener(listener);
+		statusFilterBox.valueProperty().addListener(listener);
 	}
 
 	private List<Member> filter() {
@@ -90,7 +89,7 @@ public class UserFiltersController extends GuiController {
 	}
 
 	private void handleNewUser() {
-		((UserSceneController) getParentController()).displayOnRightPane("NewUser");
+		usc.displayOnRightPane("NewUser");
 	}
 
 }

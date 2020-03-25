@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import main.domain.Member;
 import main.domain.Session;
 import main.domain.SessionStatus;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
 import main.exceptions.UserNotAuthorizedException;
@@ -40,11 +41,16 @@ public class NewSessionController extends GuiController {
 	@FXML
 	private JFXButton confirmButton, cancelButton;
 
+	private SessionSceneController ssc;
+	private SessionCalendarFacade scf;
+
 	/*
 	 * Init
 	 */
 	@FXML
 	public void initialize() {
+		scf = (SessionCalendarFacade) getFacade();
+		ssc = ((SessionSceneController) getParentController());
 
 		// 24hour view on the time picker
 		GuiUtil.fixTimePicker(startTimeField);
@@ -69,7 +75,7 @@ public class NewSessionController extends GuiController {
 	private void goBack() {
 		// clears fields and goes back to details view
 		resetView();
-		((SessionSceneController) getParentController()).displayOnRightPane("SessionTabs");
+		ssc.displayOnRightPane("SessionTabs");
 	}
 
 	private void resetView() {
@@ -126,10 +132,8 @@ public class NewSessionController extends GuiController {
 		String type = typeField.getText();
 
 		// Create a new session via facades
-		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
 
-		Member organizer = getMainController().getLoggedInMemberManager().getLoggedInMember();
-
+		Member organizer = LoggedInMemberManager.getInstance().getLoggedInMember();
 		try {
 			// Construct session
 			Session s = scf.createSessionFromFields(organizer, title, description, speaker, startDate, startTime,
@@ -142,7 +146,7 @@ public class NewSessionController extends GuiController {
 			scf.addSession(s);
 
 			// if adding is succesful
-			getMainController().getSessionSceneController().updateWithSession(s); // update tableview with new session
+			ssc.updateWithSession(s); // update tableview with new session
 			goBack(); // clears fields and goes back to details view
 
 		} catch (InvalidSessionException e) {

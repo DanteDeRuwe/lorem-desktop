@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import main.domain.Member;
 import main.domain.Session;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.SessionCalendarFacade;
 import main.exceptions.InvalidSessionException;
 import main.exceptions.UserNotAuthorizedException;
@@ -41,14 +42,14 @@ public class EditSessionController extends GuiController {
 	@FXML
 	private JFXButton confirmButton, cancelButton;
 
-	// Fields
-	Session sessionToEdit;
+	private Session sessionToEdit;
+	private SessionSceneController ssc;
+	private SessionCalendarFacade scf;
 
-	/*
-	 * Init
-	 */
 	@FXML
 	public void initialize() {
+		ssc = ((SessionSceneController) getParentController());
+		scf = (SessionCalendarFacade) getFacade();
 
 		// 24hour view on the time picker
 		GuiUtil.fixTimePicker(startTimeField);
@@ -102,7 +103,7 @@ public class EditSessionController extends GuiController {
 	private void goBack() {
 		// clears fields and goes back to details view
 		resetView();
-		((SessionSceneController) getParentController()).displayOnRightPane("SessionTabs");
+		ssc.displayOnRightPane("SessionTabs");
 	}
 
 	private void resetView() {
@@ -159,9 +160,7 @@ public class EditSessionController extends GuiController {
 		String type = typeField.getText();
 
 		// Try to create a new session, all business logic is handled there already
-		SessionCalendarFacade scf = (SessionCalendarFacade) getFacade();
-
-		Member organizer = getMainController().getLoggedInMemberManager().getLoggedInMember();
+		Member organizer = LoggedInMemberManager.getInstance().getLoggedInMember();
 
 		try {
 			// Construct session template with all updated fields
@@ -170,7 +169,7 @@ public class EditSessionController extends GuiController {
 
 			// Edit the session
 			scf.editSession(sessionToEdit, template);
-			getMainController().getSessionSceneController().updateWithSession(sessionToEdit);
+			ssc.updateWithSession(sessionToEdit);
 			goBack(); // clears fields and goes back to details view
 		} catch (InvalidSessionException e) {
 			if (e.getMessage() != null) {

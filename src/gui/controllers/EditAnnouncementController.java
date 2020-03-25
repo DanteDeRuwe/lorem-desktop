@@ -91,13 +91,4 @@ public class EditAnnouncementController extends GuiController {
 		titleField.setText("");
 		textArea.setText("");
 	}
-
-	public Announcement getInspectedAnnouncement() {
-		return inspectedAnnouncement;
-	}
-
-	public void setInspectedAnnouncement(Announcement inspectedAnnouncement) {
-		this.inspectedAnnouncement = inspectedAnnouncement;
-	}
-
 }

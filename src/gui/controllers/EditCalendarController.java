@@ -24,6 +24,8 @@ public class EditCalendarController extends GuiController {
 	@FXML
 	Label validationLabel;
 
+	private SessionCalendarFacade scf = ((SessionCalendarFacade) getFacade());
+
 	@FXML
 	public void initialize() {
 		topLabel.setText("Wijzig Kalender");
@@ -49,9 +51,8 @@ public class EditCalendarController extends GuiController {
 			return;
 
 		try {
-			((SessionCalendarFacade) getFacade()).editSessionCalendar(
-					getMainController().getCalendarSceneController().getInspectedCalendar(), startDatePicker.getValue(),
-					endDatePicker.getValue());
+			scf.editSessionCalendar(getMainController().getCalendarSceneController().getInspectedCalendar(),
+					startDatePicker.getValue(), endDatePicker.getValue());
 			fillInFields();
 			getMainController().getCalendarSceneController().update();
 			goBack();

@@ -3,7 +3,6 @@ package gui.controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -31,12 +30,14 @@ public class AnnouncementTabController extends GuiController {
 	@FXML
 	private ListView<Announcement> announcementListView;
 	@FXML
-	private AnchorPane announcementTabRoot;
-	@FXML
-	private AnchorPane announcementOverview;
+	private AnchorPane announcementTabRoot, announcementOverview;
+
+	private SessionFacade sf;
 
 	@FXML
 	public void initialize() {
+
+		sf = ((SessionFacade) getFacade());
 
 		// fill the list
 		announcementListView.setCellFactory(new AnnouncementCellFactory<Announcement>());
@@ -72,11 +73,9 @@ public class AnnouncementTabController extends GuiController {
 	private void fillList() {
 		if (inspectedSession == null)
 			return;
-		Set<Announcement> announcements = inspectedSession.getAnnouncements();
 		List<Announcement> announcementsList = new ArrayList<>();
-		announcementsList.addAll(announcements);
-		Collections.sort(announcementsList);
-		Collections.reverse(announcementsList);
+		announcementsList.addAll(inspectedSession.getAnnouncements());
+		Collections.sort(announcementsList, Collections.reverseOrder());
 		announcementListView.setItems(FXCollections.observableArrayList(announcementsList));
 	}
 
@@ -93,7 +92,7 @@ public class AnnouncementTabController extends GuiController {
 		if (alert.showAndWait().get() == ButtonType.OK) {
 			alert.close();
 			try {
-				((SessionFacade) getFacade()).removeAnnouncement(inspectedAnnouncement, inspectedSession);
+				sf.removeAnnouncement(inspectedAnnouncement, inspectedSession);
 				update();
 			} catch (UserNotAuthorizedException e) {
 				Alerts.errorAlert("Aankondiging verwijderen",

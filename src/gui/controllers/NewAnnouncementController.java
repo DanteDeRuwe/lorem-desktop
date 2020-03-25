@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import main.domain.Announcement;
 import main.domain.Session;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.SessionFacade;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
@@ -27,13 +28,15 @@ public class NewAnnouncementController extends GuiController {
 
 	private AnnouncementTabController atc;
 	private Session inspectedSession;
+	private SessionFacade sf;
 
 	@FXML
 	public void initialize() {
-
 		atc = (AnnouncementTabController) getParentController();
+		sf = (SessionFacade) getFacade();
 		setInspectedSession(atc.getInspectedSession());
 
+		// set the right header text
 		updateHeader();
 
 		// limit char counts for all fields (for db)
@@ -59,10 +62,8 @@ public class NewAnnouncementController extends GuiController {
 		String title = titleField.getText();
 		String text = textArea.getText();
 
-		SessionFacade sf = (SessionFacade) getFacade();
-
-		Announcement a = sf.createAnnouncementFromFields(
-				getMainController().getLoggedInMemberManager().getLoggedInMember(), text.trim(), title.trim());
+		Announcement a = sf.createAnnouncementFromFields(LoggedInMemberManager.getInstance().getLoggedInMember(),
+				text.trim(), title.trim());
 
 		try {
 			sf.addAnnouncement(a, inspectedSession);

@@ -33,25 +33,23 @@ public class SessionSceneController extends GuiController {
 	@FXML
 	private AnchorPane leftPane, middlePane, rightPane;
 	@FXML
-	protected TableView<Session> sessionTable;
+	private TableView<Session> sessionTable;
 	@FXML
 	private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn, capacityColumn,
 			typeColumn;
-
 	@FXML
 	private TableColumn<Session, Object> statusColumn;
-
 	@FXML
 	private TableColumn<Session, LocalDateTime> startColumn;
 	@FXML
 	private TableColumn<Session, Duration> durationColumn;
 
-	/*
-	 * Init
-	 */
+	private SessionCalendarFacade scf;
 
 	@FXML
 	public void initialize() {
+		scf = (SessionCalendarFacade) getFacade();
+
 		// Initialize controllers
 		sessionFiltersController = new SessionFiltersController();
 		sessionTabsController = new SessionTabsController();
@@ -67,7 +65,7 @@ public class SessionSceneController extends GuiController {
 
 		// Center Panel
 		GuiUtil.setTablePlaceholderText(sessionTable, "Het is hier nogal leeg...");
-		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
+		fillTableColumns(scf.getAllSessions());
 
 		// Right panel: activated when selecting a session
 		displayOnRightPane("NothingAndShrink");
@@ -140,7 +138,7 @@ public class SessionSceneController extends GuiController {
 
 	void update() {
 		// update the view
-		fillTableColumns(((SessionCalendarFacade) getFacade()).getAllSessions());
+		fillTableColumns(scf.getAllSessions());
 		((SessionFiltersController) sessionFiltersController).UpdateAcademicYear();
 		sessionTable.getSelectionModel().selectFirst(); // select first session
 	}

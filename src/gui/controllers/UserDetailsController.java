@@ -25,13 +25,18 @@ public class UserDetailsController extends GuiController {
 	@FXML
 	private ImageView profilePicView;
 
+	private UserSceneController usc;
+	private SessionSceneController ssc;
+	private MemberFacade mf;
+
 	@FXML
 	public void initialize() {
-		UserSceneController usc = getMainController().getUserSceneController();
+		usc = getMainController().getUserSceneController();
+		ssc = getMainController().getSessionSceneController();
+		mf = (MemberFacade) getFacade();
 
 		// Hide buttons for manipulating users if not permitted
 		boolean buttonsvisible = LoggedInMemberManager.getInstance().loggedInMemberCanManipulateUsers();
-
 		if (!buttonsvisible) {
 			deleteUserButton.setVisible(false);
 			editUserButton.setVisible(false);
@@ -51,7 +56,7 @@ public class UserDetailsController extends GuiController {
 				inspectedUser.getFullName()));
 		if (alert.showAndWait().get() == ButtonType.OK) {
 			try {
-				((MemberFacade) getFacade()).deleteUser(inspectedUser);
+				mf.deleteUser(inspectedUser);
 			} catch (IllegalArgumentException e) {
 				alert.close();
 				Alerts.errorAlert("Gebruiker verwijderen", "Je kan de ingelogde gebruiker niet verwijderen.")
@@ -60,13 +65,13 @@ public class UserDetailsController extends GuiController {
 				Alerts.errorAlert("Gebruiker verwijderen",
 						"Je hebt niet de juiste machtigingen om een gebruiker te verwijderen.").showAndWait();
 			}
-			getMainController().getUserSceneController().update();
+			usc.update();
 
 			// deleting a user also deletes their sessions, so sessions screen has to be
 			// updated
-			if (getMainController().getSessionSceneController() != null) {
-				getMainController().getSessionSceneController().update();
-			}	
+			if (ssc != null)
+				ssc.update();
+
 		}
 	}
 
@@ -99,7 +104,6 @@ public class UserDetailsController extends GuiController {
 		}
 
 		// Set profile picture
-
 		if (inspectedUser.getProfilePicPath() == null || inspectedUser.getProfilePicPath().isEmpty()) {
 			profilePicView.setImage(new Image(
 					"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"));

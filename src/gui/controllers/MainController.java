@@ -3,12 +3,9 @@ package gui.controllers;
 import com.jfoenix.controls.JFXTabPane;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Control;
 import javafx.scene.control.Tab;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import main.domain.facades.Facade;
 import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
@@ -23,17 +20,17 @@ import main.services.GuiUtil;
  *      - SessionTabs
  *          - InfoTab
  *          - AnnouncementTab
- *          - FeedbackTab
+ *          - SessionStatisticsTab
  *      - NewSession
  *      - ModifySession
  *  - CalendarScene
  *  - UserScene
  *      - UserFilters 
- *       - UserDetails
+ *      - UserDetails
  *      - NewUser
  *      - ModifyUser
  *  - AccountScene
- *  - StatsScene
+ *  - StatisticsScene
  *  - AboutScene
  */
 
@@ -43,7 +40,8 @@ public class MainController extends GuiController {
 	private Facade sessionCalendarFacade, memberFacade;
 
 	// Controllers
-	private GuiController sessionSceneController, calendarSceneController, userSceneController, accountSceneController, statisticsSceneController;
+	private GuiController sessionSceneController, calendarSceneController, userSceneController, accountSceneController,
+			statisticsSceneController;
 
 	private LoggedInMemberManager loggedInMemberManager;
 
@@ -97,10 +95,9 @@ public class MainController extends GuiController {
 		// Set sessiontab disabled in the beginning
 		setSessionTabEnabled(false);
 		setStatsTabEnabled(false);
-		
+
 		GuiUtil.setTooltip(navigationTabs.getTabs().get(1), "Gelieve eerst een kalender te selecteren");
 		GuiUtil.setTooltip(navigationTabs.getTabs().get(4), "Gelieve eerst een kalender te selecteren");
-		
 
 	}
 
@@ -111,14 +108,14 @@ public class MainController extends GuiController {
 			AnchorPane sessionSceneRoot = loadFXML("sessions/SessionScene.fxml", sessionSceneController,
 					sessionCalendarFacade);
 			GuiUtil.bindAnchorPane(sessionSceneRoot, sessionTab);
-			
+
 			GuiUtil.removeTooltip(navigationTabs.getTabs().get(1));
 			GuiUtil.removeTooltip(navigationTabs.getTabs().get(4));
 		}
 
 		navigationTabs.getTabs().get(1).setDisable(!enable);
 	}
-	
+
 	public void setStatsTabEnabled(boolean enable) {
 		if (enable) {
 			statisticsSceneController = new StatisticsSceneController();
@@ -169,7 +166,7 @@ public class MainController extends GuiController {
 	public CalendarSceneController getCalendarSceneController() {
 		return (CalendarSceneController) calendarSceneController;
 	}
-	
+
 	public AccountSceneController getAccountSceneController() {
 		return (AccountSceneController) accountSceneController;
 	}
