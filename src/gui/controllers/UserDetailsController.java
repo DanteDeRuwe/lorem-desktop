@@ -36,7 +36,7 @@ public class UserDetailsController extends GuiController {
 
 	private void handleDeleteUser() {
 		Alert alert = Alerts.confirmationAlert("Gebruiker verwijderen", String
-				.format("Ben je zeker dat je de gebruiker \"%s\" wilt verwijderen?", inspectedUser.getFullName()));
+				.format("Ben je zeker dat je de gebruiker \"%s\" wilt verwijderen? Dit zal ook alle sessies georganiseerd door deze gebruiker verwijderen.", inspectedUser.getFullName()));
 		if (alert.showAndWait().get() == ButtonType.OK) {
 			try {
 				((MemberFacade) getFacade()).deleteUser(inspectedUser);
@@ -49,6 +49,9 @@ public class UserDetailsController extends GuiController {
 						"Je hebt niet de juiste machtigingen om een gebruiker te verwijderen.").showAndWait();
 			}
 			getMainController().getUserSceneController().update();
+			
+			// deleting a user also deletes their sessions, so sessions screen has to be updated
+			getMainController().getSessionSceneController().update();
 		}
 	}
 

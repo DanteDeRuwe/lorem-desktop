@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,7 +59,7 @@ public class Session {
 	private Set<MediaItem> media = new HashSet<>();
 	private Set<FeedbackEntry> feedbackEntries = new HashSet<>();
 
-	@OneToMany(mappedBy = "session")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "session", orphanRemoval = true)
 	private Set<Announcement> announcements = new HashSet<>();
 
 	private SessionStatus sessionStatus;
