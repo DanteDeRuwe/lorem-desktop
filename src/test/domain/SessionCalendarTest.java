@@ -144,23 +144,6 @@ public class SessionCalendarTest {
 		assertEquals(endDate, exSesCal.getEndDate());
 	}
 	
-	private static Stream<Arguments> addCorrectEndDates() {
-		return Stream.of(
-				Arguments.of(LocalDate.of(2021, 9, 22)),
-				Arguments.of(LocalDate.of(2021, 9, 23)),
-				Arguments.of(LocalDate.of(2021, 9, 24)),
-				Arguments.of(LocalDate.of(2021, 9, 25)),
-				Arguments.of(LocalDate.of(2021, 9, 26))
-		);
-	}
-	
-	@ParameterizedTest
-	@MethodSource("addCorrectStartDates")
-	public void setEndDate_CorrectEndDate_SetsEndDate(LocalDate end) {
-		exSesCal.setEndDate(end);
-		assertEquals(end, exSesCal.getEndDate());
-	}
-	
 	@ParameterizedTest
 	@NullSource
 	public void setEndDate_NullEndDate_ThrowsIllegalArgumentException(LocalDate end) {

@@ -32,14 +32,6 @@ public class AnnouncementTest {
 	public void beforeEach() {
 		exAnn = new Announcement(exAuthor, exText, exTitle);
 	}
-
-	//Constructor test
-	@ParameterizedTest
-	@NullAndEmptySource
-	@ValueSource(strings = {" ", "   ", "\n", "\t"})
-	public void createAnnouncement_EmptyOrNullTExt_ThrowsIllegalArgumentException(String text) {
-		assertThrows(IllegalArgumentException.class, () -> new Announcement(exAuthor, text, exTitle));
-	}
 	
 	//Author test
 	@Test
@@ -51,13 +43,6 @@ public class AnnouncementTest {
 	@Test
 	public void getText_GetsCorrectText() {
 		assertEquals(exText, exAnn.getText());
-	}
-	
-	@ParameterizedTest
-	@NullAndEmptySource
-	@ValueSource(strings = {" ", "   ", "\n", "\t"})
-	public void setText_NullOrEmptyText_ThrowsIllegalArgumentException(String value) {
-		assertThrows(IllegalArgumentException.class, () -> exAnn.setText(value));
 	}
 	
 	@ParameterizedTest
