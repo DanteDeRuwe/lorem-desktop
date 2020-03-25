@@ -3,6 +3,7 @@ package main.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,8 @@ public class Member {
 	private String firstName;
 	private String lastName;
 
-	@OneToMany(mappedBy = "organizer") private Set<Session> sessions;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "organizer", orphanRemoval = true) 
+	private Set<Session> sessions;
 
 	private MemberType memberType;
 	

@@ -5,13 +5,14 @@ import java.time.LocalDate;
 import com.jfoenix.controls.JFXDatePicker;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import main.domain.SessionCalendar;
 import main.domain.facades.SessionCalendarFacade;
+import main.exceptions.InvalidSessionCalendarException;
 import main.exceptions.UserNotAuthorizedException;
 import main.services.Alerts;
+import main.services.DataValidation;
 import main.services.GuiUtil;
 
 public class NewCalendarController extends GuiController {
@@ -22,6 +23,8 @@ public class NewCalendarController extends GuiController {
 	private JFXDatePicker startDatePicker, endDatePicker;
 	@FXML
 	private Button saveButton, cancelButton;
+	@FXML
+	Label validationLabel;
 
 	@FXML
 	public void initialize() {
@@ -37,6 +40,10 @@ public class NewCalendarController extends GuiController {
 	}
 
 	private void handleCreate() {
+		validationLabel.setText("");
+		if (!allFieldsOk())
+			return;
+
 		LocalDate start = startDatePicker.getValue();
 		LocalDate end = endDatePicker.getValue();
 
@@ -46,19 +53,19 @@ public class NewCalendarController extends GuiController {
 			scf.addSessionCalendar(sc);
 			getMainController().getCalendarSceneController().update();
 			goBack();
-		} catch (IllegalArgumentException e) {
-			Alert alert = Alerts.errorAlert("Nieuwe kalender", "");
-			if (e.getMessage().equals("Academic years must start and end in consecutive years"))
-				alert.setContentText("Een academisch jaar moet starten en eindigen in opeenvolgende jaren.");
-			else if (e.getMessage().equals("Cannot create calendar that far in the past"))
-				alert.setContentText("Je mag geen kalender zo ver in het verleden aanmaken.");
-			else if (e.getMessage().equals("Overlap with an existing caledar"))
-				alert.setContentText("Er is overlap met een andere sessiekalendar.");
-			alert.showAndWait();
+		} catch (InvalidSessionCalendarException isce) {
+			validationLabel.setText(validationLabel.getText() + "\n" + isce.getMessage());
 		} catch (UserNotAuthorizedException e) {
 			Alerts.errorAlert("Kalender aanmaken", "Je hebt niet de juiste machtigingen om een kalender aan te maken.")
 					.show();
 		}
+	}
+
+	private boolean allFieldsOk() {
+		boolean startFilledIn = DataValidation.dateFilledIn(startDatePicker, validationLabel,
+				"Startdatum is verplicht");
+		boolean endFilledIn = DataValidation.dateFilledIn(startDatePicker, validationLabel, "Einddatum is verplicht");
+		return startFilledIn && endFilledIn;
 	}
 
 	private void goBack() {

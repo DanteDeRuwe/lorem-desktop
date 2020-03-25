@@ -26,7 +26,7 @@ public class SessionTabsController extends GuiController {
 		GuiUtil.bindAnchorPane(infoTabRoot, infoTab);
 
 		// we will need a facade on sessionlevel (for announcements, media, feedback...)
-		sessionFacade = new SessionFacade(getMainController().getLoggedInMemberManager());
+		sessionFacade = new SessionFacade();
 
 		// Announcement Tab
 		AnchorPane announcementTabRoot = loadFXML("sessions/tabs/AnnouncementTab.fxml", announcementTabController,

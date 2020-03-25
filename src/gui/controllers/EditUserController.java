@@ -148,8 +148,10 @@ public class EditUserController extends GuiController {
 			}
 
 			// if adding is successful
-			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new
-																						// member
+			getMainController().getUserSceneController().updateWithMember(userToEdit); // update tableview with new member
+			
+			// if  a user is changed, their sessions should updated in the sessions scene
+			getMainController().getSessionSceneController().update();
 			goBack(); // clears fields and goes back to details view
 
 		} catch (InvalidMemberException e) {
