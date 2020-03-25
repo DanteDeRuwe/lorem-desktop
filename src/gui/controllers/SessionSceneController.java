@@ -27,13 +27,19 @@ public class SessionSceneController extends GuiController {
 	private Session inspectedSession;
 
 	// FXML vars
-	@FXML private SplitPane splitpane;
-	@FXML private AnchorPane leftPane, middlePane, rightPane;
-	@FXML protected TableView<Session> sessionTable;
-	@FXML private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn,
-			capacityColumn, typeColumn;
-	@FXML private TableColumn<Session, LocalDateTime> startColumn;
-	@FXML private TableColumn<Session, Duration> durationColumn;
+	@FXML
+	private SplitPane splitpane;
+	@FXML
+	private AnchorPane leftPane, middlePane, rightPane;
+	@FXML
+	protected TableView<Session> sessionTable;
+	@FXML
+	private TableColumn<Session, String> titleColumn, organizerColumn, speakerColumn, locationColumn, capacityColumn,
+			typeColumn;
+	@FXML
+	private TableColumn<Session, LocalDateTime> startColumn;
+	@FXML
+	private TableColumn<Session, Duration> durationColumn;
 
 	/*
 	 * Init
@@ -60,21 +66,18 @@ public class SessionSceneController extends GuiController {
 
 		// Right panel: activated when selecting a session
 		displayOnRightPane("NothingAndShrink");
-		sessionTable.getSelectionModel().selectedItemProperty().addListener(
-				(x, y, session) -> {
-					setInspectedSession(session);
-					((SessionTabsController) sessionTabsController).updateInspectedSession(session);
-					displayOnRightPane("SessionTabs");
-				}
-		);
+		sessionTable.getSelectionModel().selectedItemProperty().addListener((x, y, session) -> {
+			setInspectedSession(session);
+			((SessionTabsController) sessionTabsController).updateInspectedSession(session);
+			displayOnRightPane("SessionTabs");
+		});
 
 		// select the first session by default
 		sessionTable.getSelectionModel().selectFirst();
 
 		// event handler for doubleclicking a session
 		sessionTable.setOnMouseClicked(mouseClickedEvent -> {
-			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY)
-					&& mouseClickedEvent.getClickCount() == 2) {
+			if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 2) {
 				displayOnRightPane("EditSession");
 			}
 		});
@@ -95,6 +98,7 @@ public class SessionSceneController extends GuiController {
 		GuiUtil.fillColumn(typeColumn, "type", 40, 300);
 
 		sessionTable.setItems(FXCollections.observableArrayList(sessions));
+		sessionTable.getSortOrder().add(startColumn);
 		sessionTable.refresh();
 	}
 

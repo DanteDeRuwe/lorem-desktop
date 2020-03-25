@@ -58,11 +58,10 @@ public class UserSceneController extends GuiController {
 		GuiUtil.bindAnchorPane(userFilters, leftPane);
 
 		// Event Handlers
-		userTable.getSelectionModel().selectedItemProperty()
-				.addListener((x, y, user) -> {
-					((UserDetailsController) userDetailsController).setInspectedUser(user);
-					GuiUtil.bindAnchorPane(userDetails, rightPane);
-				});
+		userTable.getSelectionModel().selectedItemProperty().addListener((x, y, user) -> {
+			((UserDetailsController) userDetailsController).setInspectedUser(user);
+			GuiUtil.bindAnchorPane(userDetails, rightPane);
+		});
 		userTable.getSelectionModel().selectFirst();
 
 		// Double click to edit user
@@ -86,6 +85,7 @@ public class UserSceneController extends GuiController {
 		GuiUtil.fillColumnWithObjectToString(statusColumn, "memberStatus", 40, 200);
 
 		userTable.setItems(FXCollections.observableArrayList(members));
+		userTable.getSortOrder().add(usernameColumn);
 		userTable.refresh();
 	}
 
