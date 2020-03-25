@@ -168,9 +168,6 @@ public class SessionCalendarFacade implements Facade {
 				&& !session.getFullOrganizerName().equals(loggedInMemberManager.getLoggedInMember().getFullName()))
 			throw new UserNotAuthorizedException();
 
-		// delete the old session from the runtime calendar
-		calendar.deleteSession(session);
-
 		// update the session
 		session.setLocation(newSession.getLocation());
 		session.setTitle(newSession.getTitle());
@@ -181,9 +178,6 @@ public class SessionCalendarFacade implements Facade {
 		session.setCapacity(newSession.getCapacity());
 		session.setExternalLink(newSession.getExternalLink());
 		session.setType(newSession.getType());
-
-		// add it again with updated info
-		calendar.addSession(session);
 
 		// persist
 		GenericDaoJpa.startTransaction();
