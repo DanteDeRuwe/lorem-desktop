@@ -7,7 +7,6 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import main.domain.Announcement;
-import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionFacade;
 import main.services.DataValidation;
 
@@ -28,12 +27,12 @@ public class NewAnnouncementController extends GuiController {
 	public void initialize() {
 
 		atc = (AnnouncementTabController) getParentController();
-		
+
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
 		confirmButton.setOnAction(e -> handleCreate());
 	}
-	
+
 	public void updateHeader(String sessionTitle) {
 		headerText.setText(String.format("Nieuwe aankondiging voor \"%s\"", sessionTitle));
 	}
@@ -47,9 +46,9 @@ public class NewAnnouncementController extends GuiController {
 		String title = titleField.getText();
 		String text = textArea.getText();
 
-		MemberFacade mf = (MemberFacade) getMainController().getMemberFacade();
 		SessionFacade sf = (SessionFacade) getFacade();
-		Announcement a = sf.createAnnouncementFromFields(mf.getLoggedInMember(), text, title);
+		Announcement a = sf.createAnnouncementFromFields(
+				getMainController().getLoggedInMemberManager().getLoggedInMember(), text, title);
 
 		sf.addAnnouncement(a, ((AnnouncementTabController) getParentController()).getInspectedSession());
 

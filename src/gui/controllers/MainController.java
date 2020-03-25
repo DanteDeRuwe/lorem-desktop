@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import main.domain.facades.Facade;
+import main.domain.facades.LoggedInMemberManager;
 import main.domain.facades.MemberFacade;
 import main.domain.facades.SessionCalendarFacade;
 import main.services.GuiUtil;
@@ -40,12 +41,18 @@ public class MainController extends GuiController {
 	// Controllers
 	private GuiController sessionSceneController, calendarSceneController, userSceneController;
 
+	private LoggedInMemberManager loggedInMemberManager;
+	
 	// Nodes
-	@FXML private AnchorPane root;
-	@FXML private AnchorPane sessionTab, calendarTab, userTab, accountTab, statsTab, aboutTab;
+	@FXML
+	private AnchorPane root;
+	@FXML
+	private AnchorPane sessionTab, calendarTab, userTab, accountTab, statsTab, aboutTab;
 
-	@FXML private JFXTabPane navigationTabs;
-	@FXML private Tab sessionNavigationTab;
+	@FXML
+	private JFXTabPane navigationTabs;
+	@FXML
+	private Tab sessionNavigationTab;
 
 	/*
 	 * INIT
@@ -58,24 +65,20 @@ public class MainController extends GuiController {
 		this.injectMainController(this);
 
 		// initialize facades
-		sessionCalendarFacade = new SessionCalendarFacade();
-		memberFacade = new MemberFacade();
+		loggedInMemberManager = new LoggedInMemberManager();
+		sessionCalendarFacade = new SessionCalendarFacade(loggedInMemberManager);
+		memberFacade = new MemberFacade(loggedInMemberManager);
 
 		// initialize controllers
 		calendarSceneController = new CalendarSceneController();
 		userSceneController = new UserSceneController();
 
 		// Load the calendar pane
-		AnchorPane calendarSceneRoot = loadFXML(
-				"calendar/CalendarScene.fxml", calendarSceneController,
-				sessionCalendarFacade
-		);
+		AnchorPane calendarSceneRoot = loadFXML("calendar/CalendarScene.fxml", calendarSceneController,
+				sessionCalendarFacade);
 
 		// load the user pane
-		AnchorPane userSceneRoot = loadFXML(
-				"users/UserScene.fxml", userSceneController,
-				memberFacade
-		);
+		AnchorPane userSceneRoot = loadFXML("users/UserScene.fxml", userSceneController, memberFacade);
 
 		// Bind the panes to the tabs
 		GuiUtil.bindAnchorPane(calendarSceneRoot, calendarTab);
@@ -90,10 +93,8 @@ public class MainController extends GuiController {
 		if (enable) {
 			// Load everything for the session
 			sessionSceneController = new SessionSceneController();
-			AnchorPane sessionSceneRoot = loadFXML(
-					"sessions/SessionScene.fxml", sessionSceneController,
-					sessionCalendarFacade
-			);
+			AnchorPane sessionSceneRoot = loadFXML("sessions/SessionScene.fxml", sessionSceneController,
+					sessionCalendarFacade);
 			GuiUtil.bindAnchorPane(sessionSceneRoot, sessionTab);
 		}
 
@@ -134,6 +135,10 @@ public class MainController extends GuiController {
 
 	public CalendarSceneController getCalendarSceneController() {
 		return (CalendarSceneController) calendarSceneController;
+	}
+	
+	public LoggedInMemberManager getLoggedInMemberManager() {
+		return loggedInMemberManager;
 	}
 
 }
