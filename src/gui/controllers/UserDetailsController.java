@@ -64,7 +64,9 @@ public class UserDetailsController extends GuiController {
 
 			// deleting a user also deletes their sessions, so sessions screen has to be
 			// updated
-			getMainController().getSessionSceneController().update();
+			if (getMainController().getSessionSceneController() != null) {
+				getMainController().getSessionSceneController().update();
+			}	
 		}
 	}
 
