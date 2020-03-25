@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import main.domain.Member;
-import main.domain.MemberType;
 import main.domain.Session;
 import main.domain.SessionCalendar;
 import main.exceptions.InvalidSessionCalendarException;
@@ -88,9 +87,9 @@ public class SessionCalendarFacade implements Facade {
 
 	public void addSessionCalendar(SessionCalendar calendar)
 			throws UserNotAuthorizedException, InvalidSessionCalendarException {
-		MemberType memberType = loggedInMemberManager.getLoggedInMember().getMemberType();
-		if (memberType != MemberType.ADMIN && memberType != MemberType.HEADADMIN)
-			throw new UserNotAuthorizedException();
+
+		if (!loggedInMemberManager.loggedInMemberCanManipulateData())
+			return;
 
 		// check for overlap
 		if (!calendar.doesNotOverlap(getAllSessionCalendars()))
@@ -104,9 +103,9 @@ public class SessionCalendarFacade implements Facade {
 
 	public void editSessionCalendar(SessionCalendar calendar, LocalDate startDate, LocalDate endDate)
 			throws UserNotAuthorizedException, InvalidSessionCalendarException {
-		MemberType memberType = loggedInMemberManager.getLoggedInMember().getMemberType();
-		if (memberType != MemberType.ADMIN && memberType != MemberType.HEADADMIN)
-			throw new UserNotAuthorizedException();
+
+		if (!loggedInMemberManager.loggedInMemberCanManipulateData())
+			return;
 
 		// try to create a calendar, this has all exception logic
 		SessionCalendar sc = createSessionCalendar(startDate, endDate);
@@ -168,9 +167,9 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public void addSession(Session session) throws UserNotAuthorizedException {
-		MemberType memberType = loggedInMemberManager.getLoggedInMember().getMemberType();
-		if (memberType != MemberType.HEADADMIN && memberType != MemberType.ADMIN)
-			throw new UserNotAuthorizedException();
+
+		if (!loggedInMemberManager.loggedInMemberCanManipulateSession(session))
+			return;
 
 		// add to calendar
 		calendar.addSession(session);
@@ -182,14 +181,9 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public void editSession(Session session, Session newSession) throws UserNotAuthorizedException {
-		MemberType memberType = loggedInMemberManager.getLoggedInMember().getMemberType();
-		if (memberType != MemberType.HEADADMIN && memberType != MemberType.ADMIN)
-			throw new UserNotAuthorizedException();
 
-		// user is an admin but session to edit isn't organized by this admin
-		if (memberType == MemberType.ADMIN
-				&& !session.getFullOrganizerName().equals(loggedInMemberManager.getLoggedInMember().getFullName()))
-			throw new UserNotAuthorizedException();
+		if (!loggedInMemberManager.loggedInMemberCanManipulateSession(session))
+			return;
 
 		// update the session
 		session.setLocation(newSession.getLocation());
@@ -209,14 +203,9 @@ public class SessionCalendarFacade implements Facade {
 	}
 
 	public void deleteSession(Session session) throws UserNotAuthorizedException {
-		MemberType memberType = loggedInMemberManager.getLoggedInMember().getMemberType();
-		if (memberType != MemberType.HEADADMIN && memberType != MemberType.ADMIN)
-			throw new UserNotAuthorizedException();
 
-		// user is an admin but session to edit isn't organized by this admin
-		if (memberType == MemberType.ADMIN
-				&& !session.getFullOrganizerName().equals(loggedInMemberManager.getLoggedInMember().getFullName()))
-			throw new UserNotAuthorizedException();
+		if (!loggedInMemberManager.loggedInMemberCanManipulateSession(session))
+			return;
 
 		// delete from calendar
 		calendar.deleteSession(session);
