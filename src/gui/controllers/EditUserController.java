@@ -54,18 +54,17 @@ public class EditUserController extends GuiController {
 		addUserButton.setText("Bevestig");
 		headerText.setText("Wijzig gebruiker \"" + userToEdit.getFullName() + "\"");
 
-		// Pre-fill the fields
-		fillFields();
-
 		// Event Listeners
 		cancelButton.setOnAction(e -> goBack());
 		addUserButton.setOnAction(e -> onMemberEditConfirm());
 
 		// Set combobox options
 		userTypeField.getItems().setAll(MemberType.values());
-		userTypeField.getSelectionModel().select(MemberType.USER);
 		userStatusField.getItems().setAll(MemberStatus.values());
-		userStatusField.getSelectionModel().select(MemberStatus.ACTIVE);
+		
+		// Pre-fill the fields
+		fillFields();
+		
 	}
 
 	/*
@@ -79,6 +78,9 @@ public class EditUserController extends GuiController {
 		userTypeField.setValue(userToEdit.getMemberType());
 		userStatusField.setValue(userToEdit.getMemberStatus());
 		profilePicField.setText(userToEdit.getProfilePicPath());
+		
+		userTypeField.getSelectionModel().select(userToEdit.getMemberType());
+		userStatusField.getSelectionModel().select(userToEdit.getMemberStatus());
 	}
 
 	private void goBack() {

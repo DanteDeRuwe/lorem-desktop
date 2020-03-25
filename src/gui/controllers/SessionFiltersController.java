@@ -3,6 +3,7 @@ package gui.controllers;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class SessionFiltersController extends GuiController {
 	@FXML
     private JFXComboBox<String> statusFilterBox;
 	
-	private final Map<String, SessionStatus> statusMap = new HashMap<>();
+	private final Map<String, SessionStatus> statusMap = new LinkedHashMap<>(); // linkedhashmaps' iteration order does not change
 
 	@FXML
 	public void initialize() {

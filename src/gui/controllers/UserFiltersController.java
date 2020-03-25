@@ -2,6 +2,7 @@ package gui.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,8 +28,8 @@ public class UserFiltersController extends GuiController {
 	@FXML
 	private JFXComboBox<String> statusFilterBox;
 
-	private final Map<String, MemberType> typeMap = new HashMap<>();
-	private final Map<String, MemberStatus> statusMap = new HashMap<>();
+	private final Map<String, MemberType> typeMap = new LinkedHashMap<>(); // linkedhashmaps' iteration order does not change
+	private final Map<String, MemberStatus> statusMap = new LinkedHashMap<>();
 
 	@FXML
 	public void initialize() {
