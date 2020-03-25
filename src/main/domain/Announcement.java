@@ -58,8 +58,6 @@ public class Announcement implements Comparable<Announcement> {
 	}
 
 	public void setText(String value) {
-		if (value == null || value.trim().isEmpty())
-			throw new IllegalArgumentException("text null or empty");
 		this.text = value;
 	}
 
