@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import main.domain.Member;
 import main.domain.MemberStatus;
 import main.domain.MemberType;
+import main.domain.SessionStatus;
 import main.domain.facades.MemberFacade;
 
 public class UserFiltersController extends GuiController {
@@ -28,19 +30,14 @@ public class UserFiltersController extends GuiController {
 	@FXML
 	private JFXComboBox<String> statusFilterBox;
 
-	private final Map<String, MemberType> typeMap = new LinkedHashMap<>(); // linkedhashmaps' iteration order does not change
+	private final Map<String, MemberType> typeMap = new LinkedHashMap<>(); // linkedhashmaps because their iteration order does not change
 	private final Map<String, MemberStatus> statusMap = new LinkedHashMap<>();
 
 	@FXML
 	public void initialize() {
 		// Fill maps
-		typeMap.put("Gebruiker", MemberType.USER);
-		typeMap.put("Verantwoordelijke", MemberType.ADMIN);
-		typeMap.put("Hoofdverantwoordelijke", MemberType.HEADADMIN);
-
-		statusMap.put("Actief", MemberStatus.ACTIVE);
-		statusMap.put("Inactief", MemberStatus.INACTIVE);
-		statusMap.put("Geblokkeerd", MemberStatus.BLOCKED);
+		Stream.of(MemberStatus.values()).forEach(ms -> statusMap.put(ms.toString(), ms));
+		Stream.of(MemberType.values()).forEach(mt -> typeMap.put(mt.toString(), mt));
 
 		// Populate comboboxes
 		typeFilterBox.getItems().add("Alle");

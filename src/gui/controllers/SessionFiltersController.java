@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -38,7 +39,7 @@ public class SessionFiltersController extends GuiController {
 	@FXML
     private JFXComboBox<String> statusFilterBox;
 	
-	private final Map<String, SessionStatus> statusMap = new LinkedHashMap<>(); // linkedhashmaps' iteration order does not change
+	private final Map<String, SessionStatus> statusMap = new LinkedHashMap<>(); // linkedhashmap because their iteration order does not change
 
 	@FXML
 	public void initialize() {
@@ -51,15 +52,12 @@ public class SessionFiltersController extends GuiController {
 		UpdateAcademicYear();
 		
 		// fill map
-		statusMap.put(SessionStatus.CREATED.toString(), SessionStatus.CREATED);
-		statusMap.put(SessionStatus.OPEN.toString(), SessionStatus.OPEN);
-		statusMap.put(SessionStatus.CLOSED.toString(), SessionStatus.CLOSED);
-		statusMap.put(SessionStatus.FINISHED.toString(), SessionStatus.FINISHED);
+		Stream.of(SessionStatus.values()).forEach(ss -> statusMap.put(ss.toString(), ss));
 		
 		// populate combo box
 		statusFilterBox.getItems().add("Alle");
 		statusFilterBox.getItems().addAll(statusMap.keySet());
-		statusFilterBox.getSelectionModel().selectFirst();
+		statusFilterBox.getSelectionModel().select(SessionStatus.CREATED.toString());
 		
 
 		// Event Listeners
