@@ -60,8 +60,9 @@ public class NewAnnouncementController extends GuiController {
 		String text = textArea.getText();
 
 		SessionFacade sf = (SessionFacade) getFacade();
+
 		Announcement a = sf.createAnnouncementFromFields(
-				getMainController().getLoggedInMemberManager().getLoggedInMember(), text, title);
+				getMainController().getLoggedInMemberManager().getLoggedInMember(), text.trim(), title.trim());
 
 		try {
 			sf.addAnnouncement(a, inspectedSession);
