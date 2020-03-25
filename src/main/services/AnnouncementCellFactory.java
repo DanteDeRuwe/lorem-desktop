@@ -40,7 +40,7 @@ public class AnnouncementCellFactory<T> implements Callback<ListView<Announcemen
 				setGraphic(vbox);
 				
 				// bind the content widths to listview width
-				text.wrappingWidthProperty().bind(listView.widthProperty().subtract(20));
+				text.wrappingWidthProperty().bind(listView.widthProperty().subtract(30d));
 			}
 
 		};
