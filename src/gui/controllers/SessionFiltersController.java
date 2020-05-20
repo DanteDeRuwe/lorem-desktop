@@ -57,7 +57,7 @@ public class SessionFiltersController extends GuiController {
 		// populate combo box
 		statusFilterBox.getItems().add("Alle");
 		statusFilterBox.getItems().addAll(statusMap.keySet());
-		statusFilterBox.getSelectionModel().select(SessionStatus.CREATED.toString());
+		statusFilterBox.getSelectionModel().select("Alle");
 
 		// Event Listeners
 		newSessionButton.setOnAction(e -> handleNewSession());
