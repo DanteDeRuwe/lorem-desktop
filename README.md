@@ -9,7 +9,7 @@ This project was built for the course "Projects and workshops II" of my educatio
 
 ## Demo
 
-[<img src="https://lh3.googleusercontent.com/proxy/baSGIcmaXtHTUo-d7iBUd61ppfnUN9nrOqVLd2MMf53-5NrqlE7JwoXRtiopSkOsJUWgo1FlPzfTLEMPqdiLxwIhxiFQteedIauHp9iokLURWk2pUPAeqn_6k2fWZrzD0pK2sho" width="200"/>](https://www.youtube.com/watch?v=FLArvyB73Ik)
+[<img src="https://i.imgur.com/p6DjWfN.png" width="200"/>](https://www.youtube.com/watch?v=FLArvyB73Ik)
 
 <br><br>
 
